@@ -1,0 +1,824 @@
+
+     Structure of BR.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     BR_001      C       4        0 
+     BR_002      C       30       0 
+     Total Fields : 2
+
+
+     Structure of CASH.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     TERM        C       4        0 
+     DATE        D       8        0 
+     TIME        N       2        0 
+     CODE        C       3        0 
+     NAME        C       20       0 
+     DAILY_C     N       4        0 
+     DAILY_A     N       14       2 
+     CASH_A      N       14       2 
+     GROSS_A     N       14       2 
+     DEPT_A      N       14       2 
+     FORCUR_C    N       4        0 
+     FORCUR_A    N       14       2 
+     MISC01_C    N       4        0 
+     MISC01_A    N       14       2 
+     MISC02_C    N       4        0 
+     MISC02_A    N       14       2 
+     MISC03_C    N       4        0 
+     MISC03_A    N       14       2 
+     MISC04_C    N       4        0 
+     MISC04_A    N       14       2 
+     MISC05_C    N       4        0 
+     MISC05_A    N       14       2 
+     MISC06_C    N       4        0 
+     MISC06_A    N       14       2 
+     MISC07_C    N       4        0 
+     MISC07_A    N       14       2 
+     MISC08_C    N       4        0 
+     MISC08_A    N       14       2 
+     MISC09_C    N       4        0 
+     MISC09_A    N       14       2 
+     MISC10_C    N       4        0 
+     MISC10_A    N       14       2 
+     MISC11_C    N       4        0 
+     MISC11_A    N       14       2 
+     MISC12_C    N       4        0 
+     MISC12_A    N       14       2 
+     MISC13_C    N       4        0 
+     MISC13_A    N       14       2 
+     MISC14_C    N       4        0 
+     MISC14_A    N       14       2 
+     MISC15_C    N       4        0 
+     MISC15_A    N       14       2 
+     MISC16_C    N       4        0 
+     MISC16_A    N       14       2 
+     MISC17_C    N       4        0 
+     MISC17_A    N       14       2 
+     MISC18_C    N       4        0 
+     MISC18_A    N       14       2 
+     MISC19_C    N       4        0 
+     MISC19_A    N       14       2 
+     MISC20_C    N       4        0 
+     MISC20_A    N       14       2 
+     MISC21_C    N       4        0 
+     MISC21_A    N       14       2 
+     MISC22_C    N       4        0 
+     MISC22_A    N       14       2 
+     MISC23_C    N       4        0 
+     MISC23_A    N       14       2 
+     MISC24_C    N       4        0 
+     MISC24_A    N       14       2 
+     MISC25_C    N       4        0 
+     MISC25_A    N       14       2 
+     MISC26_C    N       4        0 
+     MISC26_A    N       14       2 
+     MISC27_C    N       4        0 
+     MISC27_A    N       14       2 
+     MISC28_C    N       4        0 
+     MISC28_A    N       14       2 
+     MISC29_C    N       4        0 
+     MISC29_A    N       14       2 
+     MISC30_C    N       4        0 
+     MISC30_A    N       14       2 
+     MISC31_C    N       4        0 
+     MISC31_A    N       14       2 
+     MISC32_C    N       4        0 
+     MISC32_A    N       14       2 
+     MISC33_C    N       4        0 
+     MISC33_A    N       14       2 
+     MISC34_C    N       4        0 
+     MISC34_A    N       14       2 
+     MISC35_C    N       4        0 
+     MISC35_A    N       14       2 
+     MISC36_C    N       4        0 
+     MISC36_A    N       14       2 
+     MISC37_C    N       4        0 
+     MISC37_A    N       14       2 
+     MISC38_C    N       4        0 
+     MISC38_A    N       14       2 
+     MISC39_C    N       4        0 
+     MISC39_A    N       14       2 
+     MISC40_C    N       4        0 
+     MISC40_A    N       14       2 
+     MISC41_C    N       4        0 
+     MISC41_A    N       14       2 
+     MISC42_C    N       4        0 
+     MISC42_A    N       14       2 
+     MISC43_C    N       4        0 
+     MISC43_A    N       14       2 
+     MISC44_C    N       4        0 
+     MISC44_A    N       14       2 
+     MISC45_C    N       4        0 
+     MISC45_A    N       14       2 
+     MISC46_C    N       4        0 
+     MISC46_A    N       14       2 
+     MISC47_C    N       4        0 
+     MISC47_A    N       14       2 
+     MISC48_C    N       4        0 
+     MISC48_A    N       14       2 
+     MISC49_C    N       4        0 
+     MISC49_A    N       14       2 
+     MISC50_C    N       4        0 
+     MISC50_A    N       14       2 
+     IVOID_C     N       4        0 
+     IVOID_A     N       14       2 
+     MVOID_C     N       4        0 
+     MVOID_A     N       14       2 
+     IDISC_C     N       4        0 
+     IDISC_A     N       14       2 
+     SUBTD_C     N       4        0 
+     SUBTD_A     N       14       2 
+     ADDON_C     N       4        0 
+     ADDON_A     N       14       2 
+     SSBTD_C     N       4        0 
+     SSBTD_A     N       14       2 
+     SSBTA_C     N       4        0 
+     SSBTA_A     N       14       2 
+     RETRN_C     N       4        0 
+     RETRN_A     N       14       2 
+     REFND_C     N       4        0 
+     REFND_A     N       14       2 
+     OTINC_C     N       4        0 
+     OTINC_A     N       14       2 
+     CANCL_C     N       4        0 
+     CANCL_A     N       14       2 
+     TVOID_C     N       4        0 
+     TVOID_A     N       14       2 
+     SUSPD_C     N       4        0 
+     SUSPD_A     N       14       2 
+     LAYAW_C     N       4        0 
+     LAYAW_A     N       14       2 
+     PIKUP_C     N       4        0 
+     PIKUP_A     N       14       2 
+     PDOUT_C     N       4        0 
+     PDOUT_A     N       14       2 
+     LOAN_C      N       4        0 
+     LOAN_A      N       14       2 
+     RECACT_C    N       4        0 
+     RECACT_A    N       14       2 
+     BOTDEP_C    N       4        0 
+     BOTDEP_A    N       14       2 
+     CASHDEC     N       14       2 
+     TRAIN_A     N       14       2 
+     OFFLN_A     N       14       2 
+     RENTER_A    N       14       2 
+     OLDGRD_A    N       14       2 
+     NEWGRD_A    N       14       2 
+     XCOUNT_C    N       4        0 
+     ZCOUNT_C    N       4        0 
+     OP_FLAG     N       1        0 
+     Total Fields : 159
+
+
+     Structure of CASHIER.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     CASH_CODE   C       6        0 
+     NAME        C       20       0 
+     TIME_IN     C       6        0 
+     TIME_OUT    C       6        0 
+     POS_NO      C       4        0 
+     RESERVED    C       1        0 
+     Total Fields : 6
+
+
+     Structure of CC.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     CC_001      C       4        0 
+     CC_002      C       20       0 
+     CC_003      N       5        0 
+     CC_004      N       14       2 
+     CC_005      N       1        0 
+     Total Fields : 5
+
+
+     Structure of CHARGE.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     POS_NO      C       4        0 
+     DATE        D       8        0 
+     TIME        C       8        0 
+     CASH_CODE   C       6        0 
+     SLS_AMOUNT  N       12       2 
+     PAY_TYPE    C       4        0 
+     ACCT_NO     C       20       0 
+     OP_FLAG     N       1        0 
+     Total Fields : 8
+
+
+     Structure of CNTRL.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     CONTRL_NO   N       4        0 
+     DATE        D       8        0 
+     OP_FLAG     N       1        0 
+     Total Fields : 3
+
+
+     Structure of DEPT.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DATE        D       8        0 
+     DCODE       C       4        0 
+     DDESC       C       20       0 
+     DCOUNT      N       12       3 
+     DAMOUNT     N       12       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 6
+
+
+     Structure of DP.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DP_001      C       2        0 
+     DP_002      C       25       0 
+     DP_003      N       2        0 
+     DP_004      N       15       2 
+     DP_005      C       3        0 
+     DP_006      D       8        0 
+     DP_007      D       8        0 
+     DP_008      N       7        3 
+     DP_009      N       7        3 
+     DP_010      N       12       2 
+     DP_011      N       12       2 
+     DP_012      N       1        0 
+     Total Fields : 12
+
+
+     Structure of FM.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     TRANSNO     N       8        0 
+     OP_CODE     C       2        0 
+     FILE_ID     C       2        0 
+     RECDATA     C       244      0 
+     POSTDATE    D       8        0 
+     POSTSTAT    N       1        0 
+     OP_FLAG     N       1        0 
+     Total Fields : 7
+
+
+     Structure of FOREIGN.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     F_CODE      C       2        0 
+     F_ABBR      C       3        0 
+     F_DESC      C       25       0 
+     F_DXCHG     N       10       6 
+     F_PXCHG     N       10       6 
+     F_DSLST     N       15       2 
+     F_MSLST     N       15       2 
+     F_ASLST     N       15       2 
+     F_PDXCG     N       10       6 
+     F_PPXCG     N       10       6 
+     F_DECPOS    N       2        0 
+     F_DATE      D       8        0 
+     Total Fields : 12
+
+
+     Structure of HOUR.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     TERM        C       4        0 
+     DATE        D       8        0 
+     TIME        N       2        0 
+     HOUR        N       2        0 
+     HCOUNT      N       12       3 
+     HAMOUNT     N       12       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 7
+
+
+     Structure of ITEM.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     I_001       C       14       0 
+     I_002       C       20       0 
+     I_003       N       15       2 
+     I_004       N       2        0 
+     I_005       C       10       0 
+     I_006       C       2        0 
+     I_007       N       15       2 
+     I_008       N       13       3 
+     I_009       N       10       3 
+     I_010       N       10       3 
+     I_011       N       10       3 
+     I_012       N       10       3 
+     I_013       N       10       3 
+     I_014       D       8        0 
+     I_015       D       8        0 
+     I_016       D       8        0 
+     I_017       N       15       3 
+     I_018       N       15       2 
+     I_019       N       1        0 
+     I_020       C       3        0 
+     I_021       N       15       2 
+     I_022       N       10       3 
+     I_023       C       12       0 
+     I_024       C       12       0 
+     I_025       N       2        0 
+     I_026       D       8        0 
+     I_027       N       15       2 
+     I_028       N       10       3 
+     I_029       N       15       2 
+     I_030       N       10       3 
+     I_031       N       15       3 
+     I_032       N       15       2 
+     I_033       C       14       0 
+     I_034       N       7        4 
+     I_035       N       7        4 
+     I_036       N       1        0 
+     I_037       C       40       0 
+     I_038       C       4        0 
+     I_039       N       1        0 
+     I_040       C       4        0 
+     I_041       C       25       0 
+     I_042       C       4        0 
+     I_043       N       15       2 
+     Total Fields : 43
+
+
+     Structure of ITM_MOVE.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     POS_NO      C       4        0 
+     DATE        D       8        0 
+     TIME        C       8        0 
+     TRANS_NO    C       8        0 
+     CASHCODE    C       6        0 
+     PLU_CODE    C       14       0 
+     DEPT_CODE   C       4        0 
+     AMOUNT      N       12       2 
+     QTY         N       8        2 
+     UPRICE      N       8        2 
+     EXCH_RATE   N       7        4 
+     ITM_COST    N       8        2 
+     RTN_QTY     N       8        2 
+     RTN_AMOUNT  N       12       2 
+     VOID_QTY    N       8        2 
+     VOID_AMT    N       12       2 
+     DISC_AMT    N       12       3 
+     DISC_RATE   N       6        2 
+     SDISC_AMT   N       12       2 
+     RESERVED1   N       12       2 
+     RESERVED2   N       8        2 
+     FLAG        N       1        0 
+     Total Fields : 22
+
+
+     Structure of IV.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     IV_LINK     C       14       0 
+     IV_CODE     C       3        0 
+     IV_NAME     C       20       0 
+     IV_COST     N       15       2 
+     IV_OQTY     N       15       3 
+     IV_STCK     N       10       3 
+     IV_DATE     D       8        0 
+     Total Fields : 7
+
+
+     Structure of NPLU.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DATE        D       8        0 
+     CODE        C       14       0 
+     ICOUNT      N       12       2 
+     IAMOUNT     N       12       2 
+     I_UCOST     N       12       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 6
+
+
+     Structure of PLU.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DATE        D       8        0 
+     CODE        C       14       0 
+     ITEM_CODE   C       12       0 
+     DESC        C       20       0 
+     ICOUNT      N       12       2 
+     IAMOUNT     N       12       2 
+     I_UCOST     N       12       2 
+     WCOUNT      N       12       2 
+     WAMOUNT     N       12       2 
+     W_UCOST     N       12       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 11
+
+
+     Structure of PLUTEMP.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DATE        D       8        0 
+     CODE        C       14       0 
+     DESC        C       20       0 
+     ICOUNT      N       12       2 
+     IAMOUNT     N       12       2 
+     I_UCOST     N       12       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 7
+
+
+     Structure of PO.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     PO_001      C       8        0 
+     PO_002      C       3        0 
+     PO_003      D       8        0 
+     PO_004      D       8        0 
+     PO_005      N       1        0 
+     PO_006      N       1        0 
+     PO_007      N       2        0 
+     PO_008      D       8        0 
+     PO_009      N       3        0 
+     PO_010      N       5        2 
+     PO_011      N       5        2 
+     PO_012      C       20       0 
+     PO_013      C       9        0 
+     PO_014      C       4        0 
+     PO_015      C       15       0 
+     PO_016      C       15       0 
+     PO_017      D       8        0 
+     PO_018      N       1        0 
+     Total Fields : 18
+
+
+     Structure of PO_ITEMS.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     POI_LINK    C       8        0 
+     POI_ITEM    C       14       0 
+     POI_DESC    C       40       0 
+     POI_COST    N       15       2 
+     POI_QORD    N       15       3 
+     POI_UM      C       10       0 
+     POI_URET    N       15       2 
+     POI_QREC    N       15       3 
+     POI_QRET    N       15       3 
+     POI_POST    N       2        0 
+     Total Fields : 10
+
+
+     Structure of RET.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     DATE        D       8        0 
+     PLUCODE     C       14       0 
+     ITEMCODE    C       12       0 
+     RDESC       C       20       0 
+     RDEPT       C       4        0 
+     RCOUNT      N       12       3 
+     RAMOUNT     N       14       2 
+     RUCOST      N       14       2 
+     OP_FLAG     N       1        0 
+     Total Fields : 9
+
+
+     Structure of RJ.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     RJ_001      C       8        0 
+     RJ_002      C       8        0 
+     RJ_003      C       3        0 
+     RJ_004      C       30       0 
+     RJ_005      D       8        0 
+     RJ_006      D       8        0 
+     RJ_007      N       1        0 
+     RJ_008      C       10       0 
+     RJ_009      D       8        0 
+     RJ_010      N       2        0 
+     RJ_011      D       8        0 
+     RJ_012      N       1        0 
+     Total Fields : 12
+
+
+     Structure of RJ_ITEMS.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     RJI_LINK    C       8        0 
+     RJI_ITEM    C       14       0 
+     RJI_COST    N       15       2 
+     RJI_URET    N       15       2 
+     RJI_QRET    N       15       3 
+     RJI_POST    N       2        0 
+     RJI_AGEC    C       4        0 
+     Total Fields : 7
+
+
+     Structure of RR.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     RR_001      C       8        0 
+     RR_012      C       8        0 
+     RR_002      C       3        0 
+     RR_003      C       30       0 
+     RR_004      C       15       0 
+     RR_005      D       8        0 
+     RR_006      D       8        0 
+     RR_007      N       1        0 
+     RR_008      C       10       0 
+     RR_009      D       8        0 
+     RR_010      N       2        0 
+     RR_011      D       8        0 
+     RR_013      N       1        0 
+     Total Fields : 13
+
+
+     Structure of RR_ITEMS.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     RRI_LINK    C       8        0 
+     RRI_ITEM    C       14       0 
+     RRI_COST    N       15       2 
+     RRI_URET    N       15       2 
+     RRI_QREC    N       15       3 
+     RRI_POST    N       2        0 
+     RRI_AGEC    C       4        0 
+     RRI_SOLD    N       8        0 
+     Total Fields : 8
+
+
+     Structure of SA.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     SA_001      C       8        0 
+     SA_002      D       8        0 
+     SA_003      N       2        0 
+     SA_004      D       8        0 
+     SA_005      C       3        0 
+     SA_006      C       20       0 
+     SA_007      N       1        0 
+     Total Fields : 7
+
+
+     Structure of SA_ITEMS.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     SAI_LINK    C       8        0 
+     SAI_ITEM    C       14       0 
+     SAI_UNIT    C       3        0 
+     SAI_QADJ    N       13       3 
+     SAI_UPRC    N       15       2 
+     SAI_POST    N       2        0 
+     Total Fields : 6
+
+
+     Structure of ST.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     ST_001      C       8        0 
+     ST_002      C       3        0 
+     ST_003      C       3        0 
+     ST_004      D       8        0 
+     ST_005      N       2        0 
+     ST_006      D       8        0 
+     ST_007      C       3        0 
+     ST_008      C       20       0 
+     ST_009      N       1        0 
+     Total Fields : 9
+
+
+     Structure of ST_ITEMS.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     STI_LINK    C       8        0 
+     STI_ITEM    C       14       0 
+     STI_QADJ    N       13       3 
+     STI_UPRC    N       15       2 
+     STI_POST    N       2        0 
+     Total Fields : 5
+
+
+     Structure of TERMINAL.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     TERM        C       4        0 
+     DATE        D       8        0 
+     TIME        N       2        0 
+     DAILY_C     N       4        0 
+     DAILY_A     N       14       2 
+     CASH_A      N       14       2 
+     GROSS_A     N       14       2 
+     DEPT_A      N       14       2 
+     FORCUR_C    N       4        0 
+     FORCUR_A    N       14       2 
+     MISC1_C     N       4        0 
+     MISC1_A     N       14       2 
+     MISC2_C     N       4        0 
+     MISC2_A     N       14       2 
+     MISC3_C     N       4        0 
+     MISC3_A     N       14       2 
+     MISC4_C     N       4        0 
+     MISC4_A     N       14       2 
+     MISC5_C     N       4        0 
+     MISC5_A     N       14       2 
+     MISC6_C     N       4        0 
+     MISC6_A     N       14       2 
+     MISC7_C     N       4        0 
+     MISC7_A     N       14       2 
+     MISC8_C     N       4        0 
+     MISC8_A     N       14       2 
+     MISC9_C     N       4        0 
+     MISC9_A     N       14       2 
+     MISC10_C    N       4        0 
+     MISC10_A    N       14       2 
+     MISC11_C    N       4        0 
+     MISC11_A    N       14       2 
+     MISC12_C    N       4        0 
+     MISC12_A    N       14       2 
+     MISC13_C    N       4        0 
+     MISC13_A    N       14       2 
+     MISC14_C    N       4        0 
+     MISC14_A    N       14       2 
+     MISC15_C    N       4        0 
+     MISC15_A    N       14       2 
+     MISC16_C    N       4        0 
+     MISC16_A    N       14       2 
+     MISC17_C    N       4        0 
+     MISC17_A    N       14       2 
+     MISC18_C    N       4        0 
+     MISC18_A    N       14       2 
+     MISC19_C    N       4        0 
+     MISC19_A    N       14       2 
+     MISC20_C    N       4        0 
+     MISC20_A    N       14       2 
+     MISC21_C    N       4        0 
+     MISC21_A    N       14       2 
+     MISC22_C    N       4        0 
+     MISC22_A    N       14       2 
+     MISC23_C    N       4        0 
+     MISC23_A    N       14       2 
+     MISC24_C    N       4        0 
+     MISC24_A    N       14       2 
+     MISC25_C    N       4        0 
+     MISC25_A    N       14       2 
+     MISC26_C    N       4        0 
+     MISC26_A    N       14       2 
+     MISC27_C    N       4        0 
+     MISC27_A    N       14       2 
+     MISC28_C    N       4        0 
+     MISC28_A    N       14       2 
+     MISC29_C    N       4        0 
+     MISC29_A    N       14       2 
+     MISC30_C    N       4        0 
+     MISC30_A    N       14       2 
+     MISC31_C    N       4        0 
+     MISC31_A    N       14       2 
+     MISC32_C    N       4        0 
+     MISC32_A    N       14       2 
+     MISC33_C    N       4        0 
+     MISC33_A    N       14       2 
+     MISC34_C    N       4        0 
+     MISC34_A    N       14       2 
+     MISC35_C    N       4        0 
+     MISC35_A    N       14       2 
+     MISC36_C    N       4        0 
+     MISC36_A    N       14       2 
+     MISC37_C    N       4        0 
+     MISC37_A    N       14       2 
+     MISC38_C    N       4        0 
+     MISC38_A    N       14       2 
+     MISC39_C    N       4        0 
+     MISC39_A    N       14       2 
+     MISC40_C    N       4        0 
+     MISC40_A    N       14       2 
+     MISC41_C    N       4        0 
+     MISC41_A    N       14       2 
+     MISC42_C    N       4        0 
+     MISC42_A    N       14       2 
+     MISC43_C    N       4        0 
+     MISC43_A    N       14       2 
+     MISC44_C    N       4        0 
+     MISC44_A    N       14       2 
+     MISC45_C    N       4        0 
+     MISC45_A    N       14       2 
+     MISC46_C    N       4        0 
+     MISC46_A    N       14       2 
+     MISC47_C    N       4        0 
+     MISC47_A    N       14       2 
+     MISC48_C    N       4        0 
+     MISC48_A    N       14       2 
+     MISC49_C    N       4        0 
+     MISC49_A    N       14       2 
+     MISC50_C    N       4        0 
+     MISC50_A    N       14       2 
+     IVOID_C     N       4        0 
+     IVOID_A     N       14       2 
+     MVOID_C     N       4        0 
+     MVOID_A     N       14       2 
+     IDISC_C     N       4        0 
+     IDISC_A     N       14       2 
+     SUBTD_C     N       4        0 
+     SUBTD_A     N       14       2 
+     ADDON_C     N       4        0 
+     ADDON_A     N       14       2 
+     SSBTD_C     N       4        0 
+     SSBTD_A     N       14       2 
+     SSBTA_C     N       4        0 
+     SSBTA_A     N       14       2 
+     RETRN_C     N       4        0 
+     RETRN_A     N       14       2 
+     REFND_C     N       4        0 
+     REFND_A     N       14       2 
+     OTINC_C     N       4        0 
+     OTINC_A     N       14       2 
+     CANCL_C     N       4        0 
+     CANCL_A     N       14       2 
+     TVOID_C     N       4        0 
+     TVOID_A     N       14       2 
+     SUSPD_C     N       4        0 
+     SUSPD_A     N       14       2 
+     LAYAW_C     N       4        0 
+     LAYAW_A     N       14       2 
+     PIKUP_C     N       4        0 
+     PIKUP_A     N       14       2 
+     PDOUT_C     N       4        0 
+     PDOUT_A     N       14       2 
+     LOAN_C      N       4        0 
+     LOAN_A      N       14       2 
+     RECACT_C    N       4        0 
+     RECACT_A    N       14       2 
+     BOTDEP_C    N       4        0 
+     BOTDEP_A    N       14       2 
+     TRAIN_A     N       14       2 
+     OFFLN_A     N       14       2 
+     RENTER_A    N       14       2 
+     OLDGRD_A    N       14       2 
+     NEWGRD_A    N       14       2 
+     XCOUNT_C    N       6        0 
+     ZCOUNT_C    N       6        0 
+     OP_FLAG     N       1        0 
+     Total Fields : 156
+
+
+     Structure of UM.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     UNIT_LINK   C       3        0 
+     MACHINENO   C       2        0 
+     REMARKS     C       25       0 
+     TARGETSLS   N       12       2 
+     ACCUMDSLS   N       10       2 
+     ACCUMDCNT   N       9        3 
+     TAX         N       15       2 
+     DISCOUNT    N       15       2 
+     DSCT_CNT    N       10       3 
+     VOID_ERR    N       10       3 
+     ACCUMMSLS   N       10       2 
+     ACCUMASLS   N       10       2 
+     ACCUMDSUM   N       10       2 
+     ACCUMDSUM   N       10       2 
+     ACCUMDSUM   N       10       2 
+     UMAC_PATH   C       50       0 
+     UMAC_RATE   N       7        3 
+     Total Fields : 17
+
+
+     Structure of UNIT.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     UNIT_CODE   C       3        0 
+     UNIT_NAME   C       25       0 
+     UNIT_ADDR   C       25       0 
+     UNIT_TSLS   N       12       2 
+     UNIT_DSLS   N       15       2 
+     UNIT_DCNT   N       13       3 
+     UNIT_DSUM   N       15       2 
+     UNIT_MSLS   N       15       2 
+     UNIT_ASLS   N       15       2 
+     UNIT_MDSUM  N       15       2 
+     UNIT_ADSUM  N       15       2 
+     UNIT_PATH   C       50       0 
+     UNIT_RATE   N       7        3 
+     OP_FLAG     N       1        0 
+     Total Fields : 14
+
+
+     Structure of V.DBF
+     Fields      Type    Width    Decimal
+     ------------------------------------
+     V_001       C       3        0 
+     V_002       C       30       0 
+     V_003       C       50       0 
+     V_004       C       30       0 
+     V_005       C       10       0 
+     V_006       C       20       0 
+     V_007       C       12       0 
+     V_008       C       12       0 
+     V_009       N       1        0 
+     V_010       N       1        0 
+     V_011       C       20       0 
+     V_012       N       5        2 
+     V_013       N       1        0 
+     V_014       C       30       0 
+     V_015       C       30       0 
+     V_016       C       30       0 
+     V_017       C       30       0 
+     Total Fields : 17
+
+

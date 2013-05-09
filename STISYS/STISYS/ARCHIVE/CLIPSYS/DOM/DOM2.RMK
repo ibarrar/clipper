@@ -1,0 +1,26 @@
+// Filename:      DOM.RMK
+// Description:   Bank Settlement Plan Make File Script
+// Updated by:    Rollie C. Ibarra Jr.
+// Date-Started:  August 17, 1992
+// Last-Update:   August 17, 1992 / June 18,1993
+
+.prg.obj:
+  CLIPPER $* /B /N /A /M /O$@
+
+DOM.OBJ:       Dom.Prg
+Tickets.OBJ:   Tickets.Prg
+SR.OBJ:        SR.Prg
+Maint.OBJ:     Maint.Prg
+cl501_60.obj:   cl501_60.prg
+
+#ifndef nobase
+DOM2.EXE : DOM.OBJ Tickets.OBJ SR.OBJ Maint.OBJ cl501_60.OBJ
+  RTLINK FILE DOM,Tickets,Sr,Maint,cl501_60 out dom2 PLL BASE60
+#else
+DOM2.EXE : DOM.OBJ Tickets.OBJ Sr.OBJ Maint.OBJ cl501_60.OBJ
+  RTLINK LIB clipper,extend,terminal,dbfntx,userlib
+         FILE DOM,Tickets,Sr,Maint,cl501_60,screen,windows,array, \
+string,locks,omenu,gauge,scrolbar,dbbrowse,printer out dom2
+#end
+// <EOF> - DOM.RMK //
+

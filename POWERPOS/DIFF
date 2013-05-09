@@ -1,0 +1,67 @@
+Comparing files NVR_FUNC.PRG and c:\powerpos\081298\nvr_func.prg
+****** NVR_FUNC.PRG
+
+   mPOL_total  := subs(cntrl_line, NVR_POL_OFF, NVR_POL_LEN)
+
+   mSUS_level  := subs(cntrl_line, NVR_SUS_OFF, NVR_SUS_LEN)       
+****** c:\powerpos\081298\nvr_func.prg
+
+   mSUS_level  := subs(cntrl_line, NVR_SUS_OFF, NVR_SUS_LEN)       
+******
+
+****** NVR_FUNC.PRG
+   ? "Current subtotal         " + mSTT_total
+   ? "PO Limit total           " + mPOL_total
+   ? "Suspended level          " + mSUS_level
+****** c:\powerpos\081298\nvr_func.prg
+   ? "Current subtotal         " + mSTT_total
+   ? "Suspended level          " + mSUS_level
+******
+
+****** NVR_FUNC.PRG
+ endif   
+ if len(mPOL_total) != NVR_POL_LEN
+    DispStatus("Mismatch POL length")   
+ endif 
+ if len(mSUS_level) != NVR_SUS_LEN
+****** c:\powerpos\081298\nvr_func.prg
+ endif   
+ if len(mSUS_level) != NVR_SUS_LEN
+******
+
+****** NVR_FUNC.PRG
+                   mSTT_total+;
+                   mPOL_total+;
+                   mSUS_level+;
+****** c:\powerpos\081298\nvr_func.prg
+                   mSTT_total+;
+                   mSUS_level+;
+******
+
+****** NVR_FUNC.PRG
+return realiee(mPHP_Rate)
+
+function nvr_nPOL_total(nVar)
+        if nVar != nil
+            mPOL_total := ieereal(nVar)
+            Update_Cntrl()
+        endif    
+return realiee(mPOL_total)
+
+/************************** mTransaction functions **************************/
+****** c:\powerpos\081298\nvr_func.prg
+return realiee(mPHP_Rate)
+/************************** mTransaction functions **************************/
+******
+
+****** NVR_FUNC.PRG
+
+    nvr_nPOL_total(nvr_nPOL_total() - nPaymAmt + nBalance)
+
+****** c:\powerpos\081298\nvr_func.prg
+
+    nPO_Limit(nPO_Limit() - nPaymAmt + nBalance)
+
+******
+
+

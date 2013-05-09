@@ -1,0 +1,53 @@
+Comparing files tranvoid.new and tranvoid.prg
+****** tranvoid.new
+
+
+                if cFlag == "Z"
+****** tranvoid.prg
+
+                Term_nData(TR_DSLS_TOT,-nAmt)                
+                if cFlag == "Z"
+******
+
+****** tranvoid.new
+
+
+                Term_nData(TR_TRVD_KNT, 1)
+****** tranvoid.prg
+
+                Term_nData(TR_TRVD_TOT, nAmt)
+                Term_nData(TR_TRVD_KNT, 1)
+******
+
+****** tranvoid.new
+                if nPayType == 0
+                   Term_nData(TR_DSLS_TOT,-nAmt)                                         
+                   Term_nData(TR_TRVD_TOT, nAmt)                            
+                   Term_nData(TR_CASH_TOT,-nAmt)
+****** tranvoid.prg
+                if nPayType == 0
+                   Term_nData(TR_CASH_TOT,-nAmt)
+******
+
+****** tranvoid.new
+                else
+                            nAmt := (nAmt / nvr_nPHP_Rate())
+                   Term_nData(TR_DSLS_TOT,-nAmt)                                         
+                   Term_nData(TR_TRVD_TOT, nAmt)                            
+                   Term_nData(7+((nPayType-1)*2),-nAmt)        
+****** tranvoid.prg
+                else
+                   Term_nData(7+((nPayType-1)*2),-nAmt)        
+******
+
+****** tranvoid.new
+                tran_cFlag( OP_TVOD_FLAG )
+                tran_nSale( nAmt )
+                tran_nCntr( val(subs(cBuffer,CUST_CNTR_OFF,CUST_CNTR_LEN)) )
+****** tranvoid.prg
+                tran_cFlag( OP_TVOD_FLAG )
+                tran_nSale( val(subs(cBuffer,CUST_SALE_OFF,CUST_SALE_LEN)) * 0.01 )
+                tran_nCntr( val(subs(cBuffer,CUST_CNTR_OFF,CUST_CNTR_LEN)) )
+******
+
+

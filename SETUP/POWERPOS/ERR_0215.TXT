@@ -1,0 +1,8 @@
+*** System Error Occurred ***
+DATE : 02-15-12
+TIME : 09:05:52
+DESCRIPTION : CUSTOMER DISPLAY 2 2x20 device check failed...
+*** System Error Occurred ***
+DATE : 02-15-12
+TIME : 09:06:02
+DESCRIPTION : CUSTOMER DISPLAY 2 2x20 device check failed...

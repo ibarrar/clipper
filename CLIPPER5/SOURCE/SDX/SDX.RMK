@@ -1,0 +1,54 @@
+//
+//  Sdx.rmk
+//
+//  Make file for SDX RDD
+//
+//  Copyright (c) 1993, Computer Associates International, Inc.
+//  All rights reserved.
+//
+
+// Debugging options
+#ifdef DEBUG
+cflags = "/c /AL /W3 /Zi /Od /FPa /Gs"
+#else
+cflags = "/c /AL /W3 /Zl /Oalt /FPa /Gs"
+#endif
+
+masmflags = "/ML /R"
+
+#ifdef CLIPDEBUG
+clipflags = "/a /b /m /n /r /w"
+#else
+clipflags = "/a /l /m /n /r /w"
+#endif
+
+
+// Erase the error files
+#! del *.err
+
+
+// Rules
+.asm.obj:
+   echo -+ $@ & >> @sdx
+   masm $(masmflags) $<, $@ ; >> _comp.err
+
+.c.obj:
+   echo -+ $@ & >> @sdx
+   cl $(cflags) $< >> _comp.err
+
+.prg.obj:
+   echo -+ $@ & >> @sdx
+   clipper $< $(clipflags) >> _comp.err
+
+.obj.lib:
+   lib $@ @@sdx ;  >> _link.err
+   del @sdx
+
+
+// Dependencies
+sdxdyn.obj:    sdxdyn.asm
+sdxinit.obj:   sdxinit.prg
+sdx.obj:       sdx.c sdx.h
+sdxinter.obj:  sdxinter.c sdx.h
+sdx.lib:       sdxdyn.obj sdxinit.obj sdxinter.obj sdx.obj
+

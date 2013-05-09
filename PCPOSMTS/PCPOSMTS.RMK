@@ -1,0 +1,137 @@
+DATA_PATH=".\REPORTS"
+HEADER_PATH="D:\ZIP004\PCPOSMTS\HEADER"
+CLIPFLAGS=  /W /N /M /A /I$(HEADER_PATH)
+
+.prg.obj:
+	clipper $< $(CLIPFLAGS)
+
+aBrowse0.obj: abrowse0.prg
+aBrowse1.obj: abrowse1.prg
+aBrowse2.obj: abrowse2.prg
+aBrowse3.obj: abrowse3.prg
+aBrowse4.obj: abrowse4.prg
+aBrowse5.obj: abrowse5.prg
+aBrowse6.obj: abrowse6.prg
+aClosing.obj: aClosing.prg
+box.obj: box.prg
+cashier.obj: cashier.prg
+Class.obj: Class.prg
+createdbf.obj: createdbf.prg
+createntx.obj: createntx.prg
+dstktrn.obj: dstktrn.prg
+dailysa.obj: dailysa.prg
+dbflkup.obj: dbflkup.prg
+dStkRet.obj: dStkRet.prg
+dStkRec.obj: dStkRec.prg
+dPurOrd.obj: dPurOrd.prg
+dItem.obj: dItem.prg
+dpost.obj: dpost.prg
+Department.obj: Department.prg
+fmfile.obj: fmfile.prg
+dload_fc.obj: dload_fc.prg
+r_dload.obj:  r_dload.prg
+
+getdata.obj: getdata.prg
+clkmaint.obj: clkmaint.prg
+
+
+it3100.obj:   $(DATA_PATH)\it3100.prg
+it310001.obj: $(DATA_PATH)\it310001.prg $(HEADER_PATH)\its.ch
+it310002.obj: $(DATA_PATH)\it310002.prg $(HEADER_PATH)\its.ch
+it310003.obj: $(DATA_PATH)\it310003.prg $(HEADER_PATH)\its.ch
+it310005.obj: $(DATA_PATH)\it310005.prg $(HEADER_PATH)\its.ch
+it310006.obj: $(DATA_PATH)\it310006.prg $(HEADER_PATH)\its.ch
+it310007.obj: $(DATA_PATH)\it310007.prg $(HEADER_PATH)\its.ch
+it310008.obj: $(DATA_PATH)\it310008.prg $(HEADER_PATH)\its.ch
+it310009.obj: $(DATA_PATH)\it310009.prg $(HEADER_PATH)\its.ch
+it310012.obj: $(DATA_PATH)\it310012.prg $(HEADER_PATH)\its.ch
+it3200.obj:   $(DATA_PATH)\it3200.prg
+it320001.obj: $(DATA_PATH)\it320001.prg $(HEADER_PATH)\its.ch
+it320002.obj: $(DATA_PATH)\it320002.prg $(HEADER_PATH)\its.ch
+it320003.obj: $(DATA_PATH)\it320003.prg $(HEADER_PATH)\its.ch
+it320004.obj: $(DATA_PATH)\it320004.prg $(HEADER_PATH)\its.ch
+it320005.obj: $(DATA_PATH)\it320005.prg $(HEADER_PATH)\its.ch
+it3300.obj:   $(DATA_PATH)\it3300.prg
+it390001.obj: $(DATA_PATH)\it390001.prg
+it390002.obj: $(DATA_PATH)\it390002.prg
+it390003.obj: $(DATA_PATH)\it390003.prg
+it390006.obj: $(DATA_PATH)\it390006.prg
+it390007.obj: $(DATA_PATH)\it390007.prg
+acc_rep.obj: $(DATA_PATH)\acc_rep.prg
+ssreg.obj:    $(DATA_PATH)\ssreg.prg $(HEADER_PATH)\its.ch
+crdtcrd.obj: $(DATA_PATH)\crdtcrd.prg $(HEADER_PATH)\its.ch
+//  rclerk.obj: $(DATA_PATH)\rclerk.prg
+rdept.obj: $(DATA_PATH)\rdept.prg
+itlst_dp.obj: $(DATA_PATH)\itlst_dp.prg
+itlst_br.obj: $(DATA_PATH)\itlst_br.prg
+d_slsrpt.obj: $(DATA_PATH)\d_slsrpt.prg
+r_slsrpt.obj: $(DATA_PATH)\r_slsrpt.prg
+voidprev.obj: $(DATA_PATH)\voidprev.prg
+br_move.obj: $(DATA_PATH)\br_move.prg
+br_movei.obj: $(DATA_PATH)\br_movei.prg
+changepr.obj: $(DATA_PATH)\changepr.prg
+rsuplier.obj: $(DATA_PATH)\rsuplier.prg
+q_item.obj: $(DATA_PATH)\q_Item.prg
+rterm.obj: $(DATA_PATH)\rterm.prg
+rcashier.obj: $(DATA_PATH)\rcashier.prg
+rhour.obj: $(DATA_PATH)\rhour.prg
+concess.obj: $(DATA_PATH)\concess.prg
+pconcess.obj: $(DATA_PATH)\pconcess.prg
+consign.obj: $(DATA_PATH)\consign.prg
+pconsign.obj: $(DATA_PATH)\pconsign.prg
+ 
+items.obj: Items.prg $(HEADER_PATH)\its.ch
+d2fm.obj: d2fm.prg $(HEADER_PATH)\its.ch
+mClosing.obj: mClosing.prg
+pcposmts.obj: pcposmts.prg $(HEADER_PATH)\its.ch 
+makedbf1.obj: makedbf1.prg $(HEADER_PATH)\its.ch
+makedbf2.obj: makedbf2.prg $(HEADER_PATH)\its.ch
+maint.obj: maint.prg
+pcount.obj: pcount.prg
+po.obj: po.prg
+r_stktrn.obj: r_stktrn.prg
+security.obj: security.prg
+sc_rpt.obj: sc_rpt.prg
+stkRec.obj: stkrec.prg
+stkRet.obj: stkret.prg
+stkAdj.obj: stkadj.prg
+stkTrn.obj: stktrn.prg
+Vendor.obj: vendor.prg
+brand.obj: brand.prg
+window.obj: window.prg
+foreign.obj: foreign.prg
+unit.obj: unit.prg
+card.obj: card.prg
+term_imp.obj: term_imp.prg
+plu_imp.obj: plu_imp.prg
+dept_imp.obj: dept_imp.prg
+hour_imp.obj: hour_imp.prg
+retn_imp.obj: retn_imp.prg
+cash_imp.obj: cash_imp.prg
+ccd_imp.obj: ccd_imp.prg
+monitor.obj: monitor.prg
+itemtxt.obj: itemtxt.prg
+itemvtxt.obj: itemvtxt.prg
+download.obj: download.prg
+upload.obj: upload.prg
+up_stock.obj: up_stock.prg
+nplu.obj: nplu.prg
+  clipper $< $(CLIPFLAGS)
+
+
+pcposmts.exe: $(HEADER_PATH)\its.ch pcposmts.obj vendor.obj brand.obj class.obj items.obj d2fm.obj po.obj stkrec.obj stkret.obj stkadj.obj departme.obj \
+         dpost.obj abrowse0.obj abrowse1.obj abrowse2.obj abrowse3.obj abrowse4.obj abrowse5.obj makedbf1.obj createdbf.obj \
+         createntx.obj window.obj dailysa.obj dStkRet.obj dStkRec.obj dPurOrd.obj dItem.obj aClosing.obj makedbf2.obj \
+         mclosing.obj Pcount.obj dbflkup.obj  getdata.obj r_stktrn.obj \
+         it3100.obj it310001.obj it310002.obj it310003.obj it310005.obj it310006.obj it310007.obj it310008.obj \
+         it310009.obj it310012.obj it3200.obj it320001.obj it320002.obj it320003.obj it320004.obj \
+         it320005.obj it3300.obj it390001.obj it390002.obj it390003.obj it390006.obj it390007.obj \
+         ssreg.obj  q_item.obj card.obj term_imp.obj plu_imp.obj r_slsrpt.obj\
+         stktrn.obj dstktrn.obj abrowse6.obj crdtcrd.obj clkmaint.obj \
+         sc_rpt.obj maint.obj foreign.obj unit.obj cashier.obj security.obj fmfile.obj dload_fc.obj\
+         rdept.obj itlst_dp.obj itlst_br.obj d_slsrpt.obj voidprev.obj br_move.obj br_movei.obj rsuplier.obj dept_imp.obj hour_imp.obj retn_imp.obj \
+         cash_imp.obj rterm.obj rcashier.obj rhour.obj monitor.obj changepr.obj pconsign.obj \
+         download.obj upload.obj up_stock.obj nplu.obj concess.obj pconcess.obj consign.obj \
+	 r_dload.obj
+	BLINKER3 @pcposmts
+

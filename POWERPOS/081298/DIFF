@@ -1,0 +1,37 @@
+Comparing files PLU_FUNC.PRG and c:\arjan\powerpos\plu_func.prg
+****** PLU_FUNC.PRG
+      endif                             
+
+      nAmount := ( nPrice * nQty ) // we just multiply the unit price
+****** c:\arjan\powerpos\plu_func.prg
+      endif                             
+      
+      nAmount := ( nPrice * nQty ) // we just multiply the unit price
+******
+
+****** PLU_FUNC.PRG
+      tran_nQty ( nQty  )
+
+            
+****** c:\arjan\powerpos\plu_func.prg
+      tran_nQty ( nQty  )
+            
+******
+
+****** PLU_FUNC.PRG
+      lRetVal := .t.
+         
+         // this if for department wide discounts
+         if Dept_Get(cDept)
+            if nDept_Disc() > 0
+                  discount(str(nDept_Disc()))          
+            endif
+         endif
+
+   else
+****** c:\arjan\powerpos\plu_func.prg
+      lRetVal := .t.
+   else
+******
+
+

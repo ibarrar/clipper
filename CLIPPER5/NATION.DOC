@@ -1,0 +1,226 @@
+===========================================================================
+   CA-Clipper 5.2 International - Release Notes
+
+   Copyright (c) 1993, Computer Associates International, Inc.
+   All rights reserved.
+
+   This file contains important information to all European customers
+   needing national language support for their applications.
+
+
+==========================================================================
+1. Introduction
+
+   The international release of CA-Clipper 5.2 provides runtime
+   national language support, allowing users to develop applications
+   for the European market.  Linking in the appropriate drivers will
+   provide you with language translations of runtime messages and
+   country-specific database collation sequences.
+
+
+==========================================================================
+2. Translated Message Support
+
+   The international release of CA-Clipper 5.2 lets you change
+   the default messages that appear in the product, to different
+   languages.
+
+   The messages affected by this are:
+     Days of the Week    - day names used by the CDOW() function.
+     Months of the Year  - month names used by CMONTH() function.
+     Command Messages    - LABEL FORM SAMPLES message.
+                           REPORT FORM titles.
+                           GET System scoreboard messages.
+     Runtime Errors      - Many runtime errors are translated
+                           (This support is not provided with all drivers)
+
+   A file MSG*.OBJ for each country (listed below) provides this
+   support.
+
+
+==========================================================================
+3. Collation Sequences
+
+   The collation sequence affects the order of your indexes, sort
+   operations, array sorting and string comparisons.  It also includes
+   the functions UPPER(), LOWER(), ISUPPER(), ISLOWER(), ISALPHA() and
+   PICTURE clause routines. The == (Exactly equal--binary) operator is
+   not affected by this.
+
+   The default collation sequence for CA-Clipper is ASCII order.
+   National language collations drivers reorder this sequence to
+   include each country's accented characters in the correct place
+   within the alphabet.
+
+   An example, is the letter ‡-CHR(135).  With the default ASCII
+   collation sequence, if this occurred in an index, it would appear
+   between the letters †-CHR(134) and ˆ-CHR(136).  If you link in
+   the French MDX collation driver and rebuild the index, the ‡-CHR(153)
+   will now appear between the letters c-CHR(67) and d-CHR(68).
+   Therefore, the compare operation described below can give
+   different results, depending on which driver is linked.
+
+      ? "‡" > "d"     // Returns .T. with ASCII collation sequence
+      ? "‡" > "d"     // Returns .F. with French MDX collation sequence
+
+   Note: Changing the collation sequence in an application with
+         existing indexes will cause index corruption. You should
+         rebuild all indexes before the application is used.
+
+   ---------------------------------------------------------------------
+   3.1  Replaceable Database Drivers
+
+   CA-Clipper 5.2 supports Replaceable Database Drivers (RDDs). Within
+   each country, the different database products can provide a different
+   collation sequence.  We, therefore, supply different nation language
+   drivers for each of the RDDs.
+
+   The following information outlines the specifics of collation support
+   for these drivers.
+
+   ---------------------------------------------------------------------
+   3.1.1  DBFNTX (Clipper) collation sequence support
+
+   These DBFNTX language support drivers replace those provided with the
+   European Nation Module Suite available for previous versions of
+   CA-Clipper.
+
+   ---------------------------------------------------------------------
+   3.1.2  DBFMDX (dBase IV) collation sequence support
+
+   The DBFMDX National language drivers allow your applications to
+   correctly update dBase IV database and associated MDX files.  Each
+   country-specific version of dBase IV is contains its own unique
+   collation sequence.  If you do not use the correct driver,
+   index corruption will occur.
+
+   ---------------------------------------------------------------------
+   3.1.3  DBFCDX (FoxPro 2) collation sequence support
+
+   European versions of FoxPro 2 use the ASCII collation sequence.
+
+   You can link the national language message drivers, if you wish to
+   provide messages in your application.  This will not affect the
+   collation sequence of the DBFCDX RDD.
+
+   Note: Please inform your local Computer Associates office if a
+         non-ASCII collation sequence is required for compatibility
+         with the FoxPro 2 in your country.
+
+   ---------------------------------------------------------------------
+   3.1.4  DBPX (Parodox 3.5) collation sequence support
+
+   CURRENTLY, NO NATIONAL LANGUAGE SUPPORT IS AVAILABLE FOR THIS RDD.
+
+   You can link the national language message drivers, if you wish to
+   provide messages in your application.  This will not affect the
+   collation sequence of the DBPX RDD.
+
+   ---------------------------------------------------------------------
+   3.2  Multiple RDD support
+
+   You can only link one national language driver into a CA-Clipper
+   5.2 application at any time.  It is not possible to provide the two
+   different indexing orders simultaneously for users who require
+   both DBFNTX and DBFMDX Replaceable Database Drivers in a single
+   application.  You should, therefore, select the language driver
+   for the RDD index with which you wish to remain compatible.
+   You should rebuild all the indexes for the non-compatible RDD
+   system.
+
+==========================================================================
+4. What countries are supported?
+
+   The following table outlines which countries we currently support.
+   ÚÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+   ³ Country    ³ Messages ³ DBFNTX   ³ DBFMDX ³ Notes              ³
+   ÆÍÍÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍµ
+   ³ British    ³          ³          ³ MDXUK  ³ NTX is ASCII order ³
+   ³ Danish     ³ MSGDAN   ³ NTXDAN   ³        ³                    ³
+   ³ Dutch      ³ MSGDUT   ³ NTXDUT   ³ MDXDUT ³                    ³
+   ³ Finnish    ³ MSGFIN   ³ NTXFIN   ³        ³                    ³
+   ³ French     ³ MSGFRE   ³ NTXFRE   ³ MDXFRE ³                    ³
+   ³ German     ³ MSGGER   ³ NTXGER   ³ MDXGER ³                    ³
+   ³ Greek      ³ MSGGR437 ³ NTXGR437 ³        ³ For Code Page 437  ³
+   ³            ³ MSGGR851 ³ NTXGR851 ³        ³ For Code Page 851  ³
+   ³ Icelandic  ³ MSGIC850 ³ NTXIC850 ³        ³ For Code Page 850  ³
+   ³            ³ MSGIC861 ³ NTXIC861 ³        ³ For Code Page 861  ³
+   ³ Italian    ³ MSGITA   ³ NTXITA   ³ MDXITA ³                    ³
+   ³ Norwegian  ³ MSGNOR   ³ NTXNOR   ³        ³                    ³
+   ³ Portuguese ³ MSGPOR   ³          ³        ³                    ³
+   ³ Spanish    ³ MSGSPA   ³ NTXSPA   ³ MDXSPA ³                    ³
+   ³ Swedish    ³ MSGSWE   ³ NTXSWE   ³ MDXSWE ³                    ³
+   ÀÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+   If support for your country is not provided, please contact your
+   local Computer Associates office.
+
+   To install the appropriate drivers for your country run NATION.BAT,
+   found in the \CLIPPER5\OBJ directory and follow the on-screen
+   instructions.  This will copy your country's message driver to
+   MSG.OBJ, the DBFNTX collation driver to NTXSORT.OBJ and the DBFMDX
+   collation driver to MDXSORT.OBJ.
+
+==========================================================================
+5. Linking the national language drivers.
+
+   The following documentation uses the file naming convention 
+   described above and assumes your have run NATION.BAT.
+
+   Before you link in your language driver, ensure that you have set
+   the environment variable, OBJ, to the \CLIPPER5\OBJ directory.
+   For example, include "SET OBJ=C:\CLIPPER5\OBJ" in your AUTOEXEC.BAT.
+
+   To create a Clipper .EXE that provides support for your country,
+   you must link in the Message Driver and the Collation Driver
+   (for the RDD you wish to use). The syntax for this is:
+
+     RTLINK FI <Objs> [, <MessageDriver>] [, <CollationDriver>]
+
+   where  <Objs>            is the list of .OBJ files for your application
+          <MessageDriver>   is the country messages driver
+          <CollationDriver> is the country RDD driver
+
+   For example, to build an application with both messages and
+   DBFMDX collation support use,
+
+     RTLINK FI <objs>, MSG, MDXSORT
+
+   Both the Message and the Collation drivers are optional.  An
+   application could provide translated messages with the standard ASCII
+   collation driver. e.g.
+
+     RTLINK FI <objs>, MSG
+
+   By using the //INFO command line switch with your application, you
+   can determine what National Language Drivers have been linked into
+   your application. For example,
+
+     C:\> MYAPP //INFO
+
+   when linked with no language drivers, will display the following
+   message before your application starts.
+
+
+     Clipper (R) 5.2 Intl. Rev. 1.96 BRITISH - ASCII Collation
+                                     ÀÄÄÂÄÄÙ   ÀÄÂÄÙ
+                                        ³        ³
+                     National Message ÄÄÙ        ÀÄÄ National Collation
+                     Driver Linked                   Driver Linked
+
+
+   This message will change depending on what has been linked into your
+   application. For the collation driver, the RDD and country will be
+   displayed. For example if you have installed the French nation
+   drivers and linked in MSG.OBJ and MDXSORT.OBJ, the application would
+   display:
+
+     Clipper (R) 5.2 Intl. Rev. 1.96 FRENCH - FRENCH DBFMDX Collation
+
+
+   ---------------------------------------------------------------------
+   If you require any further technical assistance, or encounter any
+   problems please contact your local Computer Associates office.
+
+                              *  *  *
+

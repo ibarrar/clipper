@@ -1,0 +1,79 @@
+/***
+*
+*   Error.api
+*
+*   C language definitions for Clipper Error API
+*
+*   Copyright (c) 1992-1993, Computer Associates, International
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _ERROR_API
+
+
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+
+typedef void * ERRORP;
+
+/*
+*   error flag definations
+*/
+
+#define EF_CANRETRY		1
+#define EF_CANDEFAULT	4
+
+/*
+*   error codes (returned from _errLaunch())
+*/
+
+#define E_BREAK			0xffff
+#define E_RETRY			1
+#define E_DEFAULT			0
+
+/*
+*   error creation, activation, and destruction
+*/
+extern ERRORP  _errNew     ( void );
+extern ERRCODE _errLaunch  ( ERRORP error );
+extern void    _errRelease ( ERRORP error );
+
+
+/*
+*   error "put" functions
+*/
+extern ERRORP  _errPutSeverity   ( ERRORP error, USHORT severity  );
+extern ERRORP  _errPutGenCode    ( ERRORP error, USHORT gencode   );
+extern ERRORP  _errPutOsCode     ( ERRORP error, USHORT oscode    );
+extern ERRORP  _errPutFlags      ( ERRORP error, USHORT flags     );
+extern ERRORP  _errPutTries      ( ERRORP error, USHORT tries     );
+extern ERRORP  _errPutSubCode    ( ERRORP error, USHORT subcode   );
+extern ERRORP  _errPutSubSystem  ( ERRORP error, BYTEP  subsystem );
+extern ERRORP  _errPutDescription( ERRORP error, BYTEP  desc      );
+extern ERRORP  _errPutOperation  ( ERRORP error, BYTEP  operation );
+extern ERRORP  _errPutFileName   ( ERRORP error, BYTEP  filename  );
+
+
+/*
+*   error "get" functions
+*/
+extern USHORT  _errGetSeverity   ( ERRORP error );
+extern USHORT  _errGetGenCode    ( ERRORP error );
+extern USHORT  _errGetOsCode     ( ERRORP error );
+extern USHORT  _errGetFlags      ( ERRORP error );
+extern USHORT  _errGetTries      ( ERRORP error );
+extern USHORT  _errGetSubCode    ( ERRORP error );
+extern BYTEP   _errGetSubSystem  ( ERRORP error );
+extern BYTEP   _errGetDescription( ERRORP error );
+extern BYTEP   _errGetOperation  ( ERRORP error );
+extern BYTEP   _errGetFileName   ( ERRORP error );
+
+
+#define _ERROR_API
+#endif

@@ -1,0 +1,46 @@
+// Make file for all get samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+NESTREAD.OBJ : nestread.prg
+GET1.OBJ     : get1.prg
+GET2.OBJ     : get2.prg
+GET3.OBJ     : get3.prg
+GET4.OBJ     : get4.prg
+GET5.OBJ     : get5.prg
+GET6.OBJ     : get6.prg
+GET7.OBJ     : get7.prg
+GET9.OBJ     : get9.prg
+GET10.OBJ    : get10.prg
+GET11.OBJ    : get11.prg
+GETMEMO.OBJ  : getmemo.prg
+GET12.OBJ    : get12.prg
+GETPSW.OBJ   : getpsw.prg
+GET13.OBJ    : get13.prg
+SAYSCROLL.OBJ: sayscroll.prg
+MODGET.OBJ   : modget.prg
+GETSYS1.OBJ  : getsys1.prg
+
+.obj.exe:
+   SET RTLINKCMD=/posi
+   RTLINK $**;
+
+NESTREAD.EXE : nestread.obj
+GET1.EXE     : get1.obj
+GET2.EXE     : get2.obj
+GET3.EXE     : get3.obj
+GET4.EXE     : get4.obj
+GET5.EXE     : get5.obj
+GET6.EXE     : get6.obj
+GET7.EXE     : get7.obj
+GET9.EXE     : get9.obj
+GET10.EXE    : get10.obj
+GET11.EXE    : get11.obj  getmemo.obj
+GET12.EXE    : get12.obj  getpsw.obj
+GET13.EXE    : get13.obj  sayscroll.obj
+MODGET.EXE   : modget.obj getsys1.obj
+
+// eof //

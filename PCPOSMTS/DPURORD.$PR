@@ -1,0 +1,115 @@
+*** DPURORD.PRG ***
+
+#include "box.ch"
+#include "its.ch"
+#include "Janus.ch"
+
+function DailyPO(idate)
+
+
+        // Create display window.
+   window ( 8, 30, 12, 70, BN_COLOR )
+   @ 1, 1 wsay "Processing Purchase Orders"
+   
+        // Open I file.
+   if NetUse("ITEM.DBF",DB_SHARED,NUM_SECONDS)
+      set index to I_001
+   endif
+#ifdef CLASS_LINK
+        // Open CL file.
+   if NetUse("CL",DB_SHARED,NUM_SECONDS)
+     set index to CL_001
+   endif
+#endif   
+
+
+   if NetUse("PO",DB_EXCLUSIVE,NUM_SECONDS)
+      PO->(__DbPack())      
+      PO->(DbCloseArea())
+   endif   
+   if NetUse("PO_ITEMS",DB_EXCLUSIVE,NUM_SECONDS)
+      PO_ITEMS->(__DbPack())
+      PO_ITEMS->(DbCloseArea())
+   endif      
+   
+        // Open PO file.
+   if NetUse("PO",DB_SHARED,NUM_SECONDS)
+      set index to PO_001
+   endif   
+   if NetUse("PO_ITEMS",DB_SHARED,NUM_SECONDS)
+      set index to POI_LINK
+   endif      
+   
+        
+   PO->(DbGotop())
+   while !(PO->(EOF()) )
+
+    // If posting status = 0, process this record.
+        if (PO->PO_007 = 0 .or. PO->PO_007 == 7) .and. PO->PO_003 == idate
+
+          // Find I record.  If not found skip to next record.
+             if !( PO_ITEMS->(DbSeek(PO->PO_001)) ) 
+                 PO->(Dbskip())
+                 loop
+             endif 
+
+         @ 2,  1 wsay  " PO: " +         PO->PO_001      
+
+            // Copy Vendor Code & Unit Cost to I Vendor Code & Unit Cost
+      while PO_ITEMS->POI_LINK == PO->PO_001 .and. PO_ITEMS->(!Eof())
+        if ITEM->(DbSeek(PO_ITEMS->POI_ITEM)) .and. (PO_ITEMS->POI_POST == 0)
+           @ 2, 20 wsay  "  I: " +      PO_ITEMS->POI_ITEM
+           @ 3,  1 wsay  " Unit Cost: " + trans(PO_ITEMS->POI_COST, "99,999,999.99" )         
+           ITEM->(RecLock(0))
+           // ITEM->(Unit Price)  := PO->(Purchased amount)
+              ITEM->I_007         := PO_ITEMS->POI_COST 
+           // ITEM->(Vendor code) := PO->(Vendor Code)   
+              ITEM->I_020         := PO->PO_002
+           ITEM->(DbUnlock())
+           PO_ITEMS->(RecLock(0))
+           PO_ITEMS->POI_POST := 1  // Marks all PO as posted
+           PO_ITEMS->(DBUnlock())
+           // Subtract PO Total from OTB Available per year 
+#ifdef CLASS_LINK		 
+           if CL->(DbSeek(ITEM->I_006)) 
+              CL->(RecLock(0))
+              CL->CL_005 -= (PO_ITEMS->POI_COST * PO_ITEMS->POI_QORD)
+              CL->(DbUnLock())
+           endif   
+#endif		 
+        endif
+        PO_ITEMS->(DBSkip())
+      enddo     
+
+      // Mark as posted for daily updates.
+      PO->(RecLock(0))
+                PO->PO_007 := 1
+                PO->PO_008 := idate
+      PO->(DbUnlock())
+
+      endif
+                // Go next record.
+                PO->(Dbskip())
+        enddo
+
+        // Close all files.
+  PO_ITEMS->(DbCLoseArea())
+  PO->(DbCLoseArea())
+#ifdef CLASS_LINK  
+  CL->(DbCLoseArea())
+#endif
+  ITEM->(DbCLoseArea())
+
+   //Have to pack PO_ITEMS
+   if NetUse("PO_ITEMS",DB_EXCLUSIVE,NUM_SECONDS)
+      Set Index to POI_LINK   
+      PO_ITEMS->(__DbPack())
+      PO_ITEMS->(DbCloseArea())
+   endif   
+
+  // Remove window.
+  KillWindow()
+
+return nil
+
+

@@ -1,0 +1,41 @@
+#/ Filename:      GL.lnk
+#// Description:   Accounting System Link File Script
+#// Date-Started:  June 10, 1993
+#// Last-Update:   June 10, 1993
+
+ECHO
+NOBELL
+       fi GL
+       fi CDB
+       fi CRB
+       fi SB
+       fi PCV
+       fi JV
+       fi LEDGER
+       fi LEDGER2
+       fi SCHED
+       fi MAINT
+       fi ABROWSE
+       fi ABROWSE2
+       fi LOOKUP
+       fi COMPUTE
+       fi ASSEMBLY
+       fi BALANCE
+       fi INCOME
+       fi ..\BASE60\ARRAY
+       fi ..\BASE60\SCREEN
+       fi ..\BASE60\DBBROWSE
+       fi ..\BASE60\GAUGE
+       fi ..\BASE60\LOCKS
+       fi ..\BASE60\OMENU
+       fi ..\BASE60\PRINTER
+       fi ..\BASE60\SCROLBAR
+       fi ..\BASE60\SOUNDS
+       fi ..\BASE60\STRING
+       fi ..\BASE60\WINDOWS
+       search ..\..\..\..\..\CLIPPER5\LIB\CLIPPER.LIB
+	search ..\..\..\..\..\CLIPPER5\LIB\EXTEND.LIB
+	search ..\..\..\..\..\CLIPPER5\LIB\TERMINAL.LIB
+	search ..\..\..\..\..\CLIPPER5\LIB\USERLIB.LIB
+
+#// end-of-file

@@ -1,0 +1,10 @@
+
+ENTRY: DBU.LNK
+    Warning wpt0036: Old File not found. However, a file of the same name was 
+               found. No update done since file contents do not match.
+
+
+ENTRY: DBU.RMK
+    Warning wpt0036: Old File not found. However, a file of the same name was 
+               found. No update done since file contents do not match.
+

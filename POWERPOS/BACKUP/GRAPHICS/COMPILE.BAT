@@ -1,0 +1,10 @@
+lib grfx_api -+ grfxbox.obj ;   
+lib grfx_api -+ grfxcomn.obj ;  
+lib grfx_api -+ grfxcrcl.obj ;  
+lib grfx_api -+ grfxdrvr.obj ;  
+lib grfx_api -+ grfxline.obj ;  
+lib grfx_api -+ grfxmisc.obj ;  
+lib grfx_api -+ grfxtext.obj ;  
+lib grfx_api -+ grfx_bmp.obj ;  
+lib grfx_api -+ gscrrest.obj ;  
+lib grfx_api -+ gscrsave.obj ;  

@@ -1,0 +1,99 @@
+// Rules.rmk Include file  (V1.20)
+//
+// Copyright (C) 1991-3, Computer Associates, All rights reserved.
+// -------------------------------===-------------------------------------
+// WARNING:
+// Rules expects $(LIBLIST) to contain a list of library files.
+// -----------------------------------------------------------------------
+//
+// If CLIPSW or LINKSW are defined as Compiler or Linker options, then
+// they are not bothered, otherwise, DEBUG and PLL are checked, and the
+// option macros are set appropriately based on the defined state of 
+// these macros.
+//
+// This is meant to be an example of what your Rules.rmk file COULD look
+// like.  In reality, you may want to hardwire makepaths, linker choices,
+// corporate library directories (network directories), and other compiler
+// types.  However, this Rules file is adequate for most purposes.
+//
+
+// Define BIN directories here, have them in the path, or define
+// them in your individual make files.
+//
+// Note: Directories must have trailing backslashes
+//
+#ifndef LINKDIR
+   LINKDIR=
+#endif
+
+#ifndef CLIPDIR
+   CLIPDIR=
+#endif
+
+#ifndef MSCDIR
+   MSCDIR=
+#endif
+
+// Set compile switches
+//
+#ifndef CLIPSW
+   #ifdef DEBUG
+      CLIPSW=/w /m /b /n /p /dDEBUG
+   #else 
+      CLIPSW=/w /m /l /n
+   #endif
+#endif
+
+#ifndef LINKSW
+   #ifdef PLL
+      LINKSW=/PLL:BASE50
+   #else
+      LINKSW=
+   #endif
+#endif
+
+// Handle MSC versions 6 or 7
+//
+#ifdef C600
+   MSCSW=$(MSCSW) /Gh
+#endif
+
+#ifdef C700
+   MSCSW=$(MSCSW) /Gh
+#endif
+
+//  ALL INCLUDE directories (MSC,CLIPPER, etc...) should be
+//  in your environment or in the make -- not in this rules file!
+//  NOTE: LIB is assumed to be set properly as well.
+//
+makepath[.ch] = "$(INCLUDE)"
+
+.prg.OBJ:
+   SET CLIPPERCMD=$(CLIPSW)
+   SET INCLUDE=$(INCLUDE)
+   $(CLIPDIR)CLIPPER $< /o$(OBJDIR)
+
+.c.OBJ:
+   SET MSC=-c -AL -FPa -Gs -Zl -Oalt
+   $(MSCDIR)CL $(MSCSW) $<.c
+
+// To do deferred linking:
+
+.OBJ.RSP:
+   ECHO $<+ >> $@
+
+.RSP.EXE:
+   ECHO NUL >> $**
+   ECHO $@ >> $**
+   ECHO NUL >> $**
+   ECHO $(LIBLIST); >> $**
+   SET RTLINKCMD=/POSI /VERBOSE
+   $(LINKDIR)RTLINK @$**
+
+// Demand linking section
+
+.OBJ.EXE:
+   SET RTLINKCMD=/POSI /VERBOSE
+   $(LINKDIR)RTLINK $<,NUL,$@,$(LIBLIST);
+
+// EOF: Rules.rmk

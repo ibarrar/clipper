@@ -1,0 +1,6 @@
+# TESTOVL.LNK
+beginarea               # Start of overlays
+   file test            # This file is overlaid
+   file limerick        # This file is overlaid
+endarea                 # End of overlays
+output t                # Output .EXE name

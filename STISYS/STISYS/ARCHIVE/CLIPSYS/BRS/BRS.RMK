@@ -1,0 +1,23 @@
+// Filename:      BRS.RMK
+// Description:   Bank Reconciliation Statement
+// Author :       Rollie C. Ibarra Jr.
+// Date-Started:  June 13, 1992
+// Last-Update:   June 13, 1992/June 11,93
+
+.prg.obj:
+  CLIPPER $* /B /N /A /M /O$@
+
+BRS.OBJ:       BRS.prg
+BRS_OCH.OBJ:   BRS_OCH.PRG
+BRS_REP.OBJ:   BRS_REP.PRG
+BRS_BANK.OBJ:  BRS_BANK.PRG
+BRS_BOOK.OBJ:  BRS_BOOK.PRG
+BRS_MNT.OBJ:   BRS_MNT.PRG
+SA_BROWS.OBJ:  SA_BROWS.PRG
+CU_BROWS.OBJ:  CU_BROWS.PRG
+
+BRS.EXE : BRS.OBJ BRS_OCH.OBJ BRS_REP.OBJ BRS_BANK.OBJ SA_BROWS.OBJ CU_BROWS.OBJ BRS_MNT.OBJ
+  RTLINK FILE BRS, BRS_OCH, BRS_REP, BRS_BANK, BRS_BOOK, SA_BROWS, CU_BROWS, BRS_MNT PLL BASE50
+
+// end-of-file
+

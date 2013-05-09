@@ -1,0 +1,187 @@
+;------------------------------------------------------------------------------
+; Filename: EXTENDA.MAC
+; Program.: Clipper Extended Library
+; Author..: Ralph Davis
+; Date....: June 1, 1986
+; Notice..: Placed in the public domain by Tom Rettig Associates.
+;           Clipper is a trademark of Nantucket.
+;           dBASE and dBASE III are trademarks of Ashton-Tate.
+; Notes...: Assembly language macros for Clipper interface
+;           Modified for use with Microsoft Macro Assembler.
+;
+         EXTRN    __PARINFO:FAR
+         EXTRN    __PARC:FAR
+         EXTRN    __PARNI:FAR
+         EXTRN    __PARNL:FAR
+         EXTRN    __PARND:FAR
+         EXTRN    __PARDS:FAR
+         EXTRN    __PARL:FAR
+
+         EXTRN    __RETC:FAR
+         EXTRN    __RETNI:FAR
+         EXTRN    __RETNL:FAR
+         EXTRN    __RETND:FAR
+         EXTRN    __RETDS:FAR
+         EXTRN    __RETL:FAR
+
+
+; Equates from EXTEND.H
+
+UNDEF     EQU     0
+CHARACTER EQU     1
+NUMERIC   EQU     2
+LOGICAL   EQU     4
+DATE      EQU     8
+ALIAS     EQU     16
+
+
+; get number of parms passed--returned in AX
+
+GET_PCOUNT MACRO              
+         XOR      AX,AX
+         PUSH     AX
+         CALL     __PARINFO
+         ADD      SP,2
+         ENDM
+
+
+; get type of requested parm--returned in AX
+
+GET_PTYPE MACRO   N 
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARINFO
+         ADD      SP,2
+         ENDM
+
+
+; get requested parm as string--returns segment and offset in AX:BX
+
+GET_CHAR MACRO    N           
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARC
+         ADD      SP,2
+         ENDM
+
+
+; get requested parm as integer--returned in AX
+
+GET_INT  MACRO    N
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARNI
+         ADD      SP,2
+         ENDM
+
+
+; get requested parm as long integer--returned in AX:BX
+
+GET_LONG MACRO    N            
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARNL
+         ADD      SP,2
+         ENDM
+
+
+; get requested parm as double--returned in AX:BX:CX:DX
+
+GET_DBL  MACRO    N   
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARND
+         ADD      SP,2
+         MOV      ES,DX
+         MOV      SI,AX
+         MOV      AX,ES:[SI]
+         MOV      BX,ES:[SI + 2]
+         MOV      CX,ES:[SI + 4]        
+         MOV      DX,ES:[SI + 6]        
+         ENDM
+
+; get requested parm as date string--returns segment and offset as AX:BX
+
+GET_DATESTR MACRO N           
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARDS
+         ADD      SP,2
+         ENDM
+
+
+; get requested parm as logical true or false--returned in AX
+
+GET_LOGICAL MACRO N
+         MOV      AX,N
+         PUSH     AX
+         CALL     __PARL
+         ADD      SP,2
+         ENDM
+
+
+; return char pointer in REG1:REG2
+
+RET_CHAR MACRO    REG1,REG2   
+         IRP      X,<REG1,REG2>
+         PUSH     X
+         ENDM
+         CALL     __RETC
+         ADD      SP,4
+         ENDM
+
+
+; return integer in REG1
+
+RET_INT  MACRO    REG1        
+         PUSH     REG1
+         CALL     __RETNI
+         ADD      SP,2
+         ENDM
+
+
+; return long integer in REG1:REG2
+
+RET_LONG MACRO    REG1,REG2   
+         IRP      X,<REG1,REG2>
+         PUSH     X
+         ENDM
+         CALL     __RETNL
+         ADD      SP,4
+         ENDM
+
+
+; return 8-byte floating-point number in REG1:REG2:REG3:REG4
+
+RET_DBL  MACRO    REG1,REG2,REG3,REG4 
+         IRP      X,<REG1,REG2,REG3,REG4>
+         PUSH     X
+         ENDM
+         CALL     __RETND
+         ADD      SP,8
+         ENDM
+
+
+; return date string pointed to by REG1:REG2
+
+RET_DATESTR MACRO REG1,REG2           ; return pointer to date string
+                                      ; in REG1:REG2
+         IRP      X,<REG1,REG2>
+         PUSH     X
+         ENDM
+         CALL     __RETDS
+         ADD      SP,4
+         ENDM
+
+
+; return logical true (1) or false (0) in REG1
+
+RET_LOGICAL MACRO REG1                ; return 1 or 0 in REG1
+         PUSH     REG1
+         CALL     __RETL
+         ADD      SP,2
+         ENDM
+
+; EOF:  EXTENDA.MAC
+
+

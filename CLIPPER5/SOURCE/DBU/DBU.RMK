@@ -1,0 +1,41 @@
+//
+//    Dbu.rmk
+//
+//    Standard make file for DBU utility
+//
+//    Copyright (c) 1990-1993, Computer Associates International Inc.
+//    All rights reserved.
+//
+//    NOTE:
+//       In order to build DBU with debugger (CLD) support you must
+//       define the macro name DEBUG.  This can be accomplished as
+//       follows:
+//
+//       RMAKE DBU /dDEBUG
+//
+
+// Determine if DEBUGging is enabled
+#ifdef DEBUG
+   CompOptions := /b /m /n
+#else
+   CompOptions := /l /m /n
+#end
+
+.prg.obj:
+    clipper $< $(CompOptions)
+
+
+dbu.obj:        dbu.prg
+dbuutil.obj:    dbuutil.prg
+dbuhelp.obj:    dbuhelp.prg
+dbuview.obj:    dbuview.prg
+dbuindx.obj:    dbuindx.prg
+dbuedit.obj:    dbuedit.prg
+dbucopy.obj:    dbucopy.prg
+dbustru.obj:    dbustru.prg
+dbunet.obj:     dbunet.prg
+
+
+dbu.exe:        dbu.obj  dbuutil.obj  dbuhelp.obj  dbuview.obj  \
+                dbuindx.obj  dbuedit.obj  dbucopy.obj  dbustru.obj dbunet.obj
+   rtlink @dbu

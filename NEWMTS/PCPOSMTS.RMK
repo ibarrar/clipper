@@ -1,0 +1,22 @@
+DATA_PATH=".\REPORTS"
+HEADER_PATH=C:\PCPOSMTS\HEADER
+CLIPFLAGS=  /W /N /M /A /B /I$(HEADER_PATH)
+
+.prg.obj:
+	clipper $< $(CLIPFLAGS)
+
+pcposmts.obj: pcposmts.prg $(HEADER_PATH)\its.ch 
+makedbf1.obj: makedbf1.prg $(HEADER_PATH)\its.ch
+makedbf2.obj: makedbf2.prg $(HEADER_PATH)\its.ch
+security.obj: security.prg $(HEADER_PATH)\its.ch
+unit.obj:	    unit.prg $(HEADER_PATH)\its.ch
+vendor.obj:   vendor.prg $(HEADER_PATH)\its.ch
+window.obj:   window.prg $(HEADER_PATH)\its.ch
+fmfile.obj:   fmfile.prg $(HEADER_PATH)\its.ch
+  clipper $< $(CLIPFLAGS)
+
+
+pcposmts.exe: $(HEADER_PATH)\its.ch pcposmts.obj makedbf1.obj makedbf2.obj \
+	security.obj unit.obj vendor.obj window.obj fmfile.obj
+	BLINKER3 @pcposmts
+

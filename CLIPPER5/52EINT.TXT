@@ -1,0 +1,735 @@
+Dear CA-Clipper 5.2 Developer,
+
+   This CA-Clipper 5.2e/ExoSpace 1.0g (international version) upgrade disk
+   provides some additional corrections that were made to both of these
+   products after the Clipper 5.2d/Exospace 1.0f-1 updates.
+
+   If you have an earlier CA-Clipper 5.2 version or Exospace 1.0 version,
+   this is a culmulative update which will bring these earlier versions up
+   to the current version (CA-Clipper 5.2e and Exospace 1.0g). This provides
+   any earlier updates, in addition to the ones listed in this file, without
+   the need for any other update disks or files.
+
+   This update disk will extract the OBJ files from the NAT_OBJ.EXE archive.
+   This step was necessary due to the added samples and space limitations of
+   a 1.44Mb diskette. NAT_OBJ.EXE is located in the default CLIPPER5\OBJ
+   directory and is a self extracting PKZIP file.
+
+   After the 5.2e update is finished, please ensure that the archive is not
+   decompressed which will overwrite the OBJ files that were updated in 5.2e.
+   You can use the PKzip 2.04g utility (PK204G.EXE) to rebuild this
+   self-extracting archive. PKzip is available on most BBSs and in the PKWARE
+   section of PCVENC forum on CompuServe.
+
+   The file CDXLOCK.OBJ is not needed with the DBFCDX.LIB RDD supplied by
+   this update. This file was used with a previous version of this RDD. The
+   CDX RDD in this update will provide FoxPro 2.6 compatible record and
+   record append locking without the use of this file.
+
+   The file NTXLOCK2.OBJ is used to provide a higher record locking offset
+   to the DBFNTX RDD. The default offset is 1,000,000,000 + recno(). If your
+   DBF file is 1,000,000,000 bytes in size and used in a multiuser
+   environment, then you will need to link in NTXLOCK2.OBJ to prevent physical
+   locking of the file. This will change the logical record locking address to
+   4Gb - recno(). This provides a maximum DBF file size of 2Gb. Applications
+   that use NTXLOCK2.OBJ will not be compatible with the default DBFNTX RDD
+   record locks. They should not be accessing the same files concurrently
+   with applications that use the default record locking offset.
+
+   The file CT2PATCH.OBJ is used for linking in Clipper Tools 2 with
+   CA-Clipper 5.2.
+
+   If you have any questions or problems, please contact CA-Clipper Technical
+   Support by calling 1-516-342-4612 or posting a message to CA-Clipper
+   Technical Support on the Clipper Forum (GO CLIPPER or GO CLIPGER) on
+   CompuServe.
+
+
+  This file contains:
+
+    A. The instructions for applying the CA-Clipper 5.2e upgrade to any
+       International (INT'L) version of CA-Clipper 5.2 including:
+       5.20, 5.2a, 5.2b, 5.2c or 5.2d.
+
+       It also contains instructions for applying the CA-Clipper 5.2e/
+       ExoSpace 1.0g upgrade.
+
+       The Exospace update is optional, so if you do not have Exospace,
+       you will still be able to apply the 5.2e Clipper update. Simply
+       answer "No" at the prompt when the question:
+
+           "Do you have ExoSpace installed ?"
+
+       is asked.
+
+       Please review the the UPDATE PROCESS instructions carefully before
+       applying the upgrade.
+
+    B. The list of problems resolved by CA-Clipper 5.2e.
+
+
+=============================================================================
+
+A. Instructions for upgrading Clipper 5.2 (any rev.) to 5.2e (rev. 216) and
+   ExoSpace (any installed version) to 1.0g version.
+
+   Ensure that you have atleast 525Kb of free DOS conventional memory as
+   reported by DOS's MEM utility. If not, then the PATCH.EXE utility may
+   not be executed correctly from within the installation program provided on
+   this disk.
+
+   If you can not free up this memory by loading DOS high and removing TSRs
+   and device drivers, then simply install the 5.2e update until the installer
+   attempts to execute PATCH.EXE and an "insufficient memory" occurs.
+
+   At this point, exit the installation program and manually update the
+   directories by copying PATCH.EXE and the corresponding .RTP file from
+   the 52e update disk into the correct directory.
+
+   EXAMPLE: C:\CLIPPER5\BIN> patch 52ieBIN
+
+   The correct directories
+   are as follows:
+
+   52ieBIN.RTP    Clipper BIN directory
+   52ieLIB.RTP    Clipper LIB directory
+   52ieOBJ.RTP    Clipper OBJ directory (expand NAT_OBJ.EXE first)
+   52ieNG.RTP     Clipper NG directory
+   52ieSMP.RTP    Clipper SOURCE\SAMPLE directory
+   52ieDBU.RTP    Clipper SOURCE\DBU directory
+
+   EX10GBIN.RTP   Exospace BIN directory
+   EX10GLIB.RTP   Exospace LIB directory
+   EX10GNG.RTP    Exospace NG directory
+
+   All files of the 5.2e update will have the same DATE/TIME stamp to make
+   checking for updated files easier.
+
+   Some operating systems (such as OS/2) may not allow PATCH.EXE to back date
+   a file's DATE/TIME stamp so a complete 5.2e file listing is provided.
+
+  UPDATE PROCESS:
+
+   1.  Move to your CA-Clipper 5.2 directory.
+            EXAMPLE: C:\> CD\CLIPPER5
+
+   2.  Backup your current version of CA-Clipper.
+       Do the same for ExoSpace IF you already have it installed.
+
+   3.  If you have Clipper 5.2, 5.2a, 5.2b, 5.2c or 5.2d AND have any
+       problems installing the upgrade, please reinstall Clipper (and
+       Exospace if applicable) from the original disks and reapply the
+       5.2e update to this clean version of CA-Clipper 5.2 and Exospace
+       1.0. Then, copy these updated files into your working Clipper
+       directory if it is different from the clean Clipper installation
+       directory. This will overwrite files of the same name - updating
+       these files to the 5.2e version.
+
+       To determine the version of Clipper that you currently have.
+       At the DOS prompt type
+
+              C:\>Clipper   <then press return>
+
+
+       At the top of the screen, there will be the copyright header with
+       the version number.
+
+       You can also use the VERSION() function to determine which version of
+       Clipper that you have. Compile a 1 line TEST.PRG:
+
+              ? Version()
+
+       Compile, link and run this TEST.EXE file.
+
+   4.  Execute the installation program and follow the instructions.
+
+             EXAMPLE: A:\> INSTALL
+
+                    - or -
+
+             EXAMPLE: C:\> A:INSTALL
+
+   5.  After the installation program has successfully completed, compare the
+       date and time stamps of the updated files against the
+       LIST OF UPDATED FILES section.
+
+   6.  Make sure that your PATH, INCLUDE, OBJ, and LIB environment variables
+       have been correctly set to point to the updated version of CA-Clipper.
+       Example:
+               C:\> SET PATH=C:\CLIP52e\BIN
+               C:\> SET INCLUDE=C:\CLIP52e\INCLUDE
+               C:\> SET OBJ=C:\CLIP52e\OBJ
+               C:\> SET LIB=C:\CLIP52e\LIB
+               C:\> SET PLL=C:\CLIP52e\PLL
+
+       NOTE: You could also add these settings in your AUTOEXEC.BAT file or
+             create a batch file with these DOS environment settings to
+             execute before using the Clipper compiler.
+
+   7.  Move to your DBU directory and re-compile DBU.
+       EXAMPLE:
+               A:\> C:
+               C:\> CD \CLIPPER5\SOURCE\DBU
+               C:\CLIPPER5\SOURCE\DBU> SET RTLINKCMD=
+               C:\CLIPPER5\SOURCE\DBU> SET CLIPPERCMD=
+               C:\CLIPPER5\SOURCE\DBU> RMAKE DBU /F
+
+       Copy DBU.EXE to your BIN directory.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\DBU> COPY DBU.EXE C:\CLIPPER5\BIN
+
+
+   8.  Move to your RL directory and re-compile RL.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\DBU> CD \CLIPPER5\SOURCE\RL
+               C:\CLIPPER5\SOURCE\RL> RMAKE RL /F
+
+       Copy RL.EXE to your BIN directory.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\RL> COPY RL.EXE C:\CLIPPER5\BIN
+
+
+   9.  Move to your PE directory and re-compile PE.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\RL> CD \CLIPPER5\SOURCE\PE
+               C:\CLIPPER5\SOURCE\PE> RMAKE PE /F
+
+       Copy PE.EXE to your BIN directory.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\PE> COPY PE.EXE C:\CLIPPER5\BIN
+
+
+   10. Move to your PLL directory and rebuild BASE52.PLL.
+       EXAMPLE:
+               C:\CLIPPER5\SOURCE\PE> CD \CLIPPER5\PLL
+               C:\CLIPPER5\PLL> RTLINK @BASE52
+
+       The message:
+
+       "Undefined Symbol(s)...should be resolved at .EXE generation time"
+
+       appears during this step and is normal when creating a Pre-Linked
+       Library (PLL).
+
+
+   11. The update process is now complete.
+
+
+   UPDATED FILES:
+
+          CA-Clipper 5.2e upgrade marks all CA-Clipper files with a
+          date stamp of 02-07-95 and a time stamp of 5:25am.
+
+          The ExoSpace upgrade IF APPLIED also updates its files with a
+          date stamp of 02-07-95 and a time stamp of 5:25am.
+
+          It should be easy to check if the upgrade was applied properly.
+          Check all directories for this date/time stamp and check for the
+          .RTPatch error file (PATCH.ERR). This error file will be added to
+          the directory that .RTPatch is processing if a problem occurs
+          during this patch process.
+
+          The exception are files from \PLL subdirectory.
+          They should still have a date stamp of 02-15-93 and a time stamp of
+          5:20am unless they were modified external from any CA-Clipper 5.2
+          updates.
+
+          The files DBU.EXE, RL.EXE, PE.EXE, BASE52.PLL and BASE52.PLT
+          will have the date and time stamp of when they were most
+          recently rebuilt, so they will not have the 02-07-95 date
+          and 5:25am time stamp.
+
+          The following subdirectories are created (if they do not exist)
+          under the SOURCE directory for API sample files:
+
+          SDX, ERROR, FILESYS, ITEM and VM
+
+          The following subdirectories are created (if they do not exist)
+          under the SOURCE directory for the extra sample files:
+
+          ERRORSYS, GETSYS and TBROW
+
+
+          The following is a complete list of CA-Clipper 5.2e files and their
+          directories:
+
+          Directory of \CLIPPER5\BIN
+          CL       BAT            46 02-07-95   5:25a
+          RO       COM           354 02-07-95   5:25a
+          RTLINKST COM         7,123 02-07-95   5:25a
+          RTLINK   DAT        42,694 02-07-95   5:25a
+          CLD      EXE        54,415 02-07-95   5:25a
+          CLIPPER  EXE       198,968 02-07-95   5:25a
+          DBT52    EXE         7,349 02-07-95   5:25a
+          RMAKE    EXE        40,133 02-07-95   5:25a
+          RTLINK   EXE       356,011 02-07-95   5:25a
+          DBU      EXE       403,456 02-07-95   5:25a
+          PE       EXE       217,088 02-07-95   5:25a
+          RL       EXE       345,088 02-07-95   5:25a
+          CLD      HLP        19,677 02-07-95   5:25a
+          DBU      HLP        19,962 02-07-95   5:25a
+          RTLINK   HLP         8,416 02-07-95   5:25a
+
+          if Exospace installed:
+          EXO1     EXE       334,271 02-07-95   5:25a
+          EXOSPACE EXE       643,353 02-07-95   5:25a
+          EXO2     EXE        15,621 02-07-95   5:25a
+
+          Directory of \CLIPPER5\INCLUDE
+          EXTEND   API         2,194 02-07-95   5:25a
+          FILESYS  API         2,652 02-07-95   5:25a
+          GT       API         2,734 02-07-95   5:25a
+          ITEM     API         1,802 02-07-95   5:25a
+          RDD      API        27,716 02-07-95   5:25a
+          VM       API         1,093 02-07-95   5:25a
+          ERROR    API         2,090 02-07-95   5:25a
+          FM       API           811 02-07-95   5:25a
+          ASSERT   CH          2,137 02-07-95   5:25a
+          BOX      CH            907 02-07-95   5:25a
+          COLOR    CH            389 02-07-95   5:25a
+          COMMON   CH          1,203 02-07-95   5:25a
+          DBEDIT   CH            748 02-07-95   5:25a
+          DBSTRUCT CH            368 02-07-95   5:25a
+          DIRECTRY CH            412 02-07-95   5:25a
+          ERROR    CH          1,409 02-07-95   5:25a
+          FILEIO   CH          1,469 02-07-95   5:25a
+          GETEXIT  CH            522 02-07-95   5:25a
+          INKEY    CH          8,579 02-07-95   5:25a
+          MEMOEDIT CH          1,073 02-07-95   5:25a
+          RESERVED CH         21,870 02-07-95   5:25a
+          SET      CH          1,447 02-07-95   5:25a
+          SETCURS  CH            534 02-07-95   5:25a
+          SIMPLEIO CH            800 02-07-95   5:25a
+          STD      CH         51,453 02-07-95   5:25a
+          ACHOICE  CH            951 02-07-95   5:25a
+          RDDSYS   CH            342 02-07-95   5:25a
+          CLIPDEFS H           1,703 02-07-95   5:25a
+          EXTEND   H             238 02-07-95   5:25a
+          EXTASM   INC         1,233 02-07-95   5:25a
+          EXTENDA  INC        15,847 02-07-95   5:25a
+          EXTENDA  MAC         4,161 02-07-95   5:25a
+          RULES    RMK         2,312 02-07-95   5:25a
+
+          Directory of \CLIPPER5\LIB
+          CLD      LIB        80,719 02-07-95   5:25a
+          CLIPPER  LIB       519,887 02-07-95   5:25a
+          EXTEND   LIB       127,931 02-07-95   5:25a
+          DBFNTX   LIB        38,977 02-07-95   5:25a
+          DBFNDX   LIB        27,175 02-07-95   5:25a
+          ANSITERM LIB        12,321 02-07-95   5:25a
+          SAMPLES  LIB        53,891 02-07-95   5:25a
+          NOVTERM  LIB        13,857 02-07-95   5:25a
+          PCBIOS   LIB        14,369 02-07-95   5:25a
+          DBFMDX   LIB        90,757 02-07-95   5:25a
+          TERMINAL LIB        14,369 02-07-95   5:25a
+          DBFCDX   LIB        99,777 02-07-95   5:25a
+          DBPX     LIB       170,645 02-07-95   5:25a
+          RTLUTILS LIB        53,925 02-07-95   5:25a
+
+          if Exospace installed:
+          EXOSPACE LIB       113,973 02-07-95   5:25a
+
+          Directory of \CLIPPER5\NG
+          NG       EXE        38,160 02-07-95   5:25a
+          C52G03B  NG        364,056 02-07-95   5:25a
+          C52G02B  NG        190,520 02-07-95   5:25a
+          C52G04B  NG         45,731 02-07-95   5:25a
+          C52G05B  NG        258,949 02-07-95   5:25a
+          C52G06B  NG         25,376 02-07-95   5:25a
+          C52G07B  NG        200,146 02-07-95   5:25a
+          C52G01B  NG      1,255,971 02-07-95   5:25a
+          IERROR   NG         22,817 02-07-95   5:25a
+
+          if Exospace installed:
+          EXOSPACE NG        110,905 02-07-95   5:25a
+
+
+          Directory of \CLIPPER5\OBJ
+          NATION   BAT         3,674 02-07-95   5:25a
+          CHOOSE   COM            96 02-07-95   5:25a
+          NAT_OBJ  EXE       107,047 03-04-93   5:20a
+          GT       OBJ         9,754 02-07-95   5:25a
+          NTXLOCK2 OBJ           302 02-07-95   5:25a
+          CT2PATCH OBJ         4,703 02-07-95   5:25a
+          MSGUK    OBJ         3,057 02-07-95   5:25a
+          MSGGR437 OBJ         3,073 02-07-95   5:25a
+          NTXGER   OBJ         6,300 02-07-95   5:25a
+          MSGIC850 OBJ         3,085 02-07-95   5:25a
+          NTXFIN   OBJ         3,747 02-07-95   5:25a
+          MSGITA   OBJ         3,046 02-07-95   5:25a
+          MSGNOR   OBJ         3,046 02-07-95   5:25a
+          MSGSPA   OBJ         3,375 02-07-95   5:25a
+          MSGSWE   OBJ         3,056 02-07-95   5:25a
+          MSGDUT   OBJ         3,146 02-07-95   5:25a
+          MSGPOR   OBJ         3,050 02-07-95   5:25a
+          NTXFRE   OBJ         3,746 02-07-95   5:25a
+          CDXLOCK  OBJ         6,679 02-07-95   5:25a
+          NTXGR437 OBJ         3,748 02-07-95   5:25a
+          NTXGR851 OBJ         3,748 02-07-95   5:25a
+          MDXGER   OBJ         8,159 02-07-95   5:25a
+          NTXSPA   OBJ         3,747 02-07-95   5:25a
+          MDXITA   OBJ         8,151 02-07-95   5:25a
+          NTXIC861 OBJ         3,752 02-07-95   5:25a
+          MDXUK    OBJ         8,151 02-07-95   5:25a
+          NTXITA   OBJ         3,747 02-07-95   5:25a
+          NTXNOR   OBJ         3,749 02-07-95   5:25a
+          NTXPOR   OBJ         3,750 02-07-95   5:25a
+          NTXSWE   OBJ         3,747 02-07-95   5:25a
+          CTUS     OBJ        26,656 02-07-95   5:25a
+          MSGGER   OBJ         4,311 02-07-95   5:25a
+          MDXSPA   OBJ         8,151 02-07-95   5:25a
+          MSGFIN   OBJ         3,116 02-07-95   5:25a
+          MSGFRE   OBJ         3,572 02-07-95   5:25a
+          MDXSWE   OBJ         8,151 02-07-95   5:25a
+          NTXDUT   OBJ         3,745 02-07-95   5:25a
+          MDXUSA   OBJ         8,147 02-07-95   5:25a
+          MSGDAN   OBJ         3,045 02-07-95   5:25a
+          NTXIC850 OBJ         3,752 02-07-95   5:25a
+          MDXFRE   OBJ         8,150 02-07-95   5:25a
+          MSGGR851 OBJ         3,068 02-07-95   5:25a
+          MSGIC861 OBJ         3,085 02-07-95   5:25a
+          MDXDUT   OBJ         8,149 02-07-95   5:25a
+          NTXDAN   OBJ         3,746 02-07-95   5:25a
+
+
+          Directory of \CLIPPER5\PLL
+          BASE52   LNK         2,204 03-04-93   5:20a
+          BASE52   PLL       350,208 03-04-93   5:20a
+          BASE52   PLT        33,037 03-04-93   5:20a
+
+          Directory of \CLIPPER5\SOURCE\DBU
+          DBU      HLP        19,962 02-07-95   5:25a
+          DBU      LNK           178 02-07-95   5:25a
+          DBUNET   PRG         8,931 02-07-95   5:25a
+          DBUCOPY  PRG        17,556 02-07-95   5:25a
+          DBUVIEW  PRG        67,609 02-07-95   5:25a
+          DBU      PRG        24,063 02-07-95   5:25a
+          DBUEDIT  PRG        22,484 02-07-95   5:25a
+          DBUHELP  PRG         3,217 02-07-95   5:25a
+          DBUINDX  PRG         5,179 02-07-95   5:25a
+          DBUSTRU  PRG        26,932 02-07-95   5:25a
+          DBUUTIL  PRG        43,827 02-07-95   5:25a
+          DBU      RMK           967 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\ERROR
+          FILEOPEN C           2,714 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\ERRORSYS
+          CUST     DBF           227 02-07-95   5:25a
+          ERR01    PRG           404 02-07-95   5:25a
+          ERR02    PRG           718 02-07-95   5:25a
+          ERR03    PRG           673 02-07-95   5:25a
+          ERR04    PRG         1,463 02-07-95   5:25a
+          ERR05    PRG           642 02-07-95   5:25a
+          ERR07    PRG           957 02-07-95   5:25a
+          ERR08    PRG         1,216 02-07-95   5:25a
+          ERR12    PRG         1,760 02-07-95   5:25a
+          ERR13    PRG         2,403 02-07-95   5:25a
+          ERR14    PRG         2,793 02-07-95   5:25a
+          ERR17    PRG           953 02-07-95   5:25a
+          ERR16    PRG         2,230 02-07-95   5:25a
+          ERR15    PRG         1,741 02-07-95   5:25a
+          ERR18    PRG         1,088 02-07-95   5:25a
+          ERR11    PRG         2,132 02-07-95   5:25a
+          ERR09    PRG         1,864 02-07-95   5:25a
+          ERR10    PRG         2,059 02-07-95   5:25a
+          ERR06    PRG           333 02-07-95   5:25a
+          ERRORSYS RMK         1,047 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\FILESYS
+          FILEOPEN C           2,714 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\GETSYS
+          GET10    PRG         3,345 02-07-95   5:25a
+          GET12    PRG           608 02-07-95   5:25a
+          GET3     PRG         2,993 02-07-95   5:25a
+          GET7     PRG         1,654 02-07-95   5:25a
+          GET4     PRG         2,152 02-07-95   5:25a
+          GET5     PRG         1,390 02-07-95   5:25a
+          GET6     PRG         1,745 02-07-95   5:25a
+          GET9     PRG         1,111 02-07-95   5:25a
+          GETMEMO  PRG         2,286 02-07-95   5:25a
+          GETPSW   PRG         2,085 02-07-95   5:25a
+          NESTREAD PRG           715 02-07-95   5:25a
+          GETSYS1  PRG        14,841 02-07-95   5:25a
+          MODGET   PRG           676 02-07-95   5:25a
+          GET11    PRG         1,135 02-07-95   5:25a
+          SAYSCROL PRG         3,345 02-07-95   5:25a
+          GET2     PRG         2,270 02-07-95   5:25a
+          GET1     PRG         1,379 02-07-95   5:25a
+          GET13    PRG         1,435 02-07-95   5:25a
+          GETSYS   RMK         1,046 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\ITEM
+          CC       C           1,410 02-07-95   5:25a
+          DFUNC    C           1,356 02-07-95   5:25a
+          ISDBL    C             609 02-07-95   5:25a
+          UACLN    C           1,888 02-07-95   5:25a
+          UARRY    C           1,863 02-07-95   5:25a
+          UEVAL    C             893 02-07-95   5:25a
+          YESNO    C             837 02-07-95   5:25a
+          CCTST    PRG           641 02-07-95   5:25a
+          DFUNCTST PRG           584 02-07-95   5:25a
+          ISDBLTST PRG         1,229 02-07-95   5:25a
+          TESTBED  PRG           854 02-07-95   5:25a
+          UACLNTST PRG         1,274 02-07-95   5:25a
+          UARRYTST PRG         1,180 02-07-95   5:25a
+          UEVALTST PRG         2,121 02-07-95   5:25a
+          CCTST    RMK           436 02-07-95   5:25a
+          DFUNCTST RMK           428 02-07-95   5:25a
+          ISDBLTST RMK           475 02-07-95   5:25a
+          UACLNTST RMK           435 02-07-95   5:25a
+          UARRYTST RMK           443 02-07-95   5:25a
+          UEVALTST RMK           479 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\PE
+          PE       PRG        12,282 02-07-95   5:25a
+          PE       RMK           314 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\RL
+          RLBACK   PRG        40,489 02-07-95   5:25a
+          RLDIALG  PRG        10,626 02-07-95   5:25a
+          RLFRONT  PRG        40,165 02-07-95   5:25a
+          RL       RMK           436 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\SAMPLE
+          EXAMPLEA ASM         6,720 02-07-95   5:25a
+          TEMPLATE ASM           826 02-07-95   5:25a
+          SOUNDEX  C           3,704 02-07-95   5:25a
+          STUFF    C           2,982 02-07-95   5:25a
+          ARRAY    CH            660 02-07-95   5:25a
+          DICT     CH            218 02-07-95   5:25a
+          FILEMAN  CH          1,636 02-07-95   5:25a
+          LOCKS87  CH            918 02-07-95   5:25a
+          TIME87   CH          1,156 02-07-95   5:25a
+          BROWSE   PRG        10,294 02-07-95   5:25a
+          TBDEMO   PRG        12,398 02-07-95   5:25a
+          AMPM     PRG           673 02-07-95   5:25a
+          ARRAY    PRG        10,931 02-07-95   5:25a
+          ASRTDEMO PRG         1,562 02-07-95   5:25a
+          BOX      PRG         4,213 02-07-95   5:25a
+          DATE     PRG         4,959 02-07-95   5:25a
+          DAYS     PRG           406 02-07-95   5:25a
+          DBF      PRG           364 02-07-95   5:25a
+          DICT     PRG         6,183 02-07-95   5:25a
+          DOT      PRG       111,557 02-07-95   5:25a
+          ELAPTIME PRG           668 02-07-95   5:25a
+          ENVIRON  PRG         5,953 02-07-95   5:25a
+          FILEDEMO PRG           363 02-07-95   5:25a
+          FILEIO   PRG         9,230 02-07-95   5:25a
+          FILEMAN  PRG        37,266 02-07-95   5:25a
+          FKLABEL  PRG           367 02-07-95   5:25a
+          FKMAX    PRG           369 02-07-95   5:25a
+          GAUGDEMO PRG         1,318 02-07-95   5:25a
+          GAUGE    PRG         4,108 02-07-95   5:25a
+          ITERATOR PRG         1,552 02-07-95   5:25a
+          KEYBOARD PRG           632 02-07-95   5:25a
+          LENNUM   PRG           318 02-07-95   5:25a
+          LOCKS    PRG         4,109 02-07-95   5:25a
+          MOD      PRG         2,577 02-07-95   5:25a
+          NUM      PRG         8,060 02-07-95   5:25a
+          PRINT    PRG         1,111 02-07-95   5:25a
+          READKEY  PRG         2,361 02-07-95   5:25a
+          SCROLBAR PRG         3,403 02-07-95   5:25a
+          SECS     PRG           561 02-07-95   5:25a
+          STACK    PRG         3,818 02-07-95   5:25a
+          STATUS   PRG         1,626 02-07-95   5:25a
+          STRING   PRG         2,325 02-07-95   5:25a
+          STRZERO  PRG           986 02-07-95   5:25a
+          TIME     PRG         2,029 02-07-95   5:25a
+          TSTRING  PRG           556 02-07-95   5:25a
+          VALEDIT  PRG         3,623 02-07-95   5:25a
+          FILEDEMO RMK           363 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\SDX
+          SDXDYN   ASM         1,944 02-07-95   5:25a
+          SDX      C          43,648 02-07-95   5:25a
+          SDXINTER C           7,781 02-07-95   5:25a
+          SDX      H           3,876 02-07-95   5:25a
+          SDX      LIB        16,935 02-07-95   5:25a
+          SDXINIT  PRG           300 02-07-95   5:25a
+          SDX      RMK           951 02-07-95   5:25a
+          README   SDX        13,564 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\SYS
+          FRMDEF   CH          2,331 02-07-95   5:25a
+          LBLDEF   CH          1,074 02-07-95   5:25a
+          GETSYS   PRG        16,909 02-07-95   5:25a
+          FRMBACK  PRG        17,723 02-07-95   5:25a
+          LBLBACK  PRG         6,039 02-07-95   5:25a
+          FRMRUN   PRG        28,808 02-07-95   5:25a
+          NTXERR   PRG         1,449 02-07-95   5:25a
+          RDDSYS   PRG           640 02-07-95   5:25a
+          ERRORSYS PRG         3,096 02-07-95   5:25a
+          LBLRUN   PRG         7,554 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\ARRAYS
+          SAMPLES  CH          4,728 02-07-95   5:25a
+          TBROWSE  CH            885 02-07-95   5:25a
+          TBR24A   PRG         3,781 02-07-95   5:25a
+          TBR61    PRG         4,195 02-07-95   5:25a
+          TBR26T   PRG           695 02-07-95   5:25a
+          TBR26    PRG         5,826 02-07-95   5:25a
+          TBR24    PRG         4,050 02-07-95   5:25a
+          TBR27    PRG         3,324 02-07-95   5:25a
+          TBR25    PRG         4,672 02-07-95   5:25a
+          TBR23    PRG         3,929 02-07-95   5:25a
+          ARRAYS   RMK           522 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\BROTEXT
+          SAMPLES  CH          4,728 02-07-95   5:25a
+          TBROWSE  CH            885 02-07-95   5:25a
+          TBR29    PRG         5,132 02-07-95   5:25a
+          TBR28    PRG         5,102 02-07-95   5:25a
+          TBR30    PRG         6,209 02-07-95   5:25a
+          BROTEXT  RMK           315 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\GENERAL
+          MEMOTEST DBF           223 02-07-95   5:25a
+          TESTN    DBF           709 02-07-95   5:25a
+          TEST1    DBF         4,166 02-07-95   5:25a
+          MEMOTEST DBT         3,731 02-07-95   5:25a
+          MEMOTEST NTX         2,048 02-07-95   5:25a
+          TESTN    NTX         2,048 02-07-95   5:25a
+          TBKEYACT PRG         2,186 02-07-95   5:25a
+          TBR11    PRG         5,274 02-07-95   5:25a
+          TBR12    PRG         4,747 02-07-95   5:25a
+          TBR14    PRG         2,728 02-07-95   5:25a
+          TBR13    PRG         5,376 02-07-95   5:25a
+          TBR15    PRG         4,402 02-07-95   5:25a
+          TBR16    PRG         5,132 02-07-95   5:25a
+          TBR17    PRG         6,366 02-07-95   5:25a
+          TBR18    PRG         4,128 02-07-95   5:25a
+          TBR33    PRG         9,007 02-07-95   5:25a
+          TBR3     PRG         4,025 02-07-95   5:25a
+          TBR4     PRG         4,008 02-07-95   5:25a
+          TBR6     PRG         3,816 02-07-95   5:25a
+          TBR7     PRG         3,784 02-07-95   5:25a
+          TBR9     PRG         3,844 02-07-95   5:25a
+          TBR8     PRG         4,416 02-07-95   5:25a
+          TBR9A    PRG         4,204 02-07-95   5:25a
+          TBR10    PRG         5,497 02-07-95   5:25a
+          TESTB    PRG         2,241 02-07-95   5:25a
+          BRFUNC   PRG         4,240 02-07-95   5:25a
+          TBR2     PRG         2,961 02-07-95   5:25a
+          MAKEBASE PRG         1,427 02-07-95   5:25a
+          TBR1     PRG         2,185 02-07-95   5:25a
+          TBR32    PRG         2,631 02-07-95   5:25a
+          TBR5     PRG         5,588 02-07-95   5:25a
+          GENERAL  RMK         1,376 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\LIB
+          BRARRSKI PRG           995 02-07-95   5:25a
+          BROWGET  PRG         3,247 02-07-95   5:25a
+          BROWMOVE PRG         1,074 02-07-95   5:25a
+          BROWSEEK PRG         1,149 02-07-95   5:25a
+          BROWSKIP PRG         1,706 02-07-95   5:25a
+          BROWSTAB PRG           571 02-07-95   5:25a
+          SCRUTI   PRG         2,290 02-07-95   5:25a
+          SETUTI   PRG           939 02-07-95   5:25a
+          SHADOW   PRG           405 02-07-95   5:25a
+          TIMEOUT  PRG         1,258 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\N_COMMDR
+          MANAGER  CH            870 02-07-95   5:25a
+          MANAGDBF PRG         5,472 02-07-95   5:25a
+          MANAGDCR PRG         6,927 02-07-95   5:25a
+          MANAGER  PRG        12,903 02-07-95   5:25a
+          MANAGMIS PRG         4,365 02-07-95   5:25a
+          MANAGVEW PRG         1,803 02-07-95   5:25a
+          MANAGINF PRG           970 02-07-95   5:25a
+          MANAGER  RMK           563 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\SKIPDBF
+          FILE1    DBF           144 02-07-95   5:25a
+          FILE2    DBF           677 02-07-95   5:25a
+          PLACES   DBF         1,679 02-07-95   5:25a
+          TEST2    DBF           471 02-07-95   5:25a
+          TEST     DBF         3,116 02-07-95   5:25a
+          FILE1    NTX         2,048 02-07-95   5:25a
+          FILE2    NTX         2,048 02-07-95   5:25a
+          PLACES   NTX         2,048 02-07-95   5:25a
+          TEST2    NTX         2,048 02-07-95   5:25a
+          TBR23A   PRG         6,794 02-07-95   5:25a
+          TBR22    PRG         5,397 02-07-95   5:25a
+          TBR21    PRG         5,808 02-07-95   5:25a
+          TBR19    PRG         4,272 02-07-95   5:25a
+          TBR20    PRG         7,445 02-07-95   5:25a
+          SKIPDBF  RMK           402 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\SPRDSHT
+          BUTTONS  CH            763 02-07-95   5:25a
+          SPRDSHT  CH            922 02-07-95   5:25a
+          SPRDFOR  DBF         3,485 02-07-95   5:25a
+          SPRDVAL  DBF         1,325 02-07-95   5:25a
+          QUITIT   PRG         3,624 02-07-95   5:25a
+          MISCSPRD PRG         5,643 02-07-95   5:25a
+          BUTTONS  PRG         3,394 02-07-95   5:25a
+          SPRDSHT  PRG        21,483 02-07-95   5:25a
+          SPRDSHT  RMK           409 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\TBROW\TBRNET
+          NET      CH            884 02-07-95   5:25a
+          TBR31    CH          1,272 02-07-95   5:25a
+          TBR31    DBF        22,891 02-07-95   5:25a
+          TBR31_1  NTX        11,264 02-07-95   5:25a
+          TBR31_2  NTX         6,144 02-07-95   5:25a
+          NET      PRG         2,327 02-07-95   5:25a
+          SCRUTI   PRG         2,185 02-07-95   5:25a
+          TBR      PRG         3,497 02-07-95   5:25a
+          TBR31    PRG         4,697 02-07-95   5:25a
+          TBR31    RMK           333 02-07-95   5:25a
+          SEMAPH   TBR             4 02-07-95   5:25a
+
+          Directory of \CLIPPER5\SOURCE\VM
+          BOOTSEC  C           1,996 02-07-95   5:25a
+          CCVM     C           1,372 02-07-95   5:25a
+          HEXAMP   C           1,122 02-07-95   5:25a
+          VMCOPY   C          12,498 02-07-95   5:25a
+          BOOTREAD PRG           603 02-07-95   5:25a
+          CCVMTST  PRG           661 02-07-95   5:25a
+          TESTBED  PRG           854 02-07-95   5:25a
+          VCOPYTST PRG           863 02-07-95   5:25a
+          BOOTREAD RMK           245 02-07-95   5:25a
+          CCVMTST  RMK           440 02-07-95   5:25a
+          VCOPYTST RMK           462 02-07-95   5:25a
+
+=============================================================================
+
+B. Known problems resolved by CA-Clipper 5.2e:
+
+   o General DBFCDX RDD stability problems.
+
+   o DBFCDX RDD compability problems with FoxPro 2.6 during record locking
+     and record append locking.
+
+   o 1210 errors with DBFCDX RDD after a reindex.
+
+   o Corrected problem with APPEND BLANK (dbappend()) if optional argument was
+     not passed to function.
+
+   o Corrected General Protection Fault (GPF) in PICTURE clause.
+
+   o Corrected GPF in ERRORSYS when constantly selecting "Retry" in Error
+     Alert box.
+
+   o Corrected GPF in SET ORDER TO (OrdSetFocus()) when used in a loop.
+
+   o Corrected Virtual Memory Integrity Failure (VMIF) error in TBrowse
+     stabilization.
+
+   o Corrected GPF in TBrowse STABILIZE() method with repeated
+     CTRL-PGDN/CTRL-PGUP key events.
+
+   o Added reserved words in NG file and Reserved.ch file.
+
+   o Added error handling code to NTXERR.PRG.
+
+   o Enhanced NG file for TBrowse, Get and Error Classes.
+
+   o And last, but not least...
+
+                        enjoy the added samples
+
+=============================================================================
+=============================================================================

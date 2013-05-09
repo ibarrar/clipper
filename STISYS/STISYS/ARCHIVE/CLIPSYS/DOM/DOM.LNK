@@ -1,0 +1,5 @@
+
+LIB clipper,extend,terminal,dbfntx,userlib
+FILE DOM,Tickets,Sr,Maint,cl501_60,screen,windows,array,string,
+locks,omenu,gauge,scrolbar,dbbrowse,printer
+

@@ -1,0 +1,13 @@
+Comparing files REPORTS.PRG and ..\reports.prg
+****** REPORTS.PRG
+     cData += cBuffer
+     cData += strim_pad(aData_[CS_DSLS_TOT])
+     cash_sales := (aData_[CS_CASH_TOT] + aData_[CS_OINC_TOT] + ;
+****** ..\reports.prg
+     cData += cBuffer
+//     cData += strim_pad(aData_[CS_DSLS_TOT])
+     cData += strim_pad(nDaily_Sls)
+     cash_sales := (aData_[CS_CASH_TOT] + aData_[CS_OINC_TOT] + ;
+******
+
+

@@ -1,0 +1,14 @@
+//
+// Bootread Test
+//
+// Copyright (C) 1993, Computer Associates, Inc. All Rights Reserved
+//
+LIBLIST="LLIBCA"
+
+#include "rules.rmk"
+
+bootsec.obj:  bootsec.c
+
+bootread.obj:  bootread.prg
+
+bootread.exe:  bootread.obj  bootsec.obj 

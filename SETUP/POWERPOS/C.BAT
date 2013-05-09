@@ -1,0 +1,1 @@
+copy a:\powerpos.exe 

@@ -1,0 +1,37 @@
+CASHDR.DOC           To open cashdriver
+----------
+
+Device name : CASHDR.SYS
+
+INTRODUCTION
+
+   The device driver can only be used to open the cashdrawer.
+
+HOW TO USE
+
+   The device can be opened as a file handle in any program languages that
+   support this feature. Following is a sample C progam:
+
+
+     FILE *fp;
+
+       fp = fopen("CASH$$", "wb");             /* Open CASH       */
+       fprintf(fp, "%c%c%c", 0x1b, 'O', 1);
+       fflush(fp);
+       fclose(fp);
+
+
+
+COMMAND
+
+   1. To open cashdrawer
+
+   Format: ESC, O, 1
+
+   This will open the cashdrawer.
+
+
+                                                       Cheng Hwa
+                                                       Asst. Software Engr
+                                                       27 Dec 94
+

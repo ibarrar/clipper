@@ -1,0 +1,357 @@
+README.SDX
+
+1.  SDX RDD Overview
+
+   1.1.  The SDX RDD driver illustrates the implementation of an
+         RDD by providing the source code of a working sample RDD
+         driver.
+
+         This sample driver accesses "System Data Format" (.SDF)
+         text files.  The current SDF access in CA-Clipper only
+         provides import/export capabilities to/from a .DBF file
+         whose structure has been previously defined.  It is the
+         .DBF that gives the RDD the required information about
+         the field: type, length and decimals.
+
+         But since the purpose of this driver is to allow for
+         symbolic access to the source file (edit the fields in
+         the text file directly) we need a method of determining
+         the intended file structure.  This is the purpose of the
+         .SDX file.  It contains the information about the field
+         definitions, as well as other information normally held
+         in the header of a .DBF database.
+         
+         Placing this information in a separate file, instead of
+         as a header in the text file, allows the text file to
+         adhere to the .SDF file specification.  Because of this,
+         files can be created, edited, and written in a form that
+         is directly uploadable to mainframes or other processes
+         that import .SDF files. 
+
+   1.2.  Files included in the SDX driver sample are:
+            
+            sdx.c          Driver implementation
+            sdxinter.c     RDD interface and function table 
+                              definition
+            sdxdyn.asm     Dynamic link module
+            sdxinit.prg    RDD registration and link request
+            sdx.h          Workarea structure table and misc. 
+                              definitions
+            sdx.rmk        sdx make file
+            sdx.lib        Compiled SDX driver in LIB form
+
+
+   1.3   Useage
+
+            In your CA-Clipper program include a link request using:
+
+               REQUEST SDX
+
+
+            Then link in the SDX driver.  For example:
+
+               RTLINK FI MyObjs LIB CLIPPER SDX LLIBCA /NOE
+
+
+
+2.  SDX File Specification
+
+   2.1.  Tokens
+
+         The following is a list of the token expressions used in
+         parsing the SDX file:
+
+            LEFT_BRACKET   : [\[]
+            RIGHT_BRACKET  : [\]]
+            EQUAL_SIGN     : [=]
+            WS             : [ \t]*
+            EOF            : [\0x1A]
+            EOL            : [\nEOF]+
+            SECTION_NAME   : [0-9A-Za-z]+
+            KEYNAME        : SECTION_NAME
+            VALUE          : [~EOL]*
+            COMMENT        : [;][~EOL]*
+
+   2.2.  Sections
+
+         The format of the .SDX file closely follows the
+         established .INI file specification used by MS-Windows. 
+         As such, the .SDX file can be defined as follows:
+
+            [ <sectionName> ]
+            <keyName> = <value>
+
+         The file consists of 1 or more sections containing 0 or
+         more keyname/value pairs.
+
+         The order that the sections appear in the file is
+         meaningless as individual sections may appear in any
+         order.
+
+         Keyname/value pairs may also appear in any order within
+         the context of a section.
+
+         Sections must be contiguous (i.e., no nesting of
+         sections is allowed).
+
+         Whitespace is optional, and is ignored.
+
+         Stated precisely, the working definition of an .SDX file
+         as a token stream follows:
+
+            A. One or more section header(s) as defined by the
+               following sequence of tokens: 
+               LEFT_BRACKET [WS] SECTION_NAME [WS] RIGHT_BRACKET
+                  [WS] EOL
+
+            B. Followed by zero or more keyName/value pair(s) as
+               defined by the following sequence of tokens:
+               KEYNAME [WS] EQUAL_SIGN [WS] VALUE [WS] EOL
+
+            C. Repeating statement B until an instance of
+               statement A occurs or the EOF is encountered.
+
+            D. EOF terminates processing of file.
+
+         Note: All of these design goals have not been met in the
+         current implementation.  Specifically, the order of the
+         Keyname/value pairs is critical at this time and the
+         "info" section must precede the "fields" section.
+
+
+3.  SDF File specification
+
+    The .SDF file format used by this RDD is identical to the
+   .SDF format defined in the CA-Clipper documentation.  The
+    driver could be modified to use any record based text file
+    format.
+
+    The file format requires the following structure:
+
+       Field separator      - None
+       Record separator     - Carriage return/Linefeed
+       End of file marker   - 0x1A - CHR(26)
+
+    Fields must be structured according to their CA-Clipper type as
+    follows:
+
+       Character fields     - Padded with trailing blanks
+       Date fields          - yyyymmdd
+       Logical fields       - T or F
+       Numeric fields       - Padded with leading zeros
+
+
+4.  Implementing an RDD
+
+    The following items should help the RDD designer avoid the
+    pitfalls of implementing a driver.
+
+   4.1.  If a CA-Clipper DBUSEAREA() is performed and the driver
+         does not yet support the open method, various errors can
+         occur - a not supported error is not given.
+
+   4.2.  The typedef AREAP must be redefined to be a far pointer
+         to your workarea structure.  As an example the SDX
+         driver defines AREAP like this:
+
+            #define AREAP  struct _SDXAREA_ far *  
+
+   4.3.  The method structSize is the first method that you must
+         create.  It this method that tells the RDD system how
+         much memory to allocate for your "workarea" structure
+         (including any extensions you have added).
+
+         Warning: failure to provide this method will result in
+         memory overwrites and subsequent system failure.
+
+   4.4.  The initialization of the workarea, which occurs during
+         a CA-Clipper DBUSEAREA() call, proceeds as follows:
+
+            - A specific workarea is chosen and any residual open
+              database in that area is closed.
+
+            - The appropriate driver is selected (either
+              explicitly specified or implicitly derived from the
+              default driver setting).  An error is generated
+              (currently Internal error 1102) if the driver is
+              invalid or is not "loaded."
+         
+            - The RDD system retrieves a copy of your driver's
+              function table.  It then calls the structSize
+              method to obtain the size of your driver's workarea
+              structure.
+
+            - Memory for a copy of your workarea structure is
+              then allocated through the fixed memory allocator. 
+              A pointer to a copy of your function table is
+              stored in this new workarea structure.
+
+            - SELFNEW() is called.  
+
+            - SELFOPEN() is called.
+
+   4.5.  The CA-Clipper DBCREATE() code also makes some
+         assumptions.  In order to function properly, the
+         following methods must be operational:
+         setFieldExtent()*, addField()*, new()*, release()*,
+         close(), and create().  Asterisked items can be
+         inherited from the workarea class.
+
+   4.6.  The method waSetFieldExtent() sets the value of
+         waPtr->fieldExtent member.  It also allocates the
+         necessary memory for waPtr->fields.
+
+   4.7.  You may wish to first write a minimum implementation
+         containing methods such as go, skipRaw, etc. and build
+         up to a fully working version.   Also, for testing, many
+         components can be temporarily excluded such as network
+         locking/unlocking support, buffer flushing, updating
+         relations, etc..
+
+   4.8.  The methods goCold and goHot deserve special attention.
+
+      4.8.1.  First of all, the goCold and goHot methods are only
+              meaningful when data buffering (record buffering)
+              is being performed by the RDD.  If an RDD does not
+              perform any record buffering, then neither goCold
+              nor goHot need to be implemented.
+
+      4.8.2.  The goCold method is responsible for making sure
+              that what's in memory (buffer) is the same as
+              what's on disk.  This typically means performing a
+              write to disk of the current state of the buffer.
+
+      4.9.3.  The goHot method is responsible for informing the
+              RDD that what's in memory (buffer) might not match
+              what's on disk.  A goHot indicates that a disk
+              write is about to take place.  Checking for the
+              legality of modifying the database should
+              be verified in this method (i.e., that rlock or
+              flock requirements are met and that the file was
+              not opened readonly).
+
+   4.9.  Adding editing/appending capabilities:
+
+         The core routine responsible for editing records,
+         putValue, in this implementation calls goHot. and if
+         successful, simply changes the buffer in memory.  The
+         record will then be written to disk upon any record
+         pointer positioning that occurs thereafter (skip, goto,
+         etc.).
+         
+         The append method makes sure any "hot" buffers are
+         written to disk by calling goCold, then writes a blank
+         record to disk at the end of the file (appends a blank
+         record), making that record the current one, and
+         incrementing the record count variable used by our
+         driver.
+
+
+5.  Additional capabilities that could be added:
+
+    This example shows the core of functionality needed to
+    implement a working RDD.  The implementation lacks some items
+    that would be necessary if the driver was intended as a fully
+    functional RDD.  Some of these could be easily added such as:
+    record deletion, network support, and completion of the SDX
+    implementation so it correctly follows the above
+    specification.
+
+    Other additions, like index support, would be more
+    challenging.
+
+
+6.  Method cross reference for the Workarea abstract
+    class:
+
+    Cross reference of WORKAREA interdependencies and
+    functionality
+
+    Method              Dependencies (n/s = not supported)
+    -----------------------------------------------------------
+       bof*                none
+       eof*                none
+       found*              none
+       goBottom            n/s
+       go                  n/s
+       goToId              n/s
+       goTop               n/s
+       seek                n/s
+       skip*               skipRaw, skipFilter
+       skipFilter*         deleted, skipRaw, goTop
+       skipRaw             n/s
+       addField*           none
+       append              n/s
+       delete              n/s
+       deleted             n/s
+       fieldCount*         none
+       fieldName*          none
+       flush               n/s
+       getValue            n/s
+       getVarLen           n/s
+       goCold              n/s
+       goHot               n/s
+       putRec              n/s
+       putValue            n/s
+       recall              n/s
+       reccount            n/s
+       recno               n/s
+       setFieldExtent*     none
+       alias*              none
+       close@              clearFilter, clearRel, clearLocate
+       create@             error
+       info*               none
+       new*@               none
+       open@               error
+       release*@           none
+       structSize#         none
+       sysName             n/s
+       dbEval*             go, goTop, evalBlock, skip
+       pack                n/s
+       sort                n/s
+       trans*              go, goTop, evalBlock, skip, transRec
+       transRec*           append, deleted, delete
+       zap                 n/s
+       childEnd*           none
+       childStart*         none
+       childSync           n/s
+       syncChildren*       childSync
+       clearRel*           childEnd
+       forceRel            n/s
+       relArea*            none
+       relEval*            none
+       relText*            none
+       setRel*             childStart
+       orderListAdd        n/s
+       orderListClear      n/s
+       orderListDelete     n/s
+       orderListFocus      n/s
+       orderListRebuild    n/s
+       orderCondition      n/s
+       orderCreate         n/s
+       orderDestroy        n/s
+       orderInfo           none
+       clearFilter*        none
+       clearLocate*        none
+       clearScope          n/s
+       filterText*         none
+       setFilter*          none
+       setLocate*          none
+       setScope            n/s
+       compile*            none
+       error*              sysName
+       evalBlock*          none
+       lock                n/s
+       unlock              n/s
+
+
+       * Implementation optional - sufficient functionality is
+         supplied by the abstract class
+
+       @ If implemented, a SUPER call should be made to the
+         abstract class
+
+       # Method can only be inherited and used if NO extensions
+         to the workarea structure are made
+
+                           << END >>

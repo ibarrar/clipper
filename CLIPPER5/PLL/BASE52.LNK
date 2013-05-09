@@ -1,0 +1,71 @@
+#
+#  Base52.lnk
+#
+#  Link script for base PLL creation
+#
+#  Copyright (c) 1990-1993, Computer Associates International, Inc.
+#  All rights reserved.
+#
+
+prelink
+output base52
+
+lib clipper
+lib extend
+
+#
+#  The following lines are provided to allow inclusion of one of the
+#  various general terminal (GT) drivers.  By default, Terminal.lib
+#  will be used.  If another driver is desired, simply comment out
+#  the reference to Terminal.lib below and uncomment one of the other
+#  terminal drivers.  The PCBIOS and ANSITerm GT drivers require that
+#  the object file gt.obj be linked in.  This file is located in the
+#  \OBJ directory of the default installation.  If the OBJ environment
+#  variable is set to the \OBJ directory, RTLink will locate it
+#  automatically.
+#
+lib terminal
+#  lib pcbios    fi gt
+#  lib ansiterm  fi gt
+#  lib novterm
+
+
+#
+#  The following lines are provided to allow inclusion of one or more
+#  of the various Replaceable Database Drivers (RDDs).  The system
+#  program file Rddsys.prg defines which driver will operate as the
+#  default.  The version of Rddsys.prg provided makes Dbfntx.lib the
+#  default RDD.  In order to change the default RDD, this file must be 
+#  changed to refer to the RDD desired.  Rddsys.prg can be found
+#  in the SOURCE\SYS subdirectory of the installation.  To include any
+#  of the RDDs listed below uncomment its line.  For example, to include
+#  the Dbfmdx RDD, uncomment the line "lib dbfmdx  refer dbfmdx" below.
+#
+lib dbfntx  refer dbfntx
+#  lib dbfndx  refer dbfndx
+#  lib dbfmdx  refer dbfmdx
+#  lib dbfcdx  refer dbfcdx
+#  lib dbpx    refer dbpx
+
+refer _VOPS, _VMACRO, _VDB
+refer _VTERM, _VPICT, _VGETSYS
+refer _VDBG
+
+#
+#  If you are providing an alternate Rddsys (Rddsys.obj) to establish
+#  another RDD as the default driver, uncomment the "file RDDSYS" line
+#  and comment out the "exclude RDDSYS" line below.
+#
+#  file RDDSYS
+#
+exclude RDDSYS
+
+exclude ERRORSYS
+
+#
+#  CA-Clipper 5.2 International Release - National language support.
+#  These exclusions remove 'pre-linking symbol redefined' warning messages
+#
+exclude NATIONMSG, __NATRDDVER, ISALPHA, __EXACTCMP
+
+

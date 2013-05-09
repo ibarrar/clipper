@@ -1,0 +1,830 @@
+/***
+*
+*  Rdd.api
+*
+*  C language definitions for the Clipper RDD API
+*
+*  Copyright (c) 1990-1993, Computer Associates International, Inc.
+*  All rights reserved.
+*
+*/
+
+
+#ifndef _RDD_API
+
+
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+#ifndef _ITEM_API
+#include "item.api"
+#endif
+
+
+/*
+*  DBFIELDINFO
+*  -----------
+*  The field structure
+*/
+
+typedef struct
+{
+   BYTEP  name;            // FIELD (symbol) name
+   USHORT type;            // FIELD type
+   USHORT typeExtended;    // FIELD type extended
+   USHORT len;             // Overall FIELD length
+   USHORT dec;             // Decimal places of numeric FIELD
+} DBFIELDINFO;
+
+typedef DBFIELDINFO far * DBFIELDINFOP;
+
+
+
+/*
+*  DBOPENINFO
+*  ----------
+*  The Open Info structure
+*/
+
+typedef struct
+{
+   USHORT area;      // Work Area number of the data store
+   BYTEP  name;      // The qualified name of the data store
+   BYTEP  alias;     // The logical name of the data store
+   BOOL   shared;    // Share mode of the data store
+   BOOL   readonly;  // Readonly mode of the data store
+} DBOPENINFO;
+
+typedef DBOPENINFO far * DBOPENINFOP;
+
+
+
+/*
+*  DBORDERCONDINFO
+*  ---------------
+*  The Create Order conditional Info structure
+*/
+
+typedef struct _ORDERCONDINFO_
+{
+   BOOL  active;
+   BYTEP cFor;
+   ITEM  bFor;
+   ITEM  bWhile;
+   ITEM  bEval;
+   LONG  step;
+   LONG  startRecord;
+   LONG  nextCount;
+   LONG  record;
+   BOOL  rest;
+   BOOL  descending;
+   BOOL  scoped;
+   BOOL  all;
+} DBORDERCONDINFO;
+
+typedef DBORDERCONDINFO far * DBORDERCONDINFOP;
+
+
+
+/*
+*  DBORDERCREATE
+*  -------------
+*  The Create Order Info structure
+*/
+
+typedef struct
+{
+   DBORDERCONDINFOP condition;  // conditional information
+   BYTEP            bagName;    // Name of the Order bag
+   BYTEP            ordName;    // Name of the Order
+   BOOL             unique;     // Flag to deterimine if all keys are unique
+
+   ITEM             bExpr;      // Code block containing the KEY expression
+   ITEM             cExpr;      // String containing the KEY expression
+} DBORDERCREATEINFO;
+
+typedef DBORDERCREATEINFO far * DBORDERCREATEINFOP;
+
+
+
+/*
+*  DBORDERINFO
+*  -----------
+*  The Set Index Info structure
+*/
+
+typedef struct
+{
+   ITEM orderBag;  // Name of the Order Bag
+   ITEM order;     // Name or Number of the Order
+
+   ITEM result;    // Operation result
+   
+} DBORDERINFO;
+
+typedef DBORDERINFO far * DBORDERINFOP;
+
+
+
+/*
+*  DBSCOPEINFO
+*  -----------
+*  The Scope Info structure
+*/
+
+typedef struct
+{
+   ITEM bFor;        // Code Block representation of a FOR clause
+   ITEM cFor;        // String representation of a FOR clause
+   ITEM bWhile;      // Code Block representation of a WHILE clause
+   ITEM cWhile;      // String representation of a WHILE clause
+   ITEM nNext;
+   ITEM nRecord;     // NEXT record
+   ITEM lRest;       // TRUE if start from the current record
+} DBSCOPEINFO;
+
+typedef DBSCOPEINFO far * DBSCOPEINFOP;
+
+
+
+/*
+*  DBFILTERINFO
+*  ------------
+*  The Filter Info structure
+*/
+
+typedef struct
+{
+   ITEM bExpr;       // Block representation of the FILTER expression
+   ITEM cExpr;       // String representation of FILTER expression
+} DBFILTERINFO;
+
+typedef DBFILTERINFO far * DBFILTERINFOP;
+
+
+
+/*
+*  DBRELINFO
+*  ------------
+*  The Relationship Info structure
+*/
+
+typedef struct _DBRELINFO_
+{
+   ITEM bExpr;       // Block representation of the relational SEEK key
+   ITEM cExpr;       // String representation of the relational SEEK key
+
+   struct _WORKAREA_ far * parent;  // The parent of this relation
+   struct _WORKAREA_ far * child;   // The parents children
+
+   struct _DBRELINFO_ far * next;   // Next child or parent
+
+} DBRELINFO;
+
+typedef DBRELINFO far * DBRELINFOP;
+
+
+
+/*
+*  DBEVALINFO
+*  ------------
+*  The Evaluation Info structure
+*
+*  Contains information necessary for a block evaluation
+*  on each record of the workarea
+*/
+
+typedef struct
+{
+   ITEM        bBlock;  // The block to be evaluated
+   DBSCOPEINFO scope;   // Scope info that limits the evaluation
+} DBEVALINFO;
+
+typedef DBEVALINFO far * DBEVALINFOP;
+
+
+
+/*
+*  DBTRANSITEM
+*  ------------
+*  The Transfer Item structure
+*
+*  Defines a single transfer item (usually a field) from
+*  one database to another; used by DBTRANSINFO
+*/
+
+typedef struct
+{
+   USHORT source;       // Field index number from the source
+   USHORT dest;         // Destination field index number
+} DBTRANSITEM;
+
+typedef DBTRANSITEM far * DBTRANSITEMP;
+
+
+
+/*
+*  DBTRANSINFO
+*  ------------
+*  The Transfer Info structure
+*
+*  Defines a global transfer of data items from on workarea
+*  to another
+*/
+
+typedef struct
+{
+   struct _WORKAREA_ far *dest;  // Pointer to dest work area
+   DBSCOPEINFO  scope;           // Scope to limit transfer
+
+   USHORT       flags;           // Transfer attributes
+
+   USHORT       itemCount;       // Number of items below
+   DBTRANSITEMP items;           // Array of items.
+} DBTRANSINFO;
+
+typedef DBTRANSINFO far * DBTRANSINFOP;
+
+// Flags for DBTRANSINFO
+#define DBTF_MATCH   0x0001
+#define DBTF_PUTREC  0x0002
+
+
+
+/*
+*  DBSORTITEM
+*  ----------
+*  The Sort Item Structure
+*
+*  An array of items that, together, indicate the key value to
+*  use while sorting data. The order of the array determines the 
+*  order of the sorting.
+*/
+
+typedef struct
+{
+   USHORT field;        // Index into the workarea->fields structure
+   USHORT flags;        // sort flags
+} DBSORTITEM;
+
+typedef DBSORTITEM far * DBSORTITEMP;
+
+// Flags for DBSORTITEM
+#define SF_ASCEND    1
+#define SF_CASE		2
+#define SF_DESCEND	4
+#define SF_NUM       32
+#define SF_DOUBLE    64
+#define SF_LONG		128
+
+
+
+/*
+*  DBSORTINFO
+*  ----------
+*  The Sort Info Structure
+*
+*  Information for a physical sort on the workarea
+*/
+
+typedef struct
+{
+   DBTRANSINFO trans;      // Destination workarea transfer information
+
+   DBSORTITEMP sortItems;  // Fields which compose the key values for the sort
+   USHORT      itemCount;  // the number of fields above
+
+} DBSORTINFO;
+
+typedef DBSORTINFO far * DBSORTINFOP;
+
+
+
+/*
+*  DBLOCKINFO
+*  ----------
+*  The Lock Info Structure
+*
+*  Information for a record or file lock
+*/
+
+typedef struct
+{
+   ULONG  record;
+   USHORT method;
+   BOOL   result;
+} DBLOCKINFO;
+
+typedef DBLOCKINFO far * DBLOCKINFOP;
+
+
+
+/*
+*  FIELD
+*  -----
+*  The Field structure
+*
+*  This is the basic unit of access for a workarea
+*/
+
+typedef struct _FIELD_
+{
+   USHORT  type;           // Field type
+   USHORT  typeExtended;   // Field type - extended
+   USHORT  len;            // Field length
+   USHORT  dec;            // Decimal length
+   USHORT  area;           // Area this field resides in
+   FARP    sym;            // Symbol that represents the field
+
+   struct _FIELD_ * next;  // The next field in the list
+
+} FIELD;
+
+typedef FIELD far * FIELDP;
+
+
+
+/*--------------------* WORKAREA structure *----------------------*/
+
+/*
+*  WORKAREA
+*  --------
+*  The Workarea Structure
+*
+*  Information to administrate the workarea
+*/
+
+typedef struct _WORKAREA_
+{
+   struct _DBFUNCTABLE_ far * ftable; // Virtual method table for this workarea
+
+   USHORT  area;           // The number assigned to this workarea
+   FARP    alias;          // Pointer to the alias symbol for this workarea
+
+   USHORT fieldExtent;     // Total number of fields allocated
+   USHORT fieldCount;      // Total number of fields used
+   FIELDP fields;          // Pointer to an array of fields
+
+   ITEM result;            // All purpose result holder
+
+   BOOL top;               // TRUE if "top"
+   BOOL bottom;            // TRUE if "bottom"
+   BOOL bof;               // TRUE if "bof"
+   BOOL eof;               // TRUE if "eof"
+   BOOL found;             // TRUE if "found"
+
+   DBSCOPEINFO  locate;    // Info regarding last LOCATE
+   DBFILTERINFO filter;    // Filter in effect
+
+   DBRELINFOP   relations; // Parent/Child relationships used
+   USHORT       parents;   // Number of parents for this area
+
+   HANDLE   heap;
+   USHORT   heapSize;
+
+   USHORT   rddID;
+
+} WORKAREA;
+
+typedef WORKAREA far * WORKAREAP;
+
+#ifndef AREAP
+#define AREAP   WORKAREAP
+#endif
+
+
+
+/*--------------------* Entry Point prototypes *----------------------*/
+
+typedef USHORT (far * DBENTRYP_V)(AREAP area);
+typedef USHORT (far * DBENTRYP_S)(AREAP area, USHORT param);
+typedef USHORT (far * DBENTRYP_L)(AREAP area, LONG param);
+typedef USHORT (far * DBENTRYP_SP)(AREAP area, USHORTP param);
+typedef USHORT (far * DBENTRYP_LP)(AREAP area, LONGP param);
+typedef USHORT (far * DBENTRYP_VP)(AREAP area, FARP param);
+typedef USHORT (far * DBENTRYP_SVP)(AREAP area, USHORT index, FARP param);
+
+typedef USHORT (far * DBENTRYP_I)  (AREAP area, ITEM param);
+typedef USHORT (far * DBENTRYP_SI) (AREAP area, USHORT index, ITEM param);
+
+
+
+/*--------------------* Virtual Method Table *----------------------*/
+
+typedef struct _DBFUNCTABLE_
+{
+
+   /* Movement and positioning methods */
+
+   DBENTRYP_SP  bof;             /* SP  */
+   DBENTRYP_SP  eof;             /* SP  */
+   DBENTRYP_SP  found;           /* SP  */
+   DBENTRYP_V   goBottom;        /* V   */
+   DBENTRYP_L   go;              /* L   */
+   DBENTRYP_I   goToId;          /* I   */
+   DBENTRYP_V   goTop;           /* V   */
+   DBENTRYP_SI  seek;            /* SI  */
+   DBENTRYP_L   skip;            /* L   */
+   DBENTRYP_L   skipFilter;      /* L   */
+   DBENTRYP_L   skipRaw;         /* L   */
+
+
+   /* Data management */
+
+   DBENTRYP_VP  addField;        /* VP  */
+   DBENTRYP_S   append;          /* S   */
+   DBENTRYP_V   delete;          /* V   */
+   DBENTRYP_SP  deleted;         /* SP  */
+   DBENTRYP_SP  fieldCount;      /* SP  */
+   DBENTRYP_SVP fieldName;       /* SVP */
+   DBENTRYP_V   flush;           /* V   */
+   DBENTRYP_SI  getValue;        /* SI  */
+   DBENTRYP_SVP getVarLen;       /* SVP */
+   DBENTRYP_V   goCold;          /* V   */
+   DBENTRYP_V   goHot;           /* V   */
+   DBENTRYP_VP  putRec;          /* VP  */
+   DBENTRYP_SI  putValue;        /* SI  */
+   DBENTRYP_V   recall;          /* V   */
+   DBENTRYP_LP  reccount;        /* LP  */
+   DBENTRYP_I   recno;           /* I   */
+   DBENTRYP_S   setFieldExtent;  /* S   */
+
+   /* WorkArea/Database management */
+
+   DBENTRYP_VP  alias;           /* VP  */
+   DBENTRYP_V   close;           /* V   */
+   DBENTRYP_VP  create;          /* VP  */
+   DBENTRYP_SI  info;            /* SI  */
+   DBENTRYP_V   new;             /* V   */
+   DBENTRYP_VP  open;            /* VP  */
+   DBENTRYP_V   release;         /* V   */
+   DBENTRYP_SP  structSize;      /* SP  */
+   DBENTRYP_VP  sysName;         /* VP  */
+   DBENTRYP_VP  dbEval;          /* VP  */
+   DBENTRYP_V   pack;            /* V   */
+   DBENTRYP_VP  sort;            /* VP  */
+   DBENTRYP_VP  trans;           /* VP  */
+   DBENTRYP_VP  transRec;        /* VP  */
+   DBENTRYP_V   zap;             /* V   */
+
+
+   /* Relational Methods */
+
+   DBENTRYP_VP  childEnd;        /* VP  */
+   DBENTRYP_VP  childStart;      /* VP  */
+   DBENTRYP_VP  childSync;       /* VP  */
+   DBENTRYP_V   syncChildren;    /* V   */
+   DBENTRYP_V   clearRel;        /* V   */
+   DBENTRYP_V   forceRel;        /* V   */
+   DBENTRYP_SVP relArea;         /* SVP */
+   DBENTRYP_VP  relEval;         /* VP  */
+   DBENTRYP_SVP relText;         /* SVP */
+   DBENTRYP_VP  setRel;          /* VP  */
+
+
+   /* Order Management */
+
+   DBENTRYP_VP  orderListAdd;     /* VP  */
+   DBENTRYP_V   orderListClear;   /* V   */
+   DBENTRYP_VP  orderListDelete;  /* VP  */
+   DBENTRYP_VP  orderListFocus;   /* VP */
+   DBENTRYP_V   orderListRebuild; /* V   */
+
+   DBENTRYP_VP  orderCondition;   /* VP  */
+   DBENTRYP_VP  orderCreate;      /* VP  */
+   DBENTRYP_VP  orderDestroy;     /* VP  */
+   DBENTRYP_SVP orderInfo;        /* SVP */
+
+   /* Filters and Scope Settings */
+
+   DBENTRYP_V   clearFilter;     /* V   */
+   DBENTRYP_V   clearLocate;     /* V   */
+   DBENTRYP_V   clearScope;      /* V   */
+   DBENTRYP_VP  filterText;      /* VP  */
+   DBENTRYP_VP  setFilter;       /* VP  */
+   DBENTRYP_VP  setLocate;       /* VP  */
+   DBENTRYP_VP  setScope;        /* VP  */
+
+   /* Miscellaneous */
+
+   DBENTRYP_VP  compile;         /* VP */
+   DBENTRYP_VP  error;           /* VP */
+   DBENTRYP_I   evalBlock;       /* I  */
+
+
+   /* Network operations */
+
+   DBENTRYP_VP  lock;            /* VP  */
+   DBENTRYP_L   unlock;          /* L   */
+
+} DBFUNCTABLE;
+
+typedef DBFUNCTABLE  far * DBFUNCTABLEP;
+typedef DBFUNCTABLEP far * DBFUNCTABLEPP;
+
+#define DBFUNCCOUNT   ( sizeof(DBFUNCTABLE) / sizeof(DBENTRYP_V) )
+
+
+
+/*--------------------* Defines *---------------------*/
+
+/* Codes for Locking methods */
+
+#define DBLM_EXCLUSIVE     1
+#define DBLM_MULTIPLE      2
+#define DBLM_FILE          3
+
+/* Codes for SELFORDINFO() */
+
+#define DBOI_CONDITION     1  /* Get the order condition     */
+#define DBOI_EXPRESSION    2  /* Get the order expression    */
+#define DBOI_POSITION      3  /* Get the order position      */
+#define DBOI_RECNO         4  /* Get the order record number */
+#define DBOI_NAME          5  /* Get the order list name     */
+#define DBOI_NUMBER        6  /* Get the order list position */
+#define DBOI_BAGNAME       7  /* Get the order Bag name      */
+#define DBOI_BAGEXT        8  /* Get the order Bag Extension */
+
+/* Codes for SELFINFO() */
+
+#define DBI_ISDBF          1  /* Logical: RDD support DBF file format? */
+#define DBI_CANPUTREC      2  /* Logical: RDD support Putting Records? */
+#define DBI_GETHEADERSIZE  3  /* Numeric: Get header size of the file  */
+#define DBI_LASTUPDATED    4  /* Date:    Last date RDD file updated   */
+#define DBI_GETDELIMITER	5  /* String:  Get default delimiter        */
+#define DBI_SETDELIMITER	6  /* String:  Set default delimiter        */
+#define DBI_GETRECSIZE     7  /* Numeric: Get record size of the file  */
+#define DBI_GETLOCKARRAY   8  /* Array:   Get array of locked records  */
+#define DBI_TABLEEXT       9  /* String:  Get table file extension     */
+
+#define DBI_USER        1000  /* Start of user definable DBI_ values   */
+
+
+
+/*--------------------* SELF Methods *------------------------*/
+
+/* Movement and positioning methods */
+
+#define SELFBOF(w, sp)            ((*(w)->ftable->bof)(w, sp))
+#define SELFEOF(w, sp)            ((*(w)->ftable->eof)(w, sp))
+#define SELFFOUND(w, sp)          ((*(w)->ftable->found)(w, sp))
+#define SELFGOTO(w, l)            ((*(w)->ftable->go)(w, l))
+#define SELFGOTOID(w, sp)         ((*(w)->ftable->goToId)(w, sp))
+#define SELFGOBOTTOM(w)           ((*(w)->ftable->goBottom)(w))
+#define SELFGOTOP(w)              ((*(w)->ftable->goTop)(w))
+#define SELFSEEK(w, i, v)         ((*(w)->ftable->seek)(w, i, v))
+#define SELFSKIP(w, l)            ((*(w)->ftable->skip)(w, l))
+#define SELFSKIPFILTER(w, l)      ((*(w)->ftable->skipFilter)(w, l))
+#define SELFSKIPRAW(w, l)         ((*(w)->ftable->skipRaw)(w, l))
+
+
+/* Data management */
+
+#define SELFADDFIELD(w, ip)       ((*(w)->ftable->addField)(w, ip))
+#define SELFAPPEND(w,l)           ((*(w)->ftable->append)(w,l))
+#define SELFDELETE(w)             ((*(w)->ftable->delete)(w))
+#define SELFDELETED(w, sp)        ((*(w)->ftable->deleted)(w, sp))
+#define SELFFIELDCOUNT(w, sp)     ((*(w)->ftable->fieldCount)(w, sp))
+#define SELFFIELDNAME(w, i, bp)   ((*(w)->ftable->fieldName)(w, i, bp))
+#define SELFFLUSH(w)              ((*(w)->ftable->flush)(w))
+#define SELFGETVALUE(w, i, v)     ((*(w)->ftable->getValue)(w, i, v))
+#define SELFGETVARLEN(w, i, lp)   ((*(w)->ftable->getVarLen)(w, i, lp))
+#define SELFGOCOLD(w)             ((*(w)->ftable->goCold)(w))
+#define SELFGOHOT(w)              ((*(w)->ftable->goHot)(w))
+#define SELFPUTVALUE(w, i, v)     ((*(w)->ftable->putValue)(w, i, v))
+#define SELFPUTREC(w, bp)         ((*(w)->ftable->putRec)(w, bp))
+#define SELFRECALL(w)             ((*(w)->ftable->recall)(w))
+#define SELFRECCOUNT(w, sp)       ((*(w)->ftable->reccount)(w, sp))
+#define SELFRECNO(w, i)           ((*(w)->ftable->recno)(w, i))
+#define SELFSETFIELDEXTENT(w, s)  ((*(w)->ftable->setFieldExtent)(w, s))
+
+
+/* WorkArea/Database management */
+
+#define SELFALIAS(w, bp)          ((*(w)->ftable->alias)(w, bp))
+#define SELFCLOSE(w)              ((*(w)->ftable->close)(w))
+#define SELFCREATE(w, ip)         ((*(w)->ftable->create)(w, ip))
+#define SELFINFO(w, i, g)         ((*(w)->ftable->info)(w, i, g))
+#define SELFNEW(w)                ((*(w)->ftable->new)(w))
+#define SELFOPEN(w, ip)           ((*(w)->ftable->open)(w, ip))
+#define SELFRELEASE(w)            ((*(w)->ftable->release)(w))
+#define SELFSTRUCTSIZE(w, sp)     ((*(w)->ftable->structSize)(w, sp))
+#define SELFSYSNAME(w, bp)        ((*(w)->ftable->sysName)(w, bp))
+#define SELFDBEVAL(w, ip)         ((*(w)->ftable->dbEval)(w, ip))
+#define SELFPACK(w)               ((*(w)->ftable->pack)(w))
+#define SELFSORT(w, ip)           ((*(w)->ftable->sort)(w, ip))
+#define SELFTRANS(w, ip)          ((*(w)->ftable->trans)(w, ip))
+#define SELFTRANSREC(w, ip)       ((*(w)->ftable->transRec)(w, ip))
+#define SELFZAP(w)                ((*(w)->ftable->zap)(w))
+
+
+/* Relational Methods */
+
+#define SELFCHILDEND(w, ip)       ((*(w)->ftable->childEnd)(w, ip))
+#define SELFCHILDSTART(w, ip)     ((*(w)->ftable->childStart)(w, ip))
+#define SELFCHILDSYNC(w, ip)      ((*(w)->ftable->childSync)(w, ip))
+#define SELFSYNCCHILDREN(w)       ((*(w)->ftable->syncChildren)(w))
+#define SELFCLEARREL(w)           ((*(w)->ftable->clearRel)(w))
+#define SELFFORCEREL(w)           ((*(w)->ftable->forceRel)(w))
+#define SELFRELAREA(w, s, sp)     ((*(w)->ftable->relArea)(w, s, sp))
+#define SELFRELEVAL(w, ip)        ((*(w)->ftable->relEval)(w, ip))
+#define SELFRELTEXT(w, s, bp)     ((*(w)->ftable->relText)(w, s, bp))
+#define SELFSETREL(w, ip)         ((*(w)->ftable->setRel)(w, ip))
+
+
+/* Order Management */
+
+#define SELFORDLSTADD(w, lp)     ((*(w)->ftable->orderListAdd)(w, lp))
+#define SELFORDLSTDELETE(w, lp)  ((*(w)->ftable->orderListDelete)(w, lp))
+#define SELFORDLSTFOCUS(w, lp)   ((*(w)->ftable->orderListFocus)(w,lp))
+#define SELFORDLSTREBUILD(w)     ((*(w)->ftable->orderListRebuild)(w))
+#define SELFORDLSTCLEAR(w)       ((*(w)->ftable->orderListClear)(w))
+
+#define SELFORDSETCOND(w, ip) ((*(w)->ftable->orderCondition)(w, ip))
+#define SELFORDCREATE(w, ip)  ((*(w)->ftable->orderCreate)(w, ip))
+#define SELFORDDESTROY(w, p)  ((*(w)->ftable->orderDestroy)(w, p))
+#define SELFORDINFO(w, i, p)  ((*(w)->ftable->orderInfo)(w, i, p))
+#define SELFORDEXPR(w, p)     ((*(w)->ftable->orderInfo)(w, DBOI_EXPRESSION, p))
+#define SELFORDCOND(w, p)     ((*(w)->ftable->orderInfo)(w, DBOI_CONDITION,  p))
+#define SELFORDRECNO(w, p)    ((*(w)->ftable->orderInfo)(w, DBOI_RECNO,      p))
+#define SELFORDPOS(w, p)      ((*(w)->ftable->orderInfo)(w, DBOI_POSITION,   p))
+#define SELFORDNUMBER(w, p)   ((*(w)->ftable->orderInfo)(w, DBOI_NUMBER,     p))
+#define SELFORDNAME(w, p)     ((*(w)->ftable->orderInfo)(w, DBOI_NAME,       p))
+#define SELFORDBAGNAME(w, p)  ((*(w)->ftable->orderInfo)(w, DBOI_BAGNAME,    p))
+#define SELFORDBAGEXT(w,  p)  ((*(w)->ftable->orderInfo)(w, DBOI_BAGEXT,     p))
+
+
+/* Filters and Scope Settings */
+
+#define SELFCLEARFILTER(w)        ((*(w)->ftable->clearFilter)(w))
+#define SELFCLEARLOCATE(w)        ((*(w)->ftable->clearLocate)(w))
+#define SELFFILTERTEXT(w, bp)     ((*(w)->ftable->filterText)(w, bp))
+#define SELFSETFILTER(w, ip)      ((*(w)->ftable->setFilter)(w, ip))
+#define SELFSETLOCATE(w, ip)      ((*(w)->ftable->setLocate)(w, ip))
+
+
+/* Miscellaneous */
+
+#define SELFCOMPILE(w, bp)        ((*(w)->ftable->compile)(w, bp))
+#define SELFERROR(w, ip)          ((*(w)->ftable->error)(w, ip))
+#define SELFEVALBLOCK(w, v)       ((*(w)->ftable->evalBlock)(w, v))
+
+
+/* Network operations */
+
+#define SELFGETLOCKS(w, g)        ((*(w)->ftable->info)(w, DBI_GETLOCKARRAY, g))
+#define SELFLOCK(w, sp)           ((*(w)->ftable->lock)(w, sp))
+#define SELFUNLOCK(w, l)          ((*(w)->ftable->unlock)(w, l))
+
+
+/* Info operations */
+
+#define SELFRECSIZE(w, lp)        ((*(w)->ftable->info)(w, DBI_GETRECSIZE, lp))
+#define SELFHEADERSIZE(w, fp)     ((*(w)->ftable->info)(w, DBI_GETHEADERSIZE, fp))
+#define SELFLUPDATE(w, fp)        ((*(w)->ftable->info)(w, DBI_LASTUPDATED, fp ))
+#define SELFSETDELIM(w, fp)       ((*(w)->ftable->info)(w, DBI_SETDELIMITER, fp))
+#define SELFGETDELIM(w, fp)       ((*(w)->ftable->info)(w, DBI_GETDELIMITER, fp))
+#define SELFTABLEEXT(w, fp)       ((*(w)->ftable->info)(w, DBI_TABLEEXT, fp))
+
+
+
+/*--------------------* SUPER Methods *------------------------*/
+
+/* Movement and positioning methods */
+
+#define SUPERBOF(w, sp)            ((*(SUPERTABLE)->bof)(w, sp))
+#define SUPEREOF(w, sp)            ((*(SUPERTABLE)->eof)(w, sp))
+#define SUPERFOUND(w, sp)          ((*(SUPERTABLE)->found)(w, sp))
+#define SUPERGOTO(w, l)            ((*(SUPERTABLE)->go)(w, l))
+#define SUPERGOTOID(w, sp)         ((*(SUPERTABLE)->goToId)(w, sp))
+#define SUPERGOBOTTOM(w)           ((*(SUPERTABLE)->goBottom)(w))
+#define SUPERGOTOP(w)              ((*(SUPERTABLE)->goTop)(w))
+#define SUPERSEEK(w, i, v)         ((*(SUPERTABLE)->seek)(w, i, v))
+#define SUPERSKIP(w, l)            ((*(SUPERTABLE)->skip)(w, l))
+#define SUPERSKIPFILTER(w, l)      ((*(SUPERTABLE)->skipFilter)(w, l))
+#define SUPERSKIPRAW(w, l)         ((*(SUPERTABLE)->skipRaw)(w, l))
+
+
+/* Data management */
+
+#define SUPERADDFIELD(w, ip)       ((*(SUPERTABLE)->addField)(w, ip))
+#define SUPERAPPEND(w,l)           ((*(SUPERTABLE)->append)(w,l))
+#define SUPERDELETE(w)             ((*(SUPERTABLE)->delete)(w))
+#define SUPERDELETED(w, sp)        ((*(SUPERTABLE)->deleted)(w, sp))
+#define SUPERFIELDCOUNT(w, sp)     ((*(SUPERTABLE)->fieldCount)(w, sp))
+#define SUPERFIELDNAME(w, i, bp)   ((*(SUPERTABLE)->fieldName)(w, i, bp))
+#define SUPERFLUSH(w)              ((*(SUPERTABLE)->flush)(w))
+#define SUPERGETVALUE(w, i, v)     ((*(SUPERTABLE)->getValue)(w, i, v))
+#define SUPERGETVARLEN(w, i, lp)   ((*(SUPERTABLE)->getVarLen)(w, i, lp))
+#define SUPERGOCOLD(w)             ((*(SUPERTABLE)->goCold)(w))
+#define SUPERGOHOT(w)              ((*(SUPERTABLE)->goHot)(w))
+#define SUPERPUTVALUE(w, i, v)     ((*(SUPERTABLE)->putValue)(w, i, v))
+#define SUPERPUTREC(w, bp)         ((*(SUPERTABLE)->putRec)(w, bp))
+#define SUPERRECALL(w)             ((*(SUPERTABLE)->recall)(w))
+#define SUPERRECCOUNT(w, sp)       ((*(SUPERTABLE)->reccount)(w, sp))
+#define SUPERRECNO(w, i)           ((*(SUPERTABLE)->recno)(w, i))
+#define SUPERSETFIELDEXTENT(w, s)  ((*(SUPERTABLE)->setFieldExtent)(w, s))
+
+
+/* WorkArea/Database management */
+
+#define SUPERALIAS(w, bp)        ((*(SUPERTABLE)->alias)(w, bp))
+#define SUPERCLOSE(w)            ((*(SUPERTABLE)->close)(w))
+#define SUPERCREATE(w, ip)       ((*(SUPERTABLE)->create)(w, ip))
+#define SUPERINFO(w, i, g)       ((*(SUPERTABLE)->info)(w, i, g))
+#define SUPERNEW(w)              ((*(SUPERTABLE)->new)(w))
+#define SUPEROPEN(w, ip)         ((*(SUPERTABLE)->open)(w, ip))
+#define SUPERRELEASE(w)          ((*(SUPERTABLE)->release)(w))
+#define SUPERSTRUCTSIZE(w, sp)       ((*(SUPERTABLE)->structSize)(w, sp))
+#define SUPERSYSNAME(w, bp)      ((*(SUPERTABLE)->sysName)(w, bp))
+#define SUPERDBEVAL(w, ip)       ((*(SUPERTABLE)->dbEval)(w, ip))
+#define SUPERPACK(w)             ((*(SUPERTABLE)->pack)(w))
+#define SUPERSORT(w, ip)         ((*(SUPERTABLE)->sort)(w, ip))
+#define SUPERTRANS(w, ip)        ((*(SUPERTABLE)->trans)(w, ip))
+#define SUPERTRANSREC(w, ip)     ((*(SUPERTABLE)->transRec)(w, ip))
+#define SUPERZAP(w)              ((*(SUPERTABLE)->zap)(w))
+
+
+/* Relational Methods */
+
+#define SUPERCHILDEND(w, ip)     ((*(SUPERTABLE)->childEnd)(w, ip))
+#define SUPERCHILDSTART(w, ip)   ((*(SUPERTABLE)->childStart)(w, ip))
+#define SUPERCHILDSYNC(w, ip)    ((*(SUPERTABLE)->childSync)(w, ip))
+#define SUPERSYNCCHILDREN(w)     ((*(SUPERTABLE)->syncChildren)(w))
+#define SUPERCLEARREL(w)         ((*(SUPERTABLE)->clearRel)(w))
+#define SUPERFORCEREL(w)         ((*(SUPERTABLE)->forceRel)(w))
+#define SUPERRELAREA(w, s, sp)   ((*(SUPERTABLE)->relArea)(w, s, sp))
+#define SUPERRELEVAL(w, ip)      ((*(SUPERTABLE)->relEval)(w, ip))
+#define SUPERRELTEXT(w, s, bp)   ((*(SUPERTABLE)->relText)(w, s, bp))
+#define SUPERSETREL(w, ip)       ((*(SUPERTABLE)->setRel)(w, ip))
+
+
+/* Order Management */
+
+#define SUPERORDLSTADD(w, lp)    ((*(SUPERTABLE)->orderListAdd)(w, lp))
+#define SUPERORDLSTDELETE(w, lp) ((*(SUPERTABLE)->orderListDelete)(w, lp))
+#define SUPERORDLSTFOCUS(w, lp)  ((*(SUPERTABLE)->orderListFocus)(w, lp))
+#define SUPERORDLSTREBUILD(w)    ((*(SUPERTABLE)->orderListRebuild)(w))
+#define SUPERORDLSTCLEAR(w)      ((*(SUPERTABLE)->orderListClear)(w))
+
+#define SUPERORDSETCOND(w,ip) ((*(SUPERTABLE)->orderCondition)(w, ip))
+#define SUPERORDCREATE(w, ip) ((*(SUPERTABLE)->orderCreate)(w, ip))
+#define SUPERORDDELETE(w, ip) ((*(SUPERTABLE)->orderDelete)(w, ip))
+#define SUPERORDINFO(w, i, p) ((*(SUPERTABLE)->orderInfo)(w, i, p))
+#define SUPERORDEXPR(w, p)    ((*(SUPERTABLE)->orderInfo)(w, DBOI_EXPRESSION, p))
+#define SUPERORDCOND(w, p)    ((*(SUPERTABLE)->orderInfo)(w, DBOI_CONDITION,  p))
+#define SUPERORDRECNO(w, p)   ((*(SUPERTABLE)->orderInfo)(w, DBOI_RECNO,      p))
+#define SUPERORDPOS(w, p)     ((*(SUPERTABLE)->orderInfo)(w, DBOI_POSITION,   p))
+#define SUPERORDNUMBER(w, p)  ((*(SUPERTABLE)->orderInfo)(w, DBOI_NUMBER,     p))
+#define SUPERORDNAME(w, p)    ((*(SUPERTABLE)->orderInfo)(w, DBOI_NAME,       p))
+#define SUPERORDBAGNAME(w, p) ((*(SUPERTABLE)->orderInfo)(w, DBOI_BAGNAME,    p))
+#define SUPERORDBAGEXT(w,  p) ((*(SUPERTABLE)->orderInfo)(w, DBOI_BAGEXT,     p))
+
+
+/* Filters and Scope Settings */
+
+#define SUPERCLEARFILTER(w)      ((*(SUPERTABLE)->clearFilter)(w))
+#define SUPERCLEARLOCATE(w)      ((*(SUPERTABLE)->clearLocate)(w))
+#define SUPERFILTERTEXT(w, bp)   ((*(SUPERTABLE)->filterText)(w, bp))
+#define SUPERSETFILTER(w, ip)    ((*(SUPERTABLE)->setFilter)(w, ip))
+#define SUPERSETLOCATE(w, ip)    ((*(SUPERTABLE)->setLocate)(w, ip))
+
+
+/* Miscellaneous */
+
+#define SUPERCOMPILE(w, bp)      ((*(SUPERTABLE)->compile)(w, bp))
+#define SUPERERROR(w, ip)        ((*(SUPERTABLE)->error)(w, ip))
+#define SUPEREVALBLOCK(w, v)     ((*(SUPERTABLE)->evalBlock)(w, v))
+
+
+/* Network operations */
+
+#define SUPERGETLOCKS(w, g)      ((*(SUPERTABLE)->info)(w, DBI_GETLOCKARRAY, g))
+#define SUPERLOCK(w, sp)         ((*(SUPERTABLE)->lock)(w, sp))
+#define SUPERUNLOCK(w, l)        ((*(SUPERTABLE)->unlock)(w, l))
+
+/* Info operations */
+
+#define SUPERRECSIZE(w, lp)      ((*(SUPERTABLE)->info)(w, DBI_GETRECSIZE, lp))
+#define SUPERHEADERSIZE(w, fp)   ((*(SUPERTABLE)->info)(w, DBI_GETHEADERSIZE, fp))
+#define SUPERLUPDATE(w, fp)      ((*(SUPERTABLE)->info)(w, DBI_LASTUPDATED, fp ))
+#define SUPERSETDELIM(w, fp)     ((*(SUPERTABLE)->info)(w, DBI_SETDELIMITER, fp))
+#define SUPERGETDELIM(w, fp)     ((*(SUPERTABLE)->info)(w, DBI_GETDELIMITER, fp))
+#define SUPERTABLEEXT(w, fp)     ((*(SUPERTABLE)->info)(w, DBI_TABLEEXT, fp))
+
+
+
+/*
+*  PROTOTYPES
+*  ----------
+*/
+extern ERRCODE _rddInherit( DBFUNCTABLEP table, DBFUNCTABLEP subTable, DBFUNCTABLEP superTable, BYTEP drvName );
+extern ERRCODE _rddDisinherit( BYTEP drvName );
+extern USHORT  _rddExtendType( USHORT fieldType );
+extern USHORT  _rddFieldType( USHORT extendType );
+
+
+#define _RDD_API
+#endif
+

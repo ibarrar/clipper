@@ -1,0 +1,18 @@
+//
+//    Filedemo.rmk
+//
+//    Make file for the Filedemo demo program
+//
+//    Copyright (c) 1993, Computer Associates International Inc.
+//    All rights reserved.
+//
+
+.prg.obj:
+   CLIPPER $* /A /N /W /O$@
+
+Filedemo.obj: Filedemo.prg
+Fileman.obj:  Fileman.prg Fileman.ch
+
+Filedemo.exe: Filedemo.obj Fileman.obj
+   RTLINK FI Filedemo, Fileman
+

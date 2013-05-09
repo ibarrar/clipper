@@ -1,0 +1,112 @@
+ REMINDERS:
+ ========== 
+
+
+-> How To Compile Clipper Program :
+
+    CLIPPER <filename.prg> /A /N /O /V /M /W
+
+
+-> How to Link Clipper Program with the Graphics library :
+
+    blinker file <filename> search clipper, extend, grfx_api, grfx_pos
+
+
+-> How to Link the Graphic Drivers and Fonts to your Turbo C++ "GRAPHIC.LIB":
+
+   Go to your ..\TURBOC\BGI subdirectory and do the ff. :
+
+      REM Compile Graphic Drivers
+          bgiobj /F ATT
+          bgiobj /F CGA
+          bgiobj /F EGAVGA
+          bgiobj /F HERC
+          bgiobj /F IBM8514
+          bgiobj /F PC3270
+
+      REM Compile Font Files
+          bgiobj /F TRIP
+          bgiobj /F LITT
+          bgiobj /F SANS
+          bgiobj /F GOTH
+          bgiobj /F BOLD.CHR BOLDF.OBJ  _bold_font_far         bold_text
+          bgiobj /F EURO.CHR EUROF.OBJ  _european_font_far     euro_text
+          bgiobj /F LCOM.CHR LCOMF.OBJ  _complex_font_far      lcomf_text
+          bgiobj /F SCRI.CHR SCRIF.OBJ  _script_font_far       scri_text
+          bgiobj /F SIMP.CHR SIMPF.OBJ  _simplex_font_far      simp_text
+          bgiobj /F TSCR.CHR TSCRF.OBJ  _triplex_scr_font_far  tscr_text
+
+      copy ..\turboc\lib\graphics.lib ..\turboc\lib\graphics.old
+
+      REM add BGI obj files to GRAPHICS.LIB
+          tlib ..\turboc\lib\graphics +ATTf +CGAf +EGAVGAf +HERCf +IBM8514f +PC3270f
+
+      REM add build-in font files to GRAPHICS.LIB
+          tlib ..\turboc\lib\graphics  +TRIPf +LITTf +SANSf +GOTHf
+
+      REM add other font files to GRAPHICS.LIB
+          tlib ..\turboc\lib\graphics  +BOLDf +EUROf +LCOMf +SCRIf +SIMPf +TSCRf
+
+-> How to Link the Large Model Start-up Code to your Large Model
+   Run-time library:
+
+          copy cl.lib cl.old
+          tlib ..\turboc\lib\cl  + C0L.OBJ
+
+
+
+
+
+
+
+
+
+
+
+
+-> How to Make a New GRFX_LIB.LIB
+
+   1. Load GRFX_LIB.PRJ in your Turbo C++ IDE ( Integrated Development Environment).
+   2. Check if your Options|Directories Entries are valid.
+   3. Verify  your Options|Applications.. entries are the ff:
+         Output              : Standard Library
+         Prolog/Epilog       : Standard
+         Model               : Large   
+         Assume SS equals DS : Default for memory model
+   4. Turn off all stack frame checking via:
+
+       Options|Compiler|Entry/Exit Code
+          Standard stack frame OFF
+          Text stack overflow  OFF
+
+   5. Press F9 OR select Compile|Make from the Menu.
+
+ ***************************************************************************
+
+
+  GrfxCLIP.ZIP contains the ff: files
+
+    - GRFXCALL.EXE   ->  Demo program calling the simulated Get routine in Graphics Mode
+    - GRFXDEMO.EXE   ->  Menu Driven Demo program calling Graphical UDFs
+    - GRFXCALL.PRG
+    - GRFXDEMO.PRG
+    - GRFXINKY.PRG
+    - GRFXCALL.CH
+    - GRFX_LIB.LIB   ->  Graphics Library
+    - GRFXFUNC.DOC   ->  Documentation of routines in Graphics Library
+
+
+  GrfxTC.ZIP contains the ff: files
+
+    - EXTEND.H
+    - GRAPHLIB.H
+    - GRAPHLIB.C
+    - GRFXBOX.C
+    - GRFXCRCL.C
+    - GRFXDRVR.C
+    - GRFXLINE.C
+    - GRFXMISC.C
+    - GRFXTEXT.C
+    - TCCONFIG.TC
+    - GRFX_LIB.PRJ
+

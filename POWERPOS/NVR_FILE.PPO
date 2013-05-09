@@ -1,0 +1,295 @@
+#line 1 "C:\CLIPPER5\INCLUDE\fileio.ch"
+#line 2 "NVR_FILE.PRG"
+#line 1 ".\header\nvr_file.ch"
+#line 3 "NVR_FILE.PRG"
+#line 1 ".\header\config.ch"
+#line 5 "NVR_FILE.PRG"
+static fh_cntrl
+static lOpen := .F.
+
+
+
+
+function NVR_init()
+local drive_no := asc(upper(subs(config(040),1,1))) - asc("@")
+local filename := subs(config(040),1,1)+":\" + "NVCNTRL"
+local cCtrl_Line
+local nLine_Size,i
+local nRetVal := 0
+
+ if empty(lOpen) 
+    lOpen := .F. 
+ endif   
+
+ if !lOpen   
+    if File(filename) 
+
+      if (( fh_cntrl := FOPEN ( filename, 2 )) < 1)
+            nRetVal := -2 
+
+            error_log("File: "+filename+" open failed "+ ltrim(str(ferror())) + ".")            
+      else
+
+
+
+
+         lOpen := .T. 
+      endif
+
+    endif  
+
+
+    if !lOpen 
+
+      if diskspace(drive_no) < (117 * 200) + 76
+         nRetVal := -3
+      else            
+
+         if ((fh_cntrl := FCREATE( filename , 0 ) ) < 1)              
+            nRetVal := -4 
+         else  
+           lOpen := .T.
+
+           FSEEK (fh_cntrl, 0, 0)
+           nLine_Size := 76
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           cCtrl_Line :=             "0000"        +  "0"           +  "OFFOFF"      +  ieereal(1)    +  ieereal(1)    +  "00000001"    +  "0000"        +  ieereal(0)    +  ieereal(0)    +  ieereal(0)    +  "0"           +  "0"           +  "0"           +  "0"           +  "0"           +  "00000000"        
+
+
+           c_fwrite (fh_cntrl, cCtrl_Line, @nLine_Size)
+
+           if nLine_Size <> 76
+
+
+                 error_log("NV RAM control file writing failed during NVR set, " +  ltrim(str(ferror())) + ".")
+                 nRetVal := -5
+           endif
+
+
+
+           FSEEK(fh_cntrl, 76, 0)
+           nLine_Size := 117      
+
+           for i := 1 to 200
+
+              c_fwrite (fh_cntrl, space(117) , @nLine_Size)
+
+              if nLine_Size <> 117
+
+
+                 error_log("NV RAM control file writing failed during NVR set, " +  ltrim(str(ferror())) + ".")
+                   nRetVal := -5                                                  
+              endif   
+
+           next 
+         endif
+      endif  
+    endif 
+ endif 
+
+return nRetVal
+
+function getFMF()
+local nRetVal := -1
+local buffer  := space(8)
+
+ if lOpen
+   FSEEK (fh_cntrl, 68, 0) 
+   if FREAD (fh_cntrl, @buffer, 8) <> 8
+
+      nRetVal := -6
+
+      error_log("NV RAM control file reading failed at start-up routine, " + ltrim(str(ferror())) + ".")
+   endif
+   nRetVal := val(buffer)  
+ endif
+
+return nRetVal
+
+function updateFMF(nVal)
+local nLine_size
+
+  FSEEK (fh_cntrl, 68, 0)
+  nLine_size := 8
+  c_fwrite (fh_cntrl, padl(nVal,8,"0"), @nLine_size)
+
+  if nLine_size <> 8 
+
+
+     error_log("NVCNTRL Error updating FMF counter at " + pad(nVal,8) + ", FERROR:"+ ltrim(str(ferror())) + ".")
+  endif
+
+return nil         
+
+function get_cntrl()
+local buffer  := space(76)
+
+  FSEEK (fh_cntrl, 0, 0) 
+  if FREAD (fh_cntrl, @buffer, 76) <> 76
+
+      error_log("ERROR NVCNTRL file reading, " +ltrim(str(ferror())) + ".",1)
+  endif
+
+return buffer
+
+function put_cntrl(buffer)
+local nLine_size := 76
+
+  FSEEK (fh_cntrl, 0, 0) 
+  c_fwrite (fh_cntrl, buffer , @nLine_size)
+
+  if nLine_size  <> 76
+
+      error_log("ERROR NVCNTRL put_cntrl(155) , " +ltrim(str(ferror())) ,1)
+  endif
+
+return nil  
+
+function get_Trans(nItem)
+local buffer  := space(117)
+local nOffset 
+
+  nItem := nvr_swap(nItem)
+
+  nOffset := 76 + ((nItem-1)*(117))
+
+  FSEEK (fh_cntrl, nOffset , 0) 
+  if FREAD (fh_cntrl, @buffer, 117) <> 117
+
+      error_log("ERROR NVCNTRL file reading, " +ltrim(str(ferror())) + ".",1)
+  endif
+
+return buffer
+
+function put_Trans(nItem,buffer)
+local nLine_size := 117
+local nOffset
+
+  nItem := nvr_swap(nItem)
+
+  nOffset := 76 + ((nItem-1)*(117))
+
+  FSEEK( fh_cntrl,nOffset , 0) 
+  c_fwrite (fh_cntrl, buffer ,@nLine_size)
+
+  if nLine_size <> 117
+
+     error_log (" ERROR NVCNTRL put_Trans(185), " +ltrim(str(ferror())) +".",1)
+  endif
+
+return nil
+
+function NVR_off()
+ fclose(fh_cntrl)
+return nil
+
+
+function nvr_swap( nitems )
+local nMin,nMax 
+local status := 0
+
+   nMin := nvr_nSWPlevel() * 200 
+   nMax := nvr_nSWPlevel() * 200 + 200
+
+   while nitems < nMin .OR. nitems > nMax
+
+     if nitems > nMax
+        status := swap_put(nvr_nSWPlevel())
+        status += swap_get(nvr_nSWPlevel()+1)
+        if status == 0
+           nMax += 200
+           nMin += 200
+           nvr_nSWPlevel(nvr_nSWPlevel()+1)
+        endif
+     elseif nitems < nMin
+        status := swap_put(nvr_nSWPlevel())
+        status += swap_get(nvr_nSWPlevel()-1)
+        if status == 0
+           nMax -= 200
+           nMin -= 200
+           nvr_nSWPlevel(nvr_nSWPlevel()-1)
+        endif
+     endif
+
+   enddo
+
+return (nitems - nMin)
+
+function swap_put(nSwap)
+local status := 0
+local nHandle
+local cFilename := "C:\NVR_SWAP."+padl(nSwap,3,"0")
+local nbytesread := 1024
+local cBuffer := space(1024)
+
+  nHandle := fopen(cFilename,2)
+
+  if ferror() == 2 
+     nHandle := fcreate( cFilename, 0 )
+  endif
+
+  status := ferror()
+
+  if status == 0
+
+     fseek(nHandle, 0 , 0)
+     fseek(fh_cntrl,76,0)
+     while nbytesread == 1024 .AND. ferror() == 0
+       nbytesread := fread(fh_cntrl,@cBuffer,1024)
+       fwrite(nHandle,cBuffer,nbytesread)
+     enddo
+     status := ferror()
+  endif   
+
+  fclose(nHandle)
+return status
+
+
+function swap_get(nSwap)
+local status := 0
+local nHandle,i
+local cFilename := "C:\NVR_SWAP."+padl(nvr_nSUSlevel(),2,"0")+padl(nSwap,1,"0")
+local nbytesread := 1024
+local cBuffer := space(1024)
+
+  nHandle := fopen(cFilename,2)
+
+  if ferror() == 2 
+     nHandle := fcreate( cFilename, 0 )
+     for i := 1 to 200
+         fwrite(nHandle,space(117),117)
+     next     
+  endif
+
+  status := ferror()
+
+  if status == 0
+
+     fseek(fh_cntrl,76,0)
+     fseek(nHandle, 0 , 0)
+     while nbytesread == 1024 .AND. ferror() == 0
+       nbytesread := fread(nHandle,@cBuffer,1024)
+       fwrite(fh_cntrl,cBuffer,nbytesread)
+     enddo
+     status := ferror()
+  endif     
+  fclose(nHandle)
+return status

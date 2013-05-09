@@ -1,0 +1,23 @@
+//
+// Omenu.rmk
+// Make file for the Omenu system
+//
+// Copyright (c) 1990 Nantucket Corp.  All rights reserved.
+//
+// Note: Omenu.prg requires functions and definitions from
+//       Array.prg and Array.ch
+//
+
+.prg.obj:
+  CLIPPER $* /N /P /W /A /M /B /o$@
+
+dummy.exe : OMENU.OBJ ARRAY.OBJ
+  ECHO OFF
+  ECHO .
+  ECHO OMENU requires ARRAY.OBJ to be linked in
+
+OMENU.OBJ : Omenu.prg Omenu.ch
+
+ARRAY.OBJ : Array.prg Array.ch
+
+

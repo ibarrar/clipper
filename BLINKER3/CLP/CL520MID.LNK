@@ -1,0 +1,151 @@
+#
+#  CL520MID.LNK - 03/22/93 Version 1.0
+#
+#  Blinker link script for CA-Clipper 5.2
+#
+#  Based on Chuck Friedel's original CL501STD.LNK for Clipper 5.01
+#
+#  Our thanks go to Chuck for his valued efforts in preparing the
+#  original script on which this script is based. Chuck's original script
+#  (CL501STD.LNK) has been used by many as a standard script in all
+#  applications, as it achieves good memory savings with minimal
+#  performance degradation.
+#
+#  For ease of use this script should be stored in your library
+#  directory, (the directory pointed to by the LIB environment variable),
+#  which will allow Blinker to find the script without you having to specify
+#  a full path.
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except the RDDs and LLIBCA if it is being used).
+#
+#  example:
+#
+#  FILE one
+#  BEGINAREA
+#       FILE two
+#       FILE three
+#       FILE four
+#  ENDAREA
+#  @CL520MID
+#  LIB DBFCDX
+#  LIB LLIBCA # (if used)
+#
+#  Modules within CLIPPER.LIB are, by their nature, called very frequently
+#  within any CLIPPER application. Therefore, overlaying these routines
+#  will almost certainly result in some performance degradation, which can
+#  be minimised by increasing the OVERLAY OPSIZE, and enabling the overlay
+#  cache (Blinker 2.0 and above).
+#
+# mod tbrowse0          #  Uncomment these three lines
+# mod tbrowse1          #  to speed up TBROWSE by forcing
+# mod linelen           #  it into the root.
+#
+lib clipper
+beginarea
+    mod ACCEPT          # .c
+    mod ACOPY           # .c
+    mod ADEL            # .c
+    mod AINS            # .c
+    mod APPEXIT         # .c
+    mod APPINIT         # .c
+    mod ATAIL           # .c
+    mod CMEM            # .c
+    mod DBCMD0          # .c
+    mod DBCMD1          # .c
+    mod DBCMD2          # .c
+    mod DBCMD3          # .c
+    mod DBCMD4          # .c
+    mod DBCMD5          # .c
+    mod DBCREATE        # .c
+    mod DBGAPI          # .c
+    mod DBGSHADO        # .c
+    mod DBNUBS          # .asm
+    mod DBSTRUCT        # .c
+    mod DELIMDYN        # .asm
+    mod DISKIO          # .c
+    mod DLM0            # .c
+    mod DLM1            # .c
+    mod EMMALLOC        # .asm
+    mod EMMCOUNT        # .asm
+    mod EMMFREE         # .asm
+    mod EMMINST         # .asm
+    mod EMMPAGE         # .asm
+    mod EMMREALL        # .asm
+    mod EMMSTAT         # .asm
+    mod EMMVERS         # .asm
+    mod ERRORSYS        # Clipper
+    mod ERRSYS0         # .c
+#   mod ERRSYS1         # .c      (Overlay if not using PS ERROR)
+    mod EXACTCMP        # .c
+    mod GETENV          # .c
+    mod GETS0           # .c
+    mod GETS1           # .c
+    mod GETS2           # .c
+    mod GX              # .c
+    mod INITEXIT        # .c
+    mod INSTD           # .asm
+    mod JOINLIST        # .c
+    mod LUPDATE         # .c
+    mod MAXROW          # .c
+    mod MEMORY          # .c
+    mod MRELEASE        # .c
+    mod MSAVE           # .c
+    mod OLDBOX          # .c
+    mod OLDCLEAR        # .c
+    mod OUTSTD          # .c
+    mod PHILES          # .c
+    mod RDDORD          # .c
+    mod RDDSRV          # .c
+    mod RUN             # .c
+    mod SAVEREST        # .c
+    mod SCROLL          # .c
+    mod SDF0            # .c
+    mod SDF1            # .c
+    mod SDFDYN          # .asm
+    mod SEND            # .c
+    mod SEQ             # .c
+    mod SORTOF          # .c
+    mod SQUAWK          # .asm
+    mod STARTSYM        # .asm
+    mod TB              # .c
+#   mod TXOPEN          # .c      (Overlay if not using NETLIB)
+    mod VERSION         # .c
+    mod _AFIELDS        # Clipper
+    mod _APPINI         # Clipper
+    mod _ATPROMP        # Clipper
+    mod _CENTURY        # Clipper
+    mod _DBCOPY         # Clipper
+    mod _DBDELIM        # Clipper
+    mod _DBF            # Clipper
+    mod _DBFLIST        # Clipper
+    mod _DBGBROW        # Clipper
+    mod _DBGHELP        # Clipper
+    mod _DBGINSP        # Clipper
+    mod _DBGMENU        # Clipper
+    mod _DBJOIN         # Clipper
+    mod _DBLIST         # Clipper
+    mod _DBLOCAT        # Clipper
+    mod _DBSDF          # Clipper
+    mod _DBSORT         # Clipper
+    mod _DBSTRUX        # Clipper
+    mod _DBTOTAL        # Clipper
+    mod _DBUPDAT        # Clipper
+    mod _DELIM          # Clipper
+    mod _ERRSYS         # Clipper
+    mod _FLEDIT         # Clipper
+    mod _GETMSG         # Clipper
+    mod _GETSYS         # Clipper
+    mod _HELPKEY        # Clipper
+    mod _INPUT          # Clipper
+    mod _RDDORD         # Clipper
+    mod _READVAR        # Clipper
+    mod _SAVESCR        # Clipper
+    mod _SETFUNC        # Clipper
+    mod _SETTA          # Clipper
+    mod _TEXT           # Clipper
+    mod _WAIT           # Clipper
+    lib extend
+endarea
+lib terminal
+lib dbfntx

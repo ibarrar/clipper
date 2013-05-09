@@ -1,0 +1,109 @@
+; Default Keyboard Mapping File
+; Filename : Keyboard.map
+; Date : 15 March 1995
+;
+$1$A S3B                       ; F1
+$1$B S3C                       ; F2
+$1$C S3D                       ; F3
+$1$D S3E                       ; F4
+$1$E S3F                       ; F5
+$1$F S40                       ; F6
+$1$G S41                       ; F7
+$1$H S42                       ; F8
+$1$I S43                       ; F9
+$1$J S44                       ; F10
+$1$K SE0 S52 SE0 SD2           ; Ins
+$1$L SE0 S47 SE0 SC7           ; Home
+$1$M SE0 S49 SE0 SC9           ; PgUp
+$1$N SE0 S48 SE0 SC8           ; Up Arrow
+$1$O SE0 S51 SE0 SD1           ; PgDn
+$2$A S01                       ; Esc
+$2$B S57                       ; F11
+$2$C S58                       ; F12
+$2$D S1A                       ; [
+$2$E S1B                       ; ]
+$2$F S36 S1A SB6               ; {
+$2$G S36 S1B SB6               ; }
+$2$H S36 S33 SB6               ; <
+$2$I S36 S34 SB6               ; >
+$2$J S36 S35 SB6               ; ?
+$2$K SE0 S53 SE0 SD3           ; Del
+$2$L SE0 S4F SE0 SCF           ; End
+$2$M SE0 S4B SE0 SCB           ; Left Arrow
+$2$N SE0 S50 SE0 SD0           ; Down arrow
+$2$O SE0 S4D SE0 SCD           ; Right Arrow
+$3$A S0F                       ; Tab
+$3$B S36 S02 SB6               ; !
+$3$C S36 S03 SB6               ; @
+$3$D S36 S04 SB6               ; #
+$3$E S36 S05 SB6               ; $
+$3$F S36 S06 SB6               ; %
+$3$G S36 S07 SB6               ; ^
+$3$H S36 S08 SB6               ; &
+$3$I S36 S09 SB6               ; *
+$3$J S36 S0A SB6               ; (
+$3$K S36 S0B SB6               ; )
+$3$L S36 S0C SB6               ; _
+$3$M S0D                       ; =
+$3$N S35                       ; /
+$3$O S0E                       ; Backspace
+$4$A S10                       ; Q
+$4$B S11                       ; W
+$4$C S12                       ; E
+$4$D S13                       ; R
+$4$E S14                       ; T
+$4$F S15                       ; Y
+$4$G S16                       ; U
+$4$H S17                       ; I
+$4$I S5D                       ; Non-standard key
+$4$J S1C                       ; Enter
+$4$K S02                       ; 1
+$4$L S03                       ; 2
+$4$M S04                       ; 3
+$4$N S37                       ; *
+$4$O S5B                       ; Non-standard key
+$5$A S1E                       ; A
+$5$B S1F                       ; S
+$5$C S20                       ; D
+$5$D S21                       ; F
+$5$E S22                       ; G
+$5$F S23                       ; H
+$5$G S24                       ; J
+$5$H S25                       ; K
+$5$I S26                       ; L
+$5$J S36 S27 SB6               ; :
+$5$K S05                       ; 4
+$5$L S06                       ; 5
+$5$M S07                       ; 6
+$5$N S4A                       ; -
+$5$O S60                       ; Non-standard key
+$6$A S2C                       ; Z
+$6$B S2D                       ; X
+$6$C S2E                       ; C
+$6$D S2F                       ; V
+$6$E S30                       ; B
+$6$F S31                       ; N
+$6$G S32                       ; M
+$6$H S18                       ; O
+$6$I S19                       ; P
+$6$J S27                       ; ;
+$6$K S08                       ; 7
+$6$L S09                       ; 8
+$6$M S0A                       ; 9
+$6$N S4E                       ; +
+$6$O S5E                       ; Non-standard key
+$7$A S3A SBA                   ; Non-standard key
+$7$B S29                       ; '
+$7$C S36 S29 SB6               ; ~
+$7$D S39                       ; Non-standard key
+$7$E S39                       ; Space
+$7$F S2B                       ; \
+$7$G S36 S2B SB6               ; |
+$7$H S33                       ; ,
+$7$I S28                       ; '
+$7$J S36 S28 SB6               ; "
+$7$K S0B                       ; 0
+$7$L S0B S0B                   ; Non-standard key
+$7$M S34                       ; .
+$7$N SE0 S1C SE0 S9C           ; Enter
+$7$O S5C                       ; Non-standard key

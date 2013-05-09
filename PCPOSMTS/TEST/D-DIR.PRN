@@ -1,0 +1,38 @@
+
+ORIENTAL                            DEPARTMENT DIRECTORY
+Report Date: 08-04-98
+--------------------------------------------------------
+ #   Descriptor                 Grp      Limit    
+---  -------------------------  ---  -------------
+
+01   GROCERY                     1      10,000.00
+02   SAVVY                       2           0.00
+03   STATIONERY                  3           0.00
+04   HEALTH AND BEAUTY           4           0.00
+05   BABY ACCESSORIES            5           0.00
+06   GARMENTS                    6           0.00
+07   CAR ACCESSORIES             7           0.00
+08   TOYS                        8           0.00
+09   HOUSEWARE                   9           0.00
+10   HARDWARE                   10           0.00
+12   NOVELTY ITEMS              12           0.00
+13   SPORTS ITEMS               13           0.00
+14   ELECTRONICS                14           0.00
+15   TOILETRIES                 15           0.00
+17   KITCHENWARE                17           0.00
+20   LUGGAGES &BAGS             20           0.00
+21   WATCHES                    21           0.00
+22   SHOES                      22           0.00
+24   BED & BATH                 24           0.00
+25   SPECIAL (50%)              25           0.00
+26   SPECIAL (30%)              26           0.00
+30   GROCERY (ON SALE)          30           0.00
+31   WINES & LIQUORS            31           0.00
+32   CIGARETTES                 32           0.00
+33   ARJAN ELECTRONICS          33           0.00
+34   CENTENNIAL ITEM            34           0.00
+35   SAVVY (ON SALE)            35           0.00
+36   SAVVY COSMETICS            36           0.00
+
+END OF REPORT===========================================
+D-DIR                           08-04-98 11:01:54 Page 1

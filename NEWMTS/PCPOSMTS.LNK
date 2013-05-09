@@ -1,0 +1,8 @@
+BLINKER EXECUTABLE CLIPPER F:100;
+BLINKER INCREMENTAL OFF
+file pcposmts
+BEGINAREA
+  FILE makedbf1,makedbf2,security,unit,vendor,window,fmfile
+ENDAREA
+allocate userlib
+

@@ -1,0 +1,29 @@
+// Make file for all array samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+TBR23.OBJ : tbr23.prg
+TBR24.OBJ : tbr24.prg
+TBR24A.OBJ: tbr24a.prg
+TBR25.OBJ : tbr25.prg
+TBR26.OBJ : tbr26.prg
+TBR26T.OBJ: tbr26t.prg
+TBR27.OBJ : tbr27.prg
+TBR61.OBJ : tbr61.prg
+
+.obj.exe:
+   SET RTLINKCMD=/posi
+   RTLINK $**;
+
+TBR23.EXE : tbr23.obj
+TBR24.EXE : tbr24.obj
+TBR24A.EXE: tbr24a.obj
+TBR25.EXE : tbr25.obj
+TBR26T.EXE: tbr26t.obj tbr26.obj
+TBR27.EXE : tbr27.obj
+TBR61.EXE : tbr61.obj
+
+// eof //

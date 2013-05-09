@@ -1,0 +1,24 @@
+//
+// User EVAL test...
+//
+// WARNING: Uses the UACLN.C (ArrayClone()) test
+//
+// Copyright (C) 1993, Computer Associates, Inc. All Rights Reserved
+//
+#include "rules.rmk"
+
+src = ".\"
+
+// testc = the C routine to test
+// testclip = the clipper source to test the C program
+//
+testc = "ueval"
+testclip = "uevaltst"
+
+$(testc).obj:  $(testc).c
+
+uacln.obj: uacln.c
+
+$(testclip).obj:  $(testclip).prg
+
+$(testclip).exe:  $(testclip).obj  $(testc).obj uacln.obj

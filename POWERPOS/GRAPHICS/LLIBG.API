@@ -1,0 +1,715 @@
+#ifndef LLIBGAPI_HEADER
+#define LLIBGAPI_HEADER
+
+/*******************************************************************************
+* INCLUDES FILES                                                               *
+*******************************************************************************/
+
+#include <extend.h>
+#include <vm.api>
+#include <error.api>
+#include <item.api>
+#include <fm.api>
+#include <gt.api>
+
+
+/*******************************************************************************
+* TYPEDEFS AND DEFINES                                                         *
+*******************************************************************************/
+
+#define LLG_VIDEO_TXT                     3
+// TEXT MODES
+#define LLG_VIDEO_VESA_80_60            264
+#define LLG_VIDEO_VESA_132_25           265
+#define LLG_VIDEO_VESA_132_43           266
+#define LLG_VIDEO_VESA_132_50           267
+#define LLG_VIDEO_VESA_132_60           268
+
+// GRAPHICS MODES
+#define LLG_VIDEO_VGA_640_480_16         18
+#define LLG_VIDEO_VESA_800_592_16       258
+#define LLG_VIDEO_VESA_1024_768_16      260
+#define LLG_VIDEO_VESA_1280_1024_16     262
+
+#define LLG_VIDEO_VESA_640_480_256      257
+#define LLG_VIDEO_VESA_800_592_256      259
+#define LLG_VIDEO_VESA_1024_768_256     261
+#define LLG_VIDEO_VESA_1280_1024_256    263
+
+#define LLG_VIDEO_VESA_640_480_32K      272
+#define LLG_VIDEO_VESA_800_592_32K      275
+#define LLG_VIDEO_VESA_1024_768_32K     278
+#define LLG_VIDEO_VESA_1280_1024_32K    281
+
+#define LLG_VIDEO_VESA_640_480_64K      273
+#define LLG_VIDEO_VESA_800_592_64K      276
+#define LLG_VIDEO_VESA_1024_768_64K     279
+#define LLG_VIDEO_VESA_1280_1024_64K    282
+
+#define LLG_VIDEO_VESA_640_480_16M      274
+#define LLG_VIDEO_VESA_800_592_16M      277
+#define LLG_VIDEO_VESA_1024_768_16M     280
+#define LLG_VIDEO_VESA_1280_1024_16M    283
+
+#define LLM_CURSOR_ARROW                1
+#define LLM_CURSOR_SIZE_NS              2
+#define LLM_CURSOR_SIZE_WE              3
+#define LLM_CURSOR_SIZE_NW_SE           4
+#define LLM_CURSOR_SIZE_NE_SW           5
+#define LLM_CURSOR_HAND                 6
+#define LLM_CURSOR_FINGER               7
+#define LLM_CURSOR_CROSS                8
+#define LLM_CURSOR_WAIT                 9
+
+#define LLG_FONT_ITALIC                 0x01
+#define LLG_FONT_BOLD                   0x02
+#define LLG_FONT_UNDERLINE              0x04
+
+#define LLG_MODE_SET                    0
+#define LLG_MODE_AND                    1
+#define LLG_MODE_OR                     2
+#define LLG_MODE_XOR                    3
+#define LLG_MODE_NO_DISPLAY             4 // Used by _gWriteAt
+
+#define LLG_RGB_FLAGS_INDEX             0x00000000L    // for Indexed Palette
+#define LLG_RGB_FLAGS_COLOR             0x80000000L
+
+#define gRGB(r,g,b)          ((DWORD)(((BYTE)(r)|((WORD)(g)<<8))|(((DWORD)(BYTE)(b))<<16))) | LLG_RGB_FLAGS_COLOR
+
+#define gGetIDXValue(i)      ((BYTE)(i))
+#define gGetRValue(rgb)      ((BYTE)(rgb))
+#define gGetGValue(rgb)      ((BYTE)(((WORD)(rgb)) >> 8))
+#define gGetBValue(rgb)      ((BYTE)((rgb)>>16))
+
+#define LLG_DWORD_VOID_PARAM            0xFFFFFFFFL
+
+/*******************************************************************************
+* STRUCTURES                                                                   *
+*******************************************************************************/
+
+typedef struct
+{
+    int iX;                                 // X coordinate
+    int iY;                                 // Y coordinate
+} LLG_POINT;
+
+typedef LLG_POINT far  * LLG_LPPOINT;
+
+
+typedef struct
+{
+    int     iLeft;                          // Left   coordinate
+    int     iTop;                           // Top    coordinate
+    int     iRight;                         // Right  coordinate
+    int     iBottom;                        // Bootom coordinate
+} LLG_RECT;
+
+typedef LLG_RECT far  * LLG_LPRECT;
+
+
+typedef union
+{
+    struct
+    {
+        BYTE    bRed;                       // Red   component (0-255) or Indexed Color
+        BYTE    bGreen;                     // Green component (0-255)
+        BYTE    bBlue;                      // Blue  component (0-255)
+        BYTE    bFlags;                     // to make difference between Indexed & RGB Colors
+    }       b;
+    DWORD   dwColor;
+} LLG_RGB;
+
+typedef LLG_RGB far  * LLG_LPRGB;
+
+typedef struct
+{
+    WORD    wVersion;
+    WORD    wNumEntries;
+    LLG_RGB dwPalEntry[1];
+} LLG_PALETTE;
+
+typedef LLG_PALETTE far  * LLG_LPPALETTE;
+
+typedef struct
+{
+    int     iTextRow;                       // See gMode()
+    int     iTextCol;
+    int     iGraphRow;
+    int     iGraphCol;
+    int     iFontRow;
+    int     iFontCol;
+    DWORD   dwColorNb;
+    int     iVideoMode;
+    int     iLibVer;
+    int     iLastMode;
+    DWORD   dwLastColor;
+} LLG_VIDEOMODE;
+
+typedef LLG_VIDEOMODE far  * LLG_LPVIDEOMODE;
+
+
+typedef struct
+{
+    int     iPixTop;                        // 1 to Font Height,
+                                            // the Start Line # of Font Matrix
+    int     iPixBot;                        // 1 to Font Height,
+                                            // the End Line # of Font Matrix
+} LLG_FNTCLIP;
+
+typedef LLG_FNTCLIP far  * LLG_LPFNTCLIP;
+
+
+typedef struct
+{
+    int     iX;                             // see _mState()
+    int     iY;
+    int     iRow;
+    int     iCol;
+    int     iLeft;
+    int     iRight;
+    int     iVisible;
+    int     iDriverVersion;
+    int     iCursorShape;
+    int     iClicksLeft;
+    int     iClicksRight;
+} LLG_MOUSESTATE;
+
+typedef LLG_MOUSESTATE far * LLG_LPMOUSESTATE;
+
+/*******************************************************************************
+* FUNCTIONS PROTOTYPES                                                         *
+*******************************************************************************/
+
+/////////////////// VIDEO MODES ////////////////////////////////////////////////
+
+ERRCODE
+    _gModeSet
+    (
+        int             iMode
+    );
+
+//\\CES lpVideoModeGet must point to an LLG_LPVIDEOMODE struct allocated
+//      by the user sample in c:
+//      LLG_VIDEOMODE   VideoMode;
+//      _gModeGet( iMode, &VideoMode );
+
+ERRCODE
+    _gModeGet
+    (
+        int             iMode,
+        LLG_LPVIDEOMODE lpVideoModeGet
+    );
+
+//////////////////// BITMAP AND ICON RESOURCE FILES ////////////////////////////
+
+ITEM                                        // itemArrayBmp
+    _gBmpLoad
+    (
+        char far *      lpFileName          // FILENAME.BMP or FILENAME.ICO
+    );
+
+void
+    _gBmpDisp
+    (
+        ITEM            itemArrayBmp,       // an item returned by _gBmpLoad
+        int             iX1,                //
+        int             iY1,                //
+        DWORD           dwTransColor        // Transparent Color #
+                                            // LLG_NO_COLOR for none
+    );
+
+/////////////////// FONT RESOURCE FILES ////////////////////////////////////////
+
+int                                         // Return a FontID
+    _gFntLoad
+    (
+        char far *      lpFileName          // FONTNAME.FND or FONTNAME.FNT
+    );
+
+ERRCODE
+    _gFntSet
+    (
+        int             iFontID             // Font Handle
+    );
+
+int                                         // Current Font Handle
+    _gFntGet
+    (
+        void
+    );
+
+ERRCODE
+    _gFntClipSet
+    (
+        LLG_LPFNTCLIP   lpFntClipSet        // Clipping
+    );
+
+ERRCODE
+    _gFntClipGet
+    (
+        LLG_LPFNTCLIP   lpFntClipGet        // Clipping
+    );
+
+void
+    _gFntErase
+    (
+        int             iFontID             // Font Handle
+    );
+
+/////////////////// GRAPHICAL PRIMITIVES ///////////////////////////////////////
+
+DWORD                                       // Pixel Color
+    _gPixelGet
+    (
+        int             iX,                 // location in X
+        int             iY                  // location in Y
+    );
+
+void
+    _gPixelSet
+    (
+        int             iX,                 // location in X
+        int             iY,                 // location in Y
+        DWORD           dwColor,            // pixel color
+        char            cMode               // drawing mode
+    );
+
+void
+    _gLine
+    (
+        int             iX1,                // starting point in X
+        int             iY1,                // starting point in Y
+        int             iX2,                // end point in X
+        int             iY2,                // end point in Y
+        DWORD           dwColor,            // line color
+        char            cMode               // drawing mode
+    );
+
+void
+    _gRect
+    (
+        int             iX1,                // upper left corner in X
+        int             iY1,                // upper left corner in Y
+        int             iX2,                // lower right corner in X
+        int             iY2,                // lower right corner in Y
+        char            cFilled,            // TRUE / FALSE
+        DWORD           dwColor,            // drawing color
+        char            cMode               // drawing mode
+    );
+
+
+void
+    _gFrame
+    (
+        int             iLeft,              // upper left corner in X
+        int             iTop,               // upper left corner in Y
+        int             iRight,             // lower right corner in X
+        int             iBottom,            // lower right corner in Y
+        DWORD           dwBackgroundColor,  // background color
+        DWORD           dwBrightColor,      // light reflex
+        DWORD           dwDarkColor,        // shadow effect
+        char            cThickTop,          // frame thickness top
+        char            cThickLeft,         // frame thickness left
+        char            cThickBottom,       // frame thickness bottom
+        char            cThickRight,        // frame thickness right
+        char            cMode,              // drawing mode
+        char            cFilled             // TRUE / FALSE
+    );
+
+void
+    _gEllipse
+    (
+        int             iXC,                // X Center
+        int             iYC,                // Y Center
+        int             iA0,                // X Radius
+        int             iB0,                // Y Radius
+        int             iStartAngle,        // Start Angle ( degrees )
+        int             iEndAngle,          // End Angle   ( degrees )
+        char            cMode,              // LLG_MODE_...
+        char            cFilled,            // TRUE / FALSE
+        DWORD           dwFillColor,        // Fill Color
+        char            cOutlined,          // TRUE / FALSE
+        DWORD           dwOutlineColor,     // OutLine Color
+        int             iHeight3D           // 3D effect Height ( pixels )
+    );
+
+void
+    _gPolygon
+    (
+        int             iVertCount,         // Vertices Count
+        LLG_LPPOINT     lpVertexArray,      // Array lpVertexArray[iVertCount]
+        char            cFilled,            // TRUE for Filled Polygon
+        DWORD           dwOutLineColor,     // OutLine Color
+        DWORD           dwFillColor,        // Fill Color
+        char            cMode               // LLG_MODE_...
+    );
+
+int                                         // TextExtend in pixels
+    _gWriteAt
+    (
+        int             iX,                 // upper left corner of text in X
+        int             iY,                 // upper left corner of text in Y
+        DWORD           dwFontColor,        // font color
+        int             iFontID,            // Font Handle
+        char far *      lpString,           // Text to Display
+        char            cMode,              // LLG_MODE_...
+        char            cAttribute          // LLG_FONT_...
+    );
+
+
+/////////////////// PALETTES ///////////////////////////////////////////////////
+
+ERRCODE
+    _gPalSet
+    (
+        LLG_LPPALETTE   lpPaletteArraySet  // Set palette if not NULL
+    );
+
+ERRCODE
+    _gPalGet
+    (
+        LLG_LPPALETTE   lpPaletteArrayGet   // Store Current palette
+    );
+
+ERRCODE
+    _gRGBColorSet
+    (
+        int             iPalNum,            // Palette Index
+        DWORD           dwColorSet          // Set color ( RGB Format ) in Palette
+    );
+
+DWORD                                       // Color to get ( RGB Format )
+    _gRGBColorGet
+    (
+        int             iPalNum             // Palette Index
+    );
+
+/////////////////// CLIPPING ///////////////////////////////////////////////////
+
+ERRCODE
+    _gClipSet
+    (
+        LLG_LPRECT      lpClipRectSet       // set a clipping region
+    );
+
+ERRCODE
+    _gClipGet
+    (
+        LLG_LPRECT      lpClipRectGet       // get active clipping region
+    );
+
+/////////////////// EXCLUDING ZONES ////////////////////////////////////////////
+
+int                                         // current number of exclusions zones
+    _gExclCountGet
+    (
+        void
+    );
+
+void
+    _gExclErase
+    (
+        void
+    );
+
+ERRCODE
+    _gExclSet
+    (
+        LLG_LPRECT      lpExclSet,
+        BOOL            lIsGraphic          // TRUE for Graph coord.
+    );
+
+
+ERRCODE
+    _gExclGet
+    (
+        LLG_LPRECT      lpExclGet,          // pointer to the region
+        int             iZoneNum            // number of exclusion zone
+    );
+
+
+/////////////////// SCREEN /////////////////////////////////////////////////////
+
+ITEM
+    _gScreenSave                            // save screen region
+    (
+        int             iTop,               // upper left corner in X
+        int             iLeft,              // upper left corner in Y
+        int             iBottom,            // lower right corner in X
+        int             iRight              // lower right corner in Y
+    );
+
+void
+    _gScreenRest                            // restore screen region
+    (
+        int             iTop,               // upper left corner in X
+        int             iLeft,              // upper left corner in Y
+        int             iBottom,            // lower right corner in X
+        int             iRight,             // lower right corner in Y
+        ITEM            itemSavedScreen     // screen to be restored
+    );
+
+/////////////////// MOUSE //////////////////////////////////////////////////////
+
+int
+    _mShow
+    (
+        int             iCursor,            // LLM_CURSOR_...
+        int             iRow,               // row where to show mouse cursor
+        int             iCol                // column where to show mouse cursor
+    );
+
+void
+    _mHide                                  // hide mouse
+    (
+        void
+    );
+
+ERRCODE
+    _mState
+    (
+        BOOL             lReset,            // if TRUE reset the clicks count
+
+        LLG_LPMOUSESTATE lpmState           // pointer to mouse state structure
+    );
+
+ERRCODE
+    _mClipSetTxt                            // set a clipping region
+    (
+        LLG_LPRECT       lpClipRectSet      // pointer to clipping rectangle
+    );
+
+ERRCODE
+    _mClipSetPix                            // set a clipping region
+    (
+        LLG_LPRECT       lpClipRectSet      // pointer to clipping rectangle
+    );
+
+ERRCODE
+    _mClipGet                               // get active clipping region
+    (
+        LLG_LPRECT       lpClipRectGet      // pointer to clipping rectangle
+    );
+
+void
+    _mClipErase                             // reset clipping region to
+                                            // screen size
+    (
+        void
+    );
+
+int
+    _mRow                                   // returns the current row in
+                                            // text units
+    (
+        void
+    );
+
+int
+    _mCol                                   // returns the current column in
+                                            // text units
+    (
+        void
+    );
+
+void
+    _mTxtPos                                // sets mouse to a new position
+    (
+        int iRow,                           // new position in Row
+        int iCol                            // new position in Col
+    );
+
+int
+    _mPixX                                  // returns the current horizontal
+                                            // position in pixel
+    (
+        void
+    );
+
+int
+    _mPixY                                  // returns the current vertical
+                                            // position in pixel
+    (
+        void
+    );
+
+void
+    _mPixPos                                // sets mouse to a new position
+    (
+        int iX,                             // new position in X
+        int iY                              // new position in Y
+    );
+
+void
+    _mUpdate                                // Refresh the Mouse Cursor
+    (
+        void
+    );
+
+/////////////////// BLOCKS //////////////////////////////////////////////////////
+//
+// The blocks API is needed if you want to display your owns BitMaps using
+// the Light Lib Graphics system. A classical example is displaying incoming
+// faxes ...
+//
+// The Block functions are compatible with the Exclusions and Inclusion areas.
+//
+// Be carefull using this API.  We suggest you first study the sample code.
+// You are responsible for all the memory allocations (lpPalette, lpStrip,
+// lpUsedLUT... ).
+//
+// Because most of the BitMaps are greater than 64Kb, this will end with some
+// stripping algo. Again, look in the code sample, a full stripping algo is
+// available (In fact the sample is very close to the _gBmpDisp() function).
+
+
+typedef struct
+{
+    int             iWidth;                 // Image Width
+    int             iHeight;                // Image Height
+    BYTE            bBitsPerPixel;          // BitsPerPixels (1|4|8|24)
+    int             iBytesPerLine;          // Byte/Line (ex width=23 in 8 bits means 3 Bytes)
+    LLG_LPPALETTE   lpPalette;              // Pointer on a palette structure
+    BYTEP           lpStrip;                // Image Data
+    BYTEP           lpMask;                 // Used only for ICON , NULL Default
+}   LLG_BLOCK;
+
+typedef LLG_BLOCK far * LLG_LPBLOCK;
+
+DWORD
+    _gBlockPut
+    (
+        LLG_LPBLOCK lpBlock,                // Pointer to a block structure
+        BYTEP       lpUsedLUT,              // Pointer to a Look Up Table (made with _gExclLUTMake or _gSharedLUTMake)
+        int         iDstX1,                 // Ä¿ Destination coordinates
+        int         iDstY1,                 // ÄÙ on the screen
+        int         iSrcX1,                 // Ä¿
+        int         iSrcY1,                 //  ³ Rectangle of image (Block) to
+        int         iSrcX2,                 //  ³ be displayed
+        int         iSrcY2                  // ÄÙ
+    );
+
+DWORD
+    _gBlockGet
+    (
+        LLG_LPBLOCK lpBlock,                // Pointer to an empty LLG_LPBLOCK, except lpStrip which must point on a such a large memory area to be able to store datas  (see gBlockSize)
+        int         iSrcX1,                 // Ä¿ Screen rectangle.
+        int         iSrcY1,                 //  ³ Warning if the result is more than
+        int         iSrcX2,                 //  ³ 64K you are responsible for use
+        int         iSrcY2                  // ÄÙ multiples calls to this function and create a stripping algo
+    );
+
+// Palettes are usefull only for 16 and 256 colors video mode regardless the
+// number of colors in your image.
+//
+// Palettes are not needed in RGB modes.
+//
+// 3 modes are available to display : Overwrite, Exclusive, Shared.
+//
+// In 16 colors mode , Overwrite    : replace the 16 original colors with
+//                                    your image palette.
+//
+//                   , Exclusive and Shared  :give the same effect, and try to
+//                                            find the nearest colors in the
+//                                            system palette corresponding to
+//                                            your image palette.
+//
+// In 256 colors mode, Overwrite : replace the 256 original colors with your
+//                                 image palette
+//                   , Exclusive : the first 16 colors are preserved, and the
+//                                 next 240 colors match the first 240 colors of
+//                                 your image, the last 16 will be mapped
+//                                 to the nearest colors available
+//                   , Shared    : the first 16 colors are preserved, and the
+//                                 next 240 colors come from a standard 
+//                                 linear color/grayscale palette.
+//                                 Each color of your image is mapped to the
+//                                 nearest color in this linear palette. As
+//                                 this shared palette is fixed it is possible
+//                                 to display multiple 256 colors images in a
+//                                 256 color screen at the same time.
+
+// 3 ways to display :
+// - Overwrite       : generally used in full screen display, No LUT needed,
+//                   : just use a _gPalSet() to set the colors of the screen
+//                   : and pass NULL for lpUsedLUT in the _gBlockPut()
+
+
+// - Exclusive Pal   : Preserve the first 16 colors (text display and ICO/BMP).
+//                   : Call _gExclLUTMake() to create the look up table.
+
+
+// - Shared Palette  : Preserve the first 16 colors (text display and ICO/BMP).
+//                   : Call _gSharedLUTMake() to create the look up table.
+
+//                   :
+//                   :
+
+
+// What happens when the number of colors in the image and the number of colors
+// in the display are not the same ?
+// If the number of colors in the image is smaller (ex 16) than the number of
+// colors in the display (ex 256), it is quite easy and the displayed image is
+// good.
+//
+// If the number of colors in the image is greater (ex 256) than the number of
+// colors in the display (ex 16) , the 256 colors are mapped to the nearest 16
+// colors available and the displayed image will be poor.
+//
+// Be aware that B&W images (1 bit) can have a palette. This allows reversed B&W
+// or W&B images (common problem with faxes).
+
+BYTEP
+    _gExclLUTMake                           // Return a lpLUT used by _gBlockPut
+                                            // _gExclPalSet must be used
+    (                                       //
+        LLG_LPPALETTE lpPalette,            // A palette structure filled with the image values
+        BYTEP lpLUT                         // Pointer to n Bytes, n is the number of colors of the palette
+    );                                      //
+                                            //
+
+
+BYTEP
+    _gSharedLUTMake                         // Return a lpLUT used by _gBlockPut
+                                            // _gSharedPalSet must be used
+    (
+        LLG_LPPALETTE lpPalette,            // A palette structure filled with the image values
+        BYTEP lpLUT                         // Pointer to n Bytes, n is the number of colors of the palette
+    );                                      //
+
+
+
+void
+    _gExclPalSet                            // Set Exclusive Palette
+                                            // ( preserve 16 first colors )
+                                            // Used before a _gBlockPut
+    (
+        LLG_LPPALETTE lpPalette
+    );
+
+void
+    _gSharedPalSet                          // Set Shared Palette ( by default )
+                                            // Used before a _gBlockPut
+    (
+        void                                // No pointer needed as the palette is available in LLG
+    );
+
+int
+    _gPaletteSize                           // returns Palette Size
+                                            // for Current Mode
+    (
+        void
+    );
+
+long
+    _gBlockSize                             // returns Block Size in Bytes
+                                            // for Current Mode
+    (
+        int iX1,
+        int iY1,
+        int iX2,
+        int iY2
+    );
+
+#endif
+

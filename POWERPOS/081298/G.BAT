@@ -1,0 +1,3 @@
+DEL POWERPOS.EXE
+RMAKE PPOSGRFX.RMK %1 %2 %3  >err
+type err

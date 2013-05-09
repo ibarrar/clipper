@@ -1,0 +1,6 @@
+# TESTOVL.LNK
+file test
+beginarea
+   file limerick
+endarea
+output t

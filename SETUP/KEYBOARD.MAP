@@ -1,0 +1,111 @@
+; Default Keyboard Mapping File
+; Filename : Keyboard.map
+; Date : 15 March 1995
+;
+; Remarks: To be used for PFL Library (rnr 5-17-95).
+;
+$1$A S00  A01                  ; F1
+$1$B S00  A02                  ; F2
+$1$C S00  A03                  ; F3
+$1$D S00  A04                  ; F4
+$1$E S00  A05                  ; F5
+$1$F S00  A06                  ; F6
+$1$G S00  A07                  ; F7
+$1$H S00  A08                  ; F8
+$1$I S00  A09                  ; F9
+$1$J S00  A0A                  ; F10
+$1$K S00  A0B                  ; Ins
+$1$L S00  A0C                  ; Home
+$1$M S00  A0D                  ; PgUp
+$1$N S00  A0E                  ; Up Arrow
+$1$O S00  A0F                  ; PgDn
+$2$A S00  A10                  ; Esc
+$2$B S00  A11                  ; F11
+$2$C S00  A12                  ; F12
+$2$D S00  A13                  ; [
+$2$E S00  A14                  ; ]
+$2$F S00  A15                  ; {
+$2$G S00  A16                  ; }
+$2$H S00  A17                  ; <
+$2$I S00  A18                  ; >
+$2$J S00  A19                  ; ?
+$2$K S00  A1A                  ; Del
+$2$L S00  A1B                  ; End
+$2$M S00  A1C                  ; Left Arrow
+$2$N S00  A1D                  ; Down arrow
+$2$O S00  A1E                  ; Right Arrow
+$3$A S00  A1F                  ; Tab
+$3$B S00  A20                  ; !
+$3$C S00  A21                  ; @
+$3$D S00  A22                  ; #
+$3$E S00  A23                  ; $
+$3$F S00  A24                  ; %
+$3$G S00  A25                  ; ^
+$3$H S00  A26                  ; &
+$3$I S00  A27                  ; *
+$3$J S00  A28                  ; (
+$3$K S00  A29                  ; )
+$3$L S00  A2A                  ; _
+$3$M S00  A2B                  ; =
+$3$N S00  A2C                  ; /
+$3$O S00  A2D                  ; Backspace
+$4$A S00  A2E                  ; Q
+$4$B S00  A2F                  ; W
+$4$C S00  A30                  ; E
+$4$D S00  A31                  ; R
+$4$E S00  A32                  ; T
+$4$F S00  A33                  ; Y
+$4$G S00  A34                  ; U
+$4$H S00  A35                  ; I
+$4$I S00  A36                  ; Non-standard key
+$4$J S00  A37                  ; Enter
+$4$K S00  A38                  ; 1
+$4$L S00  A39                  ; 2
+$4$M S00  A3A                  ; 3
+$4$N S00  A3B                  ; *
+$4$O S00  A3C                  ; Non-standard key
+$5$A S00  A3D                  ; A
+$5$B S00  A3E                  ; S
+$5$C S00  A3F                  ; D
+$5$D S00  A40                  ; F
+$5$E S00  A41                  ; G
+$5$F S00  A42                  ; H
+$5$G S00  A43                  ; J
+$5$H S00  A44                  ; K
+$5$I S00  A45                  ; L
+$5$J S00  A46                  ; :
+$5$K S00  A47                  ; 4
+$5$L S00  A48                  ; 5
+$5$M S00  A49                  ; 6
+$5$N S00  A4A                  ; -
+$5$O S00  A4B                  ; Non-standard key
+$6$A S00  A4C                  ; Z
+$6$B S00  A4D                  ; X
+$6$C S00  A4E                  ; C
+$6$D S00  A4F                  ; V
+$6$E S00  A50                  ; B
+$6$F S00  A51                  ; N
+$6$G S00  A52                  ; M
+$6$H S00  A53                  ; O
+$6$I S00  A54                  ; P
+$6$J S00  A55                  ; ;
+$6$K S00  A56                  ; 7
+$6$L S00  A57                  ; 8
+$6$M S00  A58                  ; 9
+$6$N S00  A59                  ; +
+$6$O S00  A5A                  ; Non-standard key
+$7$A S00  A5B                  ; Non-standard key
+$7$B S00  A5C                  ; '
+$7$C S00  A5D                  ; ~
+$7$D S00  A5E                  ; Non-standard key
+$7$E S00  A5F                  ; Space
+$7$F S00  A60                  ; \
+$7$G S00  A61                  ; |
+$7$H S00  A62                  ; ,
+$7$I S00  A63                  ; '
+$7$J S00  A64                  ; "
+$7$K S00  A65                  ; 0
+$7$L S00  A66                  ; Non-standard key
+$7$M S00  A67                  ; .
+$7$N S00  A68                  ; Enter
+$7$O S00  A69                  ; Non-standard key

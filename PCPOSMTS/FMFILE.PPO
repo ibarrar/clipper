@@ -1,0 +1,500 @@
+#line 1 "HEADER\Its.ch"
+#line 2 "FMFILE.PRG"
+#line 1 "HEADER\janus.ch"
+#line 3 "FMFILE.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\Box.ch"
+#line 4 "FMFILE.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\setcurs.ch"
+#line 5 "FMFILE.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\inkey.ch"
+#line 6 "FMFILE.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\Set.ch"
+#line 7 "FMFILE.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\FileIO.ch"
+#line 10 "FMFILE.PRG"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+memvar Getlist
+
+function fmfile()
+local bBlock,mStart:=""
+local n := 99
+local lSet := set(11,.T.)
+local oCur, wLookup, browse, column, nKey
+local oCol,cColor := if(Iscolor(),"W+/B,W+/GR","N+/W,W+/N")
+local nup := 0, ndown := 0
+
+  if NetUse("FM",.F.,5)
+     if !.F. ; ordListClear() ; end; ordListAdd( "FM" )
+  endif
+
+  if (LastRec() > 0)  
+
+    Message("Please Wait...")
+    bBlock := { || " "+padl(alltrim(str(FM->TRANSNO)),8,"0")+" "+FM->OP_CODE+" "+FM->FILE_ID+" "+dtoc(FM->POSTDATE)+" " }
+
+    wLookUp := savescreen(03,02,maxrow()-2,maxcol())
+    Shadow(03,02,maxrow()-3,maxcol()-2)
+
+    oCur := SetCursor(0)
+    oCol := SetColor("W+/W")
+
+
+
+
+    Scroll(03,02+26+1,maxrow()-3,maxCol()-1)
+    DispBox(03,02+26+1,maxrow()-3,maxcol()-1,( CHR(201) + CHR(205) + CHR(187) + CHR(186) +  CHR(188) + CHR(205) + CHR(200) + CHR(186)  ))
+
+    SetColor(cColor)
+    Scroll(03,02,maxrow()-3,02+26)
+    DispBox(03,02,maxrow()-3,02+26,( CHR(201) + CHR(205) + CHR(187) + CHR(186) +  CHR(188) + CHR(205) + CHR(200) + CHR(186)  ))
+
+    browse := TBrowseDB(03+1,02+1,maxrow()-3-1,02+26-1)
+
+    browse:headsep := ""
+    browse:colSep := ""
+    browse:footSep := ""
+    browse:colorSpec := cColor 
+
+    column:=TBColumnNew("",bBlock ) 
+
+    browse:addColumn(column)
+
+    browse:freeze := 1
+
+
+    nup := 0
+    ndown := 0
+    while .T.
+      MsgBar("Arrow Keys-Navigate  ENTER-View  F2-DownLoad")
+      while !browse:stabilize()
+         if nextkey() <> 0
+            Exit
+         endif
+      enddo
+
+      nKey := inkey(0)
+      GoGet(FM->FILE_ID,FM->RECDATA)      
+      Do case
+         case nKey == 5
+              browse:up()
+              nDown := 0
+              nup += 1
+              if nup == 1
+               FM->(DbSkip(-1))
+               GoGet(FM->FILE_ID,FM->RECDATA)      
+              endif 
+         case nKey == 24
+              browse:down()
+              nup := 0
+              ndown += 1
+              if ndown == 1
+               FM->(DbSkip())
+               GoGet(FM->FILE_ID,FM->RECDATA)      
+              endif 
+         case nKey == 18
+              browse:pageUp()
+         case nKey == 3
+              browse:pageDown()
+         case nKey == 1
+              browse:home()
+         case nKey == 6
+              browse:end()
+         case nKey == 31
+              browse:gotop()
+         case nKey == 30
+              browse:gobottom() 
+         case nKey == 27
+              Message("Exiting....")
+              aeval( { {392,1}, {880,1} }, {|t| tone( t[1],t[2] ) })
+              Exit
+         case nkey == 13
+              GoGet(FM->FILE_ID,FM->RECDATA)
+
+         case nKey == -1
+              DownLoad()
+              Message("Done Downloading...")
+              aeval( { {784,1}, {784,1} }, {|t| tone( t[1],t[2] ) })
+              Exit
+        case nKey == -2
+                Regenerate()
+            Message("Done Regenerating all Items...")
+            aeval( { {784,1}, {784,1} }, {|t| tone( t[1],t[2] ) })
+            Exit        
+      endcase
+
+    enddo                       
+
+    RestScreen(03,02,maxrow()-2,maxcol(),wLookUp)
+    SetCursor(oCur)
+    SetColor(oCol)
+    set(11,lSet)    
+
+  else
+    Message(" No Available FM Record Yet... ")
+    Tone(300,2)
+    Tone(500,2)
+    Tone(700,3)               
+  endif
+
+  FM->(DbCLoseArea())
+
+return nil
+
+static function GoGet(nFileCode,mData)
+local xGetVar[1]
+local cColor :=SetColor(if(IsColor(),"N/W,GR+/B","N/W,W/N"))
+local nOffSet
+
+
+
+   Scroll(03+1,02+26+2,maxrow()-3-1,maxCol()-2)
+   DevPos( 03+1, 02+26+2 ) ; DevOut( "FILE ID : "+ nFileCode ) 
+   do case 
+      case nFileCode == "PL" 
+        DevPos( row(), col() ) ; DevOut( " PLU/SDF FILE " )
+        aSize(xGetVar,26)        
+        nOffset := 1                                     
+        xGetVar[01]:= subs(mData,nOffSet,14);nOffSet+=14 
+        xGetVar[02]:= subs(mData,nOffSet,12);nOffSet+=12 
+        xGetVar[03]:= subs(mData,nOffSet,20);nOffSet+=20 
+        xGetVar[04]:= subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[05]:= subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[06]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[07]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[08]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[09]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[10]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[11]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[12]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[13]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[14]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[15]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[16]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[17]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[18]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[19]:= subs(mData,nOffSet,08);nOffSet+=08 
+        xGetVar[20]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[21]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[22]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[23]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[24]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[25]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[26]:= subs(mData,nOffSet,16);nOffSet+=16 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "ASSO. DEPT    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[07], "xGetVar[07]",,, ):display() )
+        DevPos( row(), col()+2 ) ; DevOut( "CONCESSIONAIRE:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[08], "xGetVar[08]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CLASS CODE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[06], "xGetVar[06]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "PLU/SDF CODE  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[01], "xGetVar[01]",,, ):display() )
+        DevPos( row(), col()+2 ) ; DevOut( "SIZE:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[04], "xGetVar[04]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "STOCK CODE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[02], "xGetVar[02]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DESCRIPTOR    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[03], "xGetVar[03]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "QUANTITY      :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[18], "xGetVar[18]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "UNIT PRICE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[09], "xGetVar[09]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "TIME PRICE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[10], "xGetVar[10]",,, ):display() )
+
+
+
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "START DATE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[16], "xGetVar[16]",,, ):display() )
+        DevPos( row(), col()+2 ) ; DevOut( "END DATE :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[17], "xGetVar[17]",,, ):display() )
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DAY OF WEEK   :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[19], "xGetVar[19]",,, ):display() )
+        DevPos( row(), col()+2 ) ; DevOut( "BASE QUANTITY :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[18], "xGetVar[18]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "PACKAGE PRICE :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[11], "xGetVar[11]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "SINGLE PRICE  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[12], "xGetVar[12]",,, ):display() )
+        DevPos( row(), col()+2 ) ; DevOut( "ITEM DISC % :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[20], "xGetVar[20]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "Selective SubTtl. Disc %:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[22], "xGetVar[22]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "TAX1:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[24], "xGetVar[24]",,, ):display() )
+
+
+
+
+
+
+        DevPos( row(), COL() ) ; DevOut( "TAX2:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[25], "xGetVar[25]",,, ):display() )
+        DevPos( row(), COL() ) ; DevOut( "TAX3:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[21], "xGetVar[21]",,, ):display() )
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CHARGE PRICE  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[14], "xGetVar[14]",,, ):display() )
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "STATUS BYTES  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[26], "xGetVar[26]",,, ):display() )
+      case nFileCode == "02" 
+        DevPos( row(), col() ) ; DevOut( " CASHIER " )
+        aSize(xGetVar,05)
+        nOffset := 1                                     
+        xGetVar[01]:= subs(mData,nOffSet,03);nOffSet+=03 
+        xGetVar[02]:= subs(mData,nOffSet,03);nOffSet+=03 
+        xGetVar[03]:= subs(mData,nOffSet,06);nOffSet+=06 
+        xGetVar[04]:= subs(mData,nOffSet,04);nOffSet+=04 
+        xGetVar[05]:= subs(mData,nOffSet,02);nOffSet+=02 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CASHIER CODE    :" ) 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "KNOWN CODE      :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[1], "xGetVar[1]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "SECRET CODE     :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[2], "xGetVar[2]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "SIGN-ON TIME    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[3], "xGetVar[3]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "POS TERMINAL NO.:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[4], "xGetVar[4]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "RESERVED        :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[5], "xGetVar[5]",,, ):display() )        
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CASHIER KNOWN CODE : " ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[2], "xGetVar[2]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CASHIER SECRET CODE : " ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[3], "xGetVar[3]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "OPERATION CODE:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[1], "xGetVar[1]",,, ):display() )
+      case nFileCode == "DP" 
+        DevPos( row(), col() ) ; DevOut( " DEPARTMENT " )
+        aSize(xGetVar,10)
+        nOffset := 1                                     
+        xGetVar[01]:= subs(mData,nOffSet,04);nOffSet+=04 
+
+        xGetVar[03]:= subs(mData,nOffSet,20);nOffSet+=20 
+        xGetVar[02]:= subs(mData,nOffSet,04);nOffSet+=04 
+
+        xGetVar[04]:= subs(mData,nOffSet,06);nOffSet+=06 
+        xGetVar[05]:= subs(mData,nOffSet,06);nOffSet+=06 
+        xGetVar[06]:= subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[07]:= subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[08]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[09]:= subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[10]:= subs(mData,nOffSet,20);nOffSet+=10 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DEPARTMENT CODE    :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[1], "xGetVar[1]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DEPT. DESCRIPTOR   :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[3], "xGetVar[3]",,, ):display() ) 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CONCESSIONAIRE CODE:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[2], "xGetVar[2]",,, ):display() )
+
+
+
+
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "START DATE         :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[4], "xGetVar[4]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "END DATE           :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[5], "xGetVar[5]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "TAX RATE           :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[6], "xGetVar[6]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DISCOUNT RATE      :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[7], "xGetVar[7]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "HIGH AMT. LOCK OUT :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[8], "xGetVar[8]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "LOW AMT. LOCK OUT  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[9], "xGetVar[9]",,, ):display() )        
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "RESERVED           :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[10], "xGetVar[10]",,, ):display() )        
+      case nFileCode == "04" 
+        DevPos( row(), col() ) ; DevOut( " CLASS " )      
+        aSize(xGetVar,6)    
+        nOffSet := 1    
+        xGetVar[1] := subs(mData,nOffSet,06);nOffSet+=06 
+        xGetVar[2] := subs(mData,nOffSet,20);nOffSet+=20 
+        xGetVar[3] := subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[4] := subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[5] := subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[6] := subs(mData,nOffSet,10);nOffSet+=10 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "CLASS CODE   :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[1], "xGetVar[1]",,, ):display() )                
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DESCRIPTOR   :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[2], "xGetVar[2]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "DEPT. LINKS  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[3], "xGetVar[3]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "OTB BUDGET   :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[4], "xGetVar[4]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "OTB AVAILABLE:" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[5], "xGetVar[5]",,, ):display() )
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "RESERVED     :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[6], "xGetVar[6]",,, ):display() )
+      case nFileCode == "FC" 
+        DevPos( row(), col() ) ; DevOut( " FOREIGN CURRENCY " )              
+        aSize(xGetVar,07)
+        nOffSet := 1    
+        xGetVar[1] := subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[2] := subs(mData,nOffSet,03);nOffSet+=03 
+        xGetVar[3] := subs(mData,nOffSet,20);nOffSet+=20 
+        xGetVar[4] := subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[5] := subs(mData,nOffSet,10);nOffSet+=10 
+        xGetVar[6] := subs(mData,nOffSet,02);nOffSet+=02 
+        xGetVar[7] := subs(mData,nOffSet,10);nOffSet+=10 
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "           " ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[3], "xGetVar[3]",,, ):display() )               
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "FOREIGN CURRENCY CODE :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[1], "xGetVar[1]",,, ):display() )               
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "FOREIGN CURRENCY ABBR :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[2], "xGetVar[2]",,, ):display() )               
+
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "FOREIGN CURRENCY RATE :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[4], "xGetVar[4]",,, ):display() )               
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "F. CURRENCY OLD RATE  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[5], "xGetVar[5]",,, ):display() )               
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "F. CURRENCY DEC. POS  :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[6], "xGetVar[6]",,, ):display() )               
+        DevPos( row()+1, 02+26+2 ) ; DevOut( "RESERVED              :" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( xGetVar[7], "xGetVar[7]",,, ):display() )               
+   endcase   
+
+   ReadKill(.T.) ; GetList := {} 
+   setColor(cColor)
+
+return nil
+
+static function DownLoad()
+local nHandle,cData 
+local cpath 
+
+cPath := pad(cPath,35)  
+
+
+ if NetUse("UM",.F.,5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "UM" )
+ endif
+
+ cPath := alltrim(UM->UMAC_PATH)
+
+ while !empty(cPath) .AND. UM->(!EOF())
+
+    if subs(cPath,len(cPath),1) <> "\"
+       cPath += "\"
+    endif
+
+    cPath += "FM_TRANS.TXT"
+
+    if File(cPath) 
+        nHandle := fopen(cPath,2 + 64)
+    else
+        nHandle := fcreate(cPath,0)
+    endif 
+
+    if ferror() <> 0
+       if Alert("Error Opening:"+cPath+";DOS ERROR NO: "+alltrim(str(ferror())),{" Retry "," Abort "}) == 1
+          cPath := GetPath("Down Load FM File",cPath)
+          loop
+       else
+          exit
+       endif      
+    endif   
+
+    fSeek(nHandle,0,2) 
+
+    FM->(DbGotop())
+    While FM->(!Eof())
+       if FM->(!Deleted()) 
+          cData := padl(alltrim(str(FM->TRANSNO)),8,"0")
+          cData += FM->OP_CODE
+          cData += FM->FILE_ID
+          cData += FM->RECDATA          
+          if fwrite(nHandle,cData,256) == 256
+             Message("Writing Transaction: "+str(FM->TRANSNO)+" on terminal "+UM->MACHINENO)
+             FM->(RecLock())
+             FM->(DbDelete())
+             FM->(DbUnLock())
+          else
+             Message("Error Writing Transaction: "+str(FM->TRANSNO))
+             fClose(nHandle)
+             return nil
+          endif
+      endif 
+       FM->(DbSkip())
+    enddo
+
+    fClose(nHandle)
+
+    UM->(DbSkip())
+    cPath := alltrim(UM->UMAC_PATH)
+
+ enddo  
+
+ UM->(DbCloseArea())
+
+return nil
+
+function Regenerate()
+
+    DownLoad()
+
+
+    if NetUse("FM",.T.,5)
+        if !.F. ; ordListClear() ; end; ordListAdd( "FM" )
+    else
+        Message("Error Opening 'FM.DBF'....")
+
+        Alert("Program is in use elsewhere;This function requires exclusive;"+ "Access on Database 'FM.DBF'",{"Quit"})
+        return nil
+    endif
+
+
+    __dbPack()
+    FM->(DbCommit())
+    FM->(DbCloseArea())
+
+
+
+     if NetUse("FM",.F.,5)
+       if !.F. ; ordListClear() ; end; ordListAdd( "FM" )
+    endif   
+
+
+     if NetUse("DP",.F.,5)
+       if !.F. ; ordListClear() ; end; ordListAdd( "DP_001" )
+    endif
+     FM->(DbAppend())    
+    while DP->(!Eof())
+        FM->TRANSNO := FMNext()
+        FM->OP_CODE := "02"   
+        FM->OP_FLAG := 1
+        FM->FILE_ID := "DP" 
+        FM->RECDATA := GetData()
+        FM->POSTDATE:= Date()
+        FM->POSTSTAT:= 0
+    enddo
+     FM->(DbUnLock())                      
+    DP->(DbCloseArea())
+
+
+    if NetUse("ITEM",.F.,5)
+       if !.F. ; ordListClear() ; end; ordListAdd( "I_001" )
+    endif
+
+     FM->(FilLock())    
+    while ITEM->(!Eof())
+        FM->(DbAppend())
+        FM->TRANSNO := FMNext()
+        FM->OP_CODE := "02" 
+        FM->OP_FLAG := 1
+        FM->FILE_ID := "PL" 
+        FM->RECDATA := GetData()
+        FM->POSTDATE:= Date()
+        FM->POSTSTAT:= 0
+    enddo
+     FM->(DbUnLock())    
+    ITEM->(DbCLoseArea())
+
+    FM->(DbCloseArea())
+
+return nil
+
+
+Function GetPath(cTitle,cPath)
+local wPath,cColor := SetColor("W+/W,GR+/B")
+local nfhandle
+
+  if file(".\"+"FM.ID")
+     nFHandle:=fopen(".\"+"FM.ID")
+     cPath := freadstr(nFHandle,40)
+     fclose(nFHandle)
+  endif     
+
+    cPath := padr(alltrim(cPath),40) 
+
+    wPath := OpenWindow(10,22,14,68,cTitle)
+    DevPos( 12, 25 ) ; DevOut( "Enter Path and Filename" )
+    SetPos( 13, 25 ) ; AAdd( GetList, _GET_( cPath, "cPath", "@KS40",, ):display() )
+
+    setCurSor(1)
+    ReadModal(GetList) ; GetList := {}
+    setCurSor(0)
+
+    CloseWindow(wPath)
+    SetColor(cColor)
+
+
+
+ if lastkey() <> 27
+   if file("FM.ID")
+     ferase("FM.ID")
+   endif  
+   nFHandle := fcreate("FM.ID",0)
+   fwrite(nFHandle,cPath)
+   fclose(nFHandle)          
+ else
+   aeval( { {392,1}, {98,1}, {49,5} }, {|t| tone( t[1],t[2] ) })
+   return nil
+ endif
+
+return if(LastKey()==27,"",cPath)

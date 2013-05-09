@@ -1,0 +1,12 @@
+# TESTOVL.LNK
+# For Turbo C / Borland C / C++
+Echo For Borland / Turbo C / C++ link c0l.obj as the first file!!
+# FILE C0L              # For Borland/Turbo C/C++
+beginarea               # Start of overlays
+   file test            # This file is overlaid
+   file limerick        # This file is overlaid
+endarea                 # End of overlays
+output t                # Output .EXE name
+# For Turbo C / Borland C / C++
+Echo For Borland / Turbo C / C++ link CL.LIB, GRAPHICS.LIB as the last libraries!!
+# LIB CL,GRAPHICS

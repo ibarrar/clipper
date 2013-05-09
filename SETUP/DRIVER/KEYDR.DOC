@@ -1,0 +1,117 @@
+KEYDR.DOC           Device driver for Non-standard keyboard
+---------
+
+Device name : KEY.SYS v1.04a
+
+INTRODUCTION
+
+   This driver provides support for non-standard keyboard, MSR reading,
+   and for detection of the key lock position.
+
+   The driver captures the INT 15, function 4Fh, to detect non-standard
+   keys. Hence, the driver should work with any programs, unless the programs
+   themselves replace the INT 15.
+
+
+   All the inputs and result can be read from the keyboard buffer, for example
+   using getch() function in C language.
+
+
+          иммяммяммяммяммяммяммяммяммяммяммяммяммяммямм╩
+          ╨30Ё31Ё32Ё33Ё35Ё34Ё36Ё37Ё38Ё3BЁ3AЁ39Ё3CЁ3DЁ3E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨40Ё41Ё42Ё43Ё45Ё44Ё46Ё47Ё48Ё4BЁ4AЁ49Ё4CЁ4DЁ4E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨50Ё51Ё52Ё53Ё55Ё54Ё56Ё57Ё58Ё5BЁ5AЁ59Ё5CЁ5DЁ5E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨60Ё61Ё62Ё63Ё65Ё64Ё66Ё67Ё68Ё6BЁ6AЁ69Ё6CЁ6DЁ6E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨20Ё21Ё22Ё23Ё25Ё24Ё26Ё27Ё28Ё2BЁ2AЁ29Ё2CЁ2DЁ2E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨10Ё11Ё12Ё13Ё15Ё14Ё16Ё17Ё18Ё1BЁ1AЁ19Ё1CЁ1DЁ1E╨
+          гддеддеддеддеддеддеддеддеддеддеддеддеддеддедд╤
+          ╨00Ё01Ё02Ё03Ё05Ё04Ё06Ё07Ё08Ё0BЁ0AЁ09Ё0CЁ0DЁ0E╨
+          хммоммоммоммоммоммоммоммоммоммоммоммоммоммомм╫
+
+                      Keyboard position
+
+
+HOW TO USE
+
+   The device can be opened as a file handle in any program languages that
+   support this feature. Following is a sample C progam:
+
+
+     FILE *fp;
+
+       fp = fopen("KEY$$", "wb");           /* Open KEY       */
+       fprintf(fp, "%c", !);                /* Cancel MSR reading   */
+       fflush(fp);
+       fclose(fp);
+
+
+COMMAND
+
+   '!' - Disable MSR reading and resume keyboard scanning
+   '@' - Set 'Cancel' key, the driver expects the next single byte to be the
+         postion of the new 'Cancel' key. Please refer to the attached
+         documents for the keys position. The default 'Cancel' key is ESC (40h)
+
+   '#' - To read back current 'Cancel' key postion. Please note the result is
+         put into the keyboard buffer. Programmer just need to read it
+         immediately after sending this command.
+
+   '$' - Enable MSR reading. Special code '╗'(A8h) is used to denote MSR
+         operation.
+
+           Result codes
+
+             '╗t' - Time out
+             '╗e' - Error in the reading of the data
+             '╗c' - User has pressed the 'Cancel' key to stop the MSR reading
+
+           If everything is fine, the following will be read from the keyboard
+           buffer.
+
+           Track Data
+           ╗,Track number (1 byte, 1|2|3), Data Length (2 bytes in hex format),
+           Data bytes (variable), Checksum (2 bytes),╗,x
+
+           Card Data
+           Track Data, ..., ╗, m, ╜
+
+           Note: Data bytes must be converted to keyboard scan code before they
+                 can used to calculate check sum. Checksum bytes include only
+                 the data bytes. Please refer to the keyboard scan code table
+                 for scan code table conversion.
+
+   '%' - Read current key lock position.
+         Range from '1' to '6'
+
+   '^' - Read currect Engineering Change Level. Present level is 01
+
+
+   NOTE: All results and inputs are to be read only from the keyboard buffer.
+
+
+ Non-standard keys
+
+   Position              Ascii Code Return
+
+     68h                     CDh
+     6Eh                     CBh         These keys are not supported on
+     2Eh                     D0h         some versions of keyboard.
+     1Eh                     CEh
+     0Eh                     CCh
+
+     09h                     '00'        Simulate '0' being pressed twice
+     03h                     D1h
+
+     00h                     Nil         Simulate Caplock
+
+
+                                                       Cheng Hwa
+                                                       Asst. Software Engr
+                                                       27 Dec 94
+
+

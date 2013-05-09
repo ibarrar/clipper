@@ -1,0 +1,157 @@
+#line 1 "C:\PCPOSMTS\HEADER\itm_move.ch"
+#line 1 "C:\PCPOSMTS\HEADER\itemtran.ch"
+#line 3 "itm_move.ch"
+#line 2 "ITEMVTXT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\directry.ch"
+#line 3 "ITEMVTXT.PRG"
+#line 1 "C:\PCPOSMTS\HEADER\janus.ch"
+#line 4 "ITEMVTXT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\fileio.ch"
+#line 5 "ITEMVTXT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\inkey.ch"
+#line 6 "ITEMVTXT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\setcurs.ch"
+#line 8 "ITEMVTXT.PRG"
+
+
+
+
+memvar getlist
+function ItemV_imp()
+local cpath := space(35), i := 0, cFileName, aTxtDir := {}, nFHandle, cStr:=space(116), nFH, nfh2
+local aflag:={  "R", "D", "V","G" }
+local aChargeFlags := {"Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+local wChange
+local cDate:=dtos(date())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if NetUse("UM",.F.,5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "UM" )
+endif
+
+if netuse("PLU", .F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "PLU" ); ordListAdd( "DATEPLU" ); ordListAdd( "ITEMCNT" ); ordListAdd( "AMTCNT" )
+endif
+
+if netuse("CHARGE", .F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "CHARGE" )
+endif
+
+while UM->(!Eof())
+
+  if UM->(Deleted())
+     UM->(DbSkip())
+    loop
+  endif    
+
+  cpath := ALLTRIM(UM->UMAC_PATH)
+  if substr(cpath,len(cpath),1) <> "\"
+    cpath += "\"
+  endif  
+
+  aTxtDir := directory(cPath+"ITEM*.TXT")
+
+  if len(aTxtDir) == 0
+    Message("No ITEM TEXT transaction file on Machine "+UM->MACHINENO)
+  endif
+
+  for  i:= 1 to len(aTxtDir)
+     if file(cPath+ aTxtDir[i][1])
+       __CopyFile( (cPath)+(aTxtDir[i][1]), (chr(65+curdrv())+":\"+curdir()+"\BACKUP\")+(subs(aTxtDir[i][1],1,4)+subs(cDate,5,4)+".J"+ alltrim(str(val(subs(aTxtDir[i][1],5,4)))) ) )
+       FRename( (cPath)+aTxtDir[i][1], (cPath)+substr(aTxtDir[i][1],1,8) )
+       __CopyFile( (cPath)+substr(aTxtDir[i][1],1,8), (chr(65+curdrv())+":\"+curdir()+"\MTSDATA\")+ (aTxtDir[i][1]) ) 
+       FERASE((cPath)+substr(aTxtDir[i][1],1,8))
+     endif  
+  next
+
+for i := 1 to len(aTxtDir)
+
+  cFileName := aTxtDir[i][1]
+  nFHandle := fopen((chr(65+curdrv())+":\"+curdir()+"\MTSDATA\")+ cFileName,0)
+
+  if nFHandle == -1
+    Alert("Error opening file : '"+cFileName+"'", {"Return"})
+    loop 
+  endif
+  Message('Updating files "PLU.DBF " please wait...')
+
+  while !feof(nFhandle)
+     cStr := freadstr(nFHandle,128) 
+    if aScan(aChargeFlags, substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1)) <> 0
+         if val(substr(cStr,(((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1),1)) <> 0
+            CHARGE->(dbAppend())
+                CHARGE->(RecLock())
+
+                CHARGE->POS_NO     := substr(cStr,1,4)        
+                CHARGE->DATE       := CTOD(substr(cStr,(1 + 4),8))
+                CHARGE->TIME       := substr(cStr,((1 + 4) + 8),8)        
+                CHARGE->CASH_CODE  := substr(cStr,((((((1 + 4) + 8) + 8) + 8) + 1) + 1),6) 
+                CHARGE->SLS_AMOUNT := cNcon(substr(cStr,((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 4),12)) * 0.01
+                CHARGE->PAY_TYPE   := substr(cStr,(((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1),1)  
+                CHARGE->ACCT_NO    := substr(cStr,((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 4) + 12) + 8),20)
+                CHARGE->OP_FLAG    := substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1)
+                CHARGE->(dbUnLock())    
+           endif     
+       elseif aScan(aFlag, substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1)) <> 0 
+
+        if (!PLU->(DbSeek(substr(cStr,(((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2),14)+dtos(ctod(substr(cStr,(1 + 4),8))))))
+              PLU->(dbAppend())
+          PLU->DATE := ctod(substr(cStr,(1 + 4),8))
+          PLU->CODE := substr(cStr,(((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2),14)
+          PLU->ITEM_CODE := substr(cStr,((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14),12)
+          PLU->OP_FLAG := substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1)
+        endif          
+            PLU->(RecLock())
+
+        if (substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1) == "V" .OR. substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1) == "G") .AND. substr(cStr,((((1 + 4) + 8) + 8) + 8),1) == "N"
+            PLU->VOID_QTY += val(substr(cStr,((((((((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14) + 12) + 4) + 4) + 2) + 2) + 12),10))
+            PLU->VOID_AMT += cNcon(substr(cStr,(((((((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14) + 12) + 4) + 4) + 2) + 2),12)) * 0.01
+        elseif substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1) == "D"
+            PLU->DISC_QTY += 1
+            PLU->DISC_AMT += cNcon(substr(cStr,(((((((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14) + 12) + 4) + 4) + 2) + 2),12)) * 0.01
+        elseif (substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1) == "R" .OR. substr(cStr,(((((1 + 4) + 8) + 8) + 8) + 1),1) == "E") .AND. substr(cStr,((((1 + 4) + 8) + 8) + 8),1) == "N"
+             PLU->RTN_QTY +=  val(substr(cStr,((((((((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14) + 12) + 4) + 4) + 2) + 2) + 12),10))
+            PLU->RTN_AMT +=  cNcon(substr(cStr,(((((((((((((((((1 + 4) + 8) + 8) + 8) + 1) + 1) + 6) + 6) + 1) + 1) + 2) + 14) + 12) + 4) + 4) + 2) + 2),12)) * 0.01
+        endif        
+
+            PLU->(dbUnLock())
+
+      endif    
+  enddo
+
+  Fclose(nFHandle)
+  aeval( { {392,1}, {880,1} }, {|t| tone( t[1],t[2] ) })
+next
+
+  UM->(DbSkip())
+enddo 
+
+CHARGE->(dbCommit())    
+CHARGE->(DbCloseArea())
+PLU->(dbCommit())    
+PLU->(DbCloseArea())
+UM->(DbCloseArea())
+
+aeval( { {784,1}, {784,1} }, {|t| tone( t[1],t[2] ) })
+inkey(1)      
+
+return nil  
+
+
+function cNcon(n)
+return val(if("-" $ n,"-"+substr(n,at("-",n)+1),n))

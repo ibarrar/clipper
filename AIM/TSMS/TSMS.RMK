@@ -1,0 +1,43 @@
+CLIPFLAGS=-w -n -b -a -m -i 
+
+.prg.obj :
+  clipper $* $(CLIPFLAGS) 
+
+tsms.obj: tsms.prg
+
+master.obj: master.prg
+
+view.obj: view.prg
+
+abrowse.obj: abrowse.prg
+
+mapclust.obj: mapclust.prg
+
+config.obj: config.prg
+
+read.obj: read.prg
+
+reading.obj: reading.prg
+
+TERMCON.OBJ: TERMCON.PRG
+
+DEPTCON.OBJ: DEPTCON.PRG
+
+HOURCON.OBJ: HOURCON.PRG
+
+reports.obj: reports.prg
+
+reports1.obj: reports1.prg
+
+reports2.obj: reports2.prg
+
+reset.obj: reset.prg
+
+f_clos.obj: f_clos.prg
+  clipper $* -b -n -w -a -m
+
+tsms.exe: tsms.obj master.obj view.obj abrowse.obj config.obj mapclust.obj \
+          read.obj reading.obj reports.obj termcon.obj deptcon.obj hourcon.obj \
+          reports1.obj reports2.obj reset.obj f_clos.obj
+  RTLINK @tsms
+

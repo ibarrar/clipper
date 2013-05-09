@@ -1,0 +1,23 @@
+//
+//  Rl.rmk
+//
+//  Make file for RL, Clipper REPORT and LABEL FORM design program.
+//
+//  Copyright (c) 1990-1993, Computer Associates International, Inc.
+//  All rights reserved.
+//
+
+.prg.obj:
+    clipper $< /m /n
+
+.obj.exe:
+    set rtlinkcmd=/posi
+    rtlink $**, $@ ;
+
+
+rlfront.obj:    rlfront.prg
+rlback.obj:     rlback.prg
+rldialg.obj:    rldialg.prg
+
+rl.exe:         rlfront.obj  rlback.obj  rldialg.obj
+

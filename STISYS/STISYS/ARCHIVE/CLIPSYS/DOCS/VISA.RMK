@@ -1,0 +1,16 @@
+.prg.obj:
+  CLIPPER $* /N /A /M /O$@
+
+VISA.OBJ:     Visa.prg
+EDITOR.OBJ:   Editor.prg
+HELP.OBJ:     Help.prg
+MAINT.OBJ:    Maint.prg
+SCREEN.OBJ:   Screen.prg
+WINDOWS.OBJ:  Windows.prg
+
+VISA.EXE : VISA.OBJ EDITOR.OBJ HELP.OBJ MAINT.OBJ SCREEN.OBJ WINDOWS.OBJ
+  RTLINK FI VISA,EDITOR,HELP,MAINT,SCREEN,WINDOWS
+
+
+
+

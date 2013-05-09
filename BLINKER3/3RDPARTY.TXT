@@ -1,0 +1,558 @@
+3RDPARTY.TXT                                                      11/27/93
+------------                                                      --------
+                    Blinker Third Party Document
+
+The vendors of the following products have reported these products to be
+compatible with Blinker.  We appreciate their cooperation in compiling
+this report.  This information is only as current as the date in the upper
+right hand corner and applies to the current version of Blinker at that
+date.  Each product's level of compatibility with Blinker is listed as
+it was last reported by the vendor without verification by Blink Inc.
+
+If you have any questions about the level of compatibility or the manner
+in which one of these products should be linked with Blinker, please
+refer to the documentation for the product in question, or contact the
+vendor of the product.
+
+Many more products are compatible with Blinker than could be listed in
+this report.  This is a sampling of some of the major vendors that have
+responded to our inquiries.  Two alphabetic lists are attached:
+(I) compatible software products, followed by (II) their vendors.
+
+I. List of products alphabetically:
+
+                                 Overlay |Prot|Dual
+Product             Vendor      Full|Part|Mode|Mode Description
+-------            ----------   ----|----|----|---- -----------
+AAMOUSE           Artful Applicat  -   Y   Y    Y  Mousery applications.
+Advanced Image    Sun Country Sof  -   Y   -    -  High resolution image database.
+AHELP5            Capella Inc.     Y   Y   Y    -  Advanced HELP for Clipper 5.x.
+ArtfulGold        Artful Applicat  -   Y   Y    Y  Relational data driven lib.
+Asset Keeper      Pro-Ware         -   -   -    -
+BrowseMan         Rhino Publishin  Y   Y   Y    Y  Linkable TBrowse painter.
+C++/Views         Liant Software   -   -   -    -  C++ lib. for GUI applications.
+C-Scape           Liant Software   -   -   -    -  Lib. for user interfaces in C.
+C-Scape386        Liant Software   -   -   -    -  C-Scape for real/protected mode.
+CALC              Touchstone Busi  Y   -   Y    Y  Professional calculator for Clipper.
+Camouflage        Moon Microsyste  Y   Y   Y    Y  Symbol encryption utility for Clipper.
+ClassMates        Objective Softw  Y   -   Y    Y  Object oriented user interface Clipper 5
+CLGraph/3D        Building Blocks  -   Y   Y    Y  Graphics lib. works in any resolution.
+CLGraph/3D        Dr. Huggle & Pa  -   Y   Y    Y  Graphics lib. works in any resolution.
+CLImage           Building Blocks  -   Y   Y    Y  Func. for image processing.
+CLImage           Dr. Huggle & Pa  -   Y   Y    Y  Func. for image processing.
+Clip4Win          Grumpfish, Inc.  -   -   -    -  Create Windows EXE's for Clipper.
+Clip4Win          Skelton Softwar  -   -   -    -  Create windows EXE's for Clipper.
+CLIPCAT           On-Line Resours  Y   -   -    Y  Function libraries for Clipper.
+CLIPMORE          Loadstone, Inc.  Y   -   Y    Y  High performance RDD for Clipper.
+CLIPON            Proware          Y   -   -    -  Gen. purpose Clipper add-on library.
+Clipper Tools     Computer Associ  -   -   -    -  Add on library for Clipper.
+CLIPWKS           Grumpfish, Inc.  Y   -   -    -  Translates Lotus or Quatro spreadsheets.
+CLIPX             GG Compu-System  Y   -   -    Y  Add-on CA-Clipper library.
+CLIRMA - 3270 Emu Four Seasons Pu  -   -   -    -  3270 Emulation.
+CLReport          Building Blocks  -   Y   Y    Y  Design reports w/WYSIWYG.
+CLReport          Dr. Huggle & Pa  -   Y   Y    Y  Design reports w/WYSIWYG.
+CLSpell           Building Blocks  Y   -   Y    Y  Spell checker for Clipper.
+CLText            Building Blocks  -   Y   Y    Y  Text editing tool for Clipper.
+CLText            Dr. Huggle & Pa  -   Y   Y    Y  Text editing tool for Clipper.
+CLToolsI          Building Blocks  -   Y   Y    Y  Clipper prof. w/100's funct. in groups.
+CLToolsI          Dr. Huggle & Pa  -   Y   Y    Y  Clipper prof. w/100's funct. in groups.
+CLWindow          Dr. Huggle & Pa  -   Y   Y    Y  GUI lib. works in all video modes.
+CLWindow          Building Blocks  -   Y   Y    Y  GUI lib. works in all video modes.
+CodeBase          Sequiter Softwa  -   -   -    -  The C/C++ lib. for dbase management.
+odeBasic          Sequiter Softwa  -   -   -    -  Dbase management for Visual Basic.
+CODESAFE          Eliashim Microc  -   -   -    -  Copy protection software.
+ColrTrax Unlimite Blackhawk Data   Y   -   -    -  Color screen print software.
+
+                                 Overlay |Prot|Dual
+Product             Vendor      Full|Part|Mode|Mode Description
+-------            ----------   ----|----|----|---- -----------
+Comix Driver      Loadstone, Inc.  Y   -   Y    Y  Query Optimizer.
+CommTools         Pinnacle Publis  -   Y   -    -  Communications lib. Clipper/FoxPro.
+dbClass           Capella Softwar  Y   -   Y    Y  Database class library.
+dbdBAK            Data Base Desig  -   -   -    -
+dBest Toolbox     HALLoGRAM Publi  -   -   -    -  23 Misc. source code libraries.
+DBFtrieve         Softech Micro S  Y   -   Y    Y  Object lib. for Btrieve access.
+dBsee 3.0         Italian Softwar  Y   -   -    -  CASE-Code generator.
+dBsee 4.0         Italian Softwar  -   Y   Y    Y  CASE-Code generator.
+dClip 3.0         Donnay Software  -   Y   Y    Y  IDE/DBMS library.
+dGE               Pinnacle Publis  Y   Y   Y    Y  Graphics lib. for Clip., FoxPro, & C.
+DGE               Bits Per Second  Y   Y   Y    Y  Graphics lib. for C and Database lang.
+dGT Unlimited     Blackhawk Data   -   Y   -    -  Database graphics toolkit.
+Dr. Switch ASE    Black and White  -   Y   -    -  Creates TSRs and mem. swapper.
+Escape            Pinnacle Publis  Y   Y   Y    Y  Laser printer lib. for CA-Clipper.
+EVERKEY           Az-Tech Softwar  Y   Y   -    -  Software distribution control.
+EVERLOCK          Az-Tech Softwar  Y   Y   -    -  Software security.
+Fast Text Search  Index Applicati  Y   -   -    -  CA-Clipper S'87.
+Fast Text Search  Index Applicati  Y   -   Y    Y  DOS, OS2, Windows.
+Fast Text Search  Index Applicati  Y   -   Y    Y  CA-Clipper specific 5.x.
+FastGET           On-Line Resours  Y   -   -    Y  Fully mousable GET system.
+FAXual.lib        Extrasensory So  Y   -   Y    Y  Fax lib. for Clipper.
+FIVEWIN           Functional Soft  Y   -   -    -  Win3.1 xBase &OOPS for Clipper.
+FIVEWIN           Antonio Linares  Y   -   -    -  Win3.1 xBase & OOPS for Clipper.
+FlashTools        Avis-Hill        -   -   -    -
+Flexfile II       GANAHL Software  Y   -   Y    Y  Replaces Clipper's memo files.
+Flipper           ProWorks         -   Y   -    -  Graphics lib. for CA-Clipper.
+FUNCKy            dLesko           -   Y   Y    Y  Add-on lib. for C and Clipper.
+Grumpfish Library Grumpfish, Inc.  Y   -   -    -  Multi-faceted prod. tool.
+Grumpfish Menu    Grumpfish, Inc.  Y   -   -    -  Front-end menu genorator/prototype sys.
+Grumpfish Reporte Grumpfish, Inc.  Y   -   -    -  Clipper report writer.
+Grumpfish Speller Grumpfish, Inc.  Y   -   -    -  Spell checker & theaurus for Clipper.
+GX Effects        Genus Microprog  Y   -   -    -  Professional graphics & animation.
+GX Text           Genus Microprog  Y   -   -    -  Display bitmapped text in graphics mode.
+Hi-Per Six Rev 1. SuccessWare 90   Y   Y   Y    Y  Access to high speed NSX indexes.
+IDL(3)            Integrated Deve  Y   -   Y    Y  Gen. purpose lib. for Clipper.
+IQuery            Moon Microsyste  Y   -   Y    Y  Conditional indexing for Clipper.
+KeyLock           Softech Micro S  Y   -   Y    Y  Keystroke record & replay for Clipper.
+LANPlug           Eliashim Microc  -   -   -    -  Copy protection software.
+LIBTOOLS          Integrated Deve  -   -   -    -  Lib. tools for MS compat. OBJ files.
+LIGHT LIB GRAPHIC DFL              -   -   -    -  Graphical interface lib. Clipper.
+Light Lib Graphic HALLoGRAM Publi  -   -   -    -  Clip. repl. terminal driver- graph mode.
+LIGHT LIB IMAGE   DFL              -   -   -    -
+MemoPlug          Eliashim Microc  -   -   -    -  Copy protection software.
+NetLib            Pinnacle Publis  Y   Y   Y    -  Networking lib. Clipper/FoxPro.
+NOVLIB            Blinkinc         Y   Y   Y    Y  Novell NetWare lib. for Clipper.
+OODLES            Rhino Publishin  Y   Y   Y    Y  Create own objects in Clipper.
+Overlay           SofDesign Inter  -   Y   -    -  Application swapper.
+
+                                 Overlay |Prot|Dual
+Product             Vendor      Full|Part|Mode|Mode Description
+-------            ----------   ----|----|----|---- -----------
+PadBase           R2Z, Inc.        Y   -   -    -  Zooming Object Toolkit.
+PCX Toolkit Progr Genus Microprog  Y   -   -    -  Create apps. w/the PCX file format.
+PenBuilder        R2Z, Inc.        Y   -   -    -  Pen Based Toolkit.
+PenZoom           R2Z, Inc.        Y   -   -    -  Pen Development SDK.
+Periscope         Periscope Compa  -   -   -    -  Dos debugger.
+Plastic           Atlas Software   Y   Y   Y    Y  CA-Clipper app. gen.
+PostScript Lib                     Y   Y   Y    Y  PostScript for Clipper
+ProBas 5.5        TeraTech Inc.    -   Y   -    -  Graphics & gen. purpose Basic lib.
+ProBas Toolkit    TeraTech Inc.    -   Y   -    -  Menu & B-Tree index Basic lib.
+ProClip           SofDesign Inter  -   Y   -    -  Clipper add-on library.
+ProVision         SofDesign Inter  -   Y   -    -  Clipper add-on library.
+PS Error          Extrasensory So  -   Y   Y    Y  Clipper replacement error system.
+RaSQL/B           Pinnacle Publis  Y   Y   Y    -  Btrieve RDD Clipper/FoxPro.
+RaSQL/X           Pinnacle Publis  Y   Y   Y    -  NetWare SQL RDD Clipper/FoxPro.
+R&R Report Writer Concentric Data  -   -   -    -  An X-base report writer.
+Remote ANSI       Gilmore Softwar  -   Y   -    -  Remote control communications.
+Remote API        Gilmore Softwar  -   Y   -    -  Remote control communications.
+SBT               SBT              Y   Y   Y    Y  Accounting package/Clipper.
+SECURE.LIB        Touchstone Busi  Y   -   Y    Y  Demo lib. and copy protection lib.
+Series 7          South By Southw  -   -   -    -  Full SBT Accounting Library.
+SilverClip Librar SilverWare, Inc  -   Y   Y    -  Comm. and faxing lib. for Clipper 5.x.
+SilverComm        SilverWare, Inc  -   Y   -    -  Comm. lib. for "C" and Clipper S'87.
+SilverPaint Lib.  SilverWare, Inc  Y   -   Y    -  Graphics lib. for CA-Clipper S'87/5.x.
+Six Driver CDX    SuccessWare 90   Y   Y   Y    Y  Replaceable Database for FoxPro CDX.
+Six Driver NSX    SuccessWare 90   Y   Y   Y    Y  Fast Clipper indexes.
+Smartmem (S'87 On Integrated Deve  Y   -   -    -  Add-on lib. for Clipper S'87.
+SoftClip          On-Line Resours  Y   -   -    Y
+SoftCode          BOTTLEWORKS DEV  -   -   -    -  Code generator C, Pascal, Clipper, etc.
+Something eXtra   Zachary Softwar  Y   Y   Y    Y  Add-on lib. for Clipper.
+SOS Help!         Lamaura Develop  Y   Y   Y    Y  Help authoring sys for Clipper 5.x
+Stage             IS Technology    Y   Y   Y    Y  Application generator for Clip & Foxp.
+Stage CASE TOOL   IS Technology    Y   Y   Y    Y  CASE Tool - Clip S87,5.x,Fox 2.5 DOS/Win
+StarClass         Loesgen Softwar  Y   -   Y    Y  User interface class lib. for Clipper.
+Steve Straley's T Four Seasons Pu  -   -   -    -  Clipper S'87 Library.
+SubNtx ()         Moon Microsyste  Y   Y   Y    Y  Conditional indexing for Clipper.
+Sunshow           Pinnacle Publis  -   Y   -    -  Image toolkit for database programmers.
+SunShow Image Too Sun Country Sof  -   Y   -    -  Image database for Clipper.
+Sunshow Professio Pinnacle Publis  -   Y   Y    Y  A full-featured image toolkit.
+SuperLib 2.5      Functional Soft  Y   Y   -    -  CA-Clipper library (S'87).
+SuperLib 3.5      Functional Soft  Y   Y   Y    Y  CA-Clipper library (5.x).
+SymScript 3.0     HALLoGRAM Publi  -   -   -    -  LaserJet & PostScript form design.
+T-Base            Videotex System  -   Y   -    -  Image Display Library.
+TechWriter        Interface Techn  -   -   Y    Y  Tools for hypertext authoring.
+TeleComm Toolkit  TeraTech Inc.    -   Y   -    -  Telecomms Basic library.
+Telepathy         Extrasensory So  -   Y   Y    Y  Serial comm lib. for Clipper.
+Vermont Views     Vermont Creativ  -   -   -    -
+Viewit            Objective Softw  Y   -   Y    Y  Power browser for Clipper 5.x.
+Vitamin C         Creative Progra  -   -   -    -  Lib. of user interfaces - C programs.
+VitaminScreen     Micro Consult N  -   Y   Y    Y  Clipper lib TMR w/GRAPHS/ICONS/MOUSE...
+Visual Interface  Bits Per Second  -   -   Y    Y  Graphical user interface for Clipper.
+Windesign         Artful Applicat  -   Y   Y    Y  Screen designer, menu designer.
+WINLITE           Rosenthal Engin  -   -   -    -  Compresses MS-Windows programs
+Winscope          Periscope Compa  -   -   -    -  Windows debugger.
+Adv Xbase Server  Extended System  -   Y   Y    Y
+ZAP               Inmark           -   -   -    -
+ZIP/Clip          Effective Data   Y   -   -    -  Dev. tool supplying zip code info.
+
+
+
+
+II. List of vendors alphabetically:
+
+Vendor & address                          Contacts
+----------------                          --------
+Antonio Linares Software                  Phone: 34-528-61419
+Avda. R. Soriano 68                       Fax  : 34-528-61419
+1-7
+Marbella, 29600
+SPAIN
+
+Artful Applications                       Phone: 416-920-7395
+176 St. George St.                        Fax  : 416-920-4892
+Toronto, Ontario, M5R 2M7
+CANADA
+
+Atlas Software                            Phone: 61-922-78100
+81 Edward St.                             Fax  : 61-922-78896
+Perth W.A., 6000
+AUSTRALIA
+
+Avis-Hill                                 Phone: 805-259-6943
+7131 Owensmouth                           Fax  : 818-888-3902
+Suite A-69
+Canoga Park, CA 91303
+USA
+
+Az-Tech Software, Inc.                    Phone: 816-776-2700
+201 E. Franklin                           Fax  : 816-776-8398
+Richmond, MO 64085
+USA
+
+Bits Per Second                           Phone: 44-273-727119
+14 Regent Hill                            Fax  : 44-273-731925
+Brighton,Suffex, BN13ED
+UK
+
+Black and White International             Phone: 800-932-9202
+50 W. 106th Street                        Fax  : 212-666-3752
+Suite 1-C
+New York, NY 10025
+USA
+
+Blackhawk Data Corporation                Phone: 708-453-9590
+7234 West North Avenue                    Fax  : 708-453-9005
+Suite 411
+Elmwood Park, IL 60635
+USA
+
+Blinkinc                                  Phone: 804-747-6700
+P.O. Box 7154                             Fax  : 804-747-4200
+Richmond, VA 23221-0154                   BBS  : 804-747-7333
+USA
+
+BOTTLEWORKS DEV. CORP.                    Phone: 516-596-9700
+P.O. Box 367                              Fax  : 516-596-9701
+Malverne, NY 11565
+USA
+
+Building Blocks Publishing                Phone: 800-486-8700
+17 Madison Ave.                           Fax  : 201-301-0128
+Suite 50                                  BBS  : 201-895-2469
+Madison, NJ 07940
+USA
+
+Capella Inc.                              Phone: 216-932-9147
+3312 Bradford Road                        Fax  : 216-464-1802
+Cleveland, OH 44118
+USA
+
+Capella Software                          Phone: 44-602-865943
+24 Helvellyn Close                        Fax  : 44-602-851397
+The Meadows
+Nottingham, NG2 1LF
+ENGLAND
+
+Computer Associates Internat              Phone: 310-348-4432
+The Hannum Building
+300 Corporate Pointe, 2nd Fl
+Culver City, CA 90230
+USA
+
+Concentric Data Systems                   Phone: 508-366-1122
+110 Turnpike Road                         Fax  : 508-366-2954
+Westborough, MA 01581
+USA
+
+Creative Programming                      Phone: 214-245-9139
+2013 N. Broadway                          Fax  : 214-245-9717
+Carrollton, TX 75006
+USA
+
+Data Base Designs                         Phone: 619-345-6595
+79925 Trinidad Dr.                        Fax  : 619-345-0846
+Bermuda Dunes, CA 92201
+USA
+
+DFL                                       Phone: 46-052066
+Rue de la Saussiere,39-41                 Fax  : 46-041039
+Boulogne, France, 92100
+FRANCE
+
+dLesko                                    Phone: 201-435-8401
+248 York St.                              Fax  : 201-435-0637
+Jersey City, NJ 07302                     BBS  : 201-435-9245
+USA
+
+Donnay Software Designs                   Phone: 208-331-2516
+P.O. Box 16330                            Fax  : 208-331-2621
+Boise, ID 83715-6330
+USA
+
+Dr. Huggle & Partner GmbH                 Phone: 49-241-403114
+Heinrichsallee 41                         Fax  : 49-241-401117
+Aachen, D-52062
+GERMANY
+
+Effective Data Solutions                  Phone: 818-991-4000
+28030 Dorothy Dr.
+Ste# 302
+Agoura Hills, CA 91301
+USA
+
+Eliashim Microcomputers,Inc.              Phone: 813-744-5177
+4005 Wedgemere Drive                      Fax  : 813-744-5197
+Tampa, FL 33610
+USA
+
+Extended Systems, Inc.                    Phone: 208-322-7575
+5777 N. Meeker Ave                        Fax  : 208-377-1906
+Boise, ID 83704
+USA
+
+Extrasensory Software                     Phone: 818-981-8367
+4450 Murietta Ave. #8                     Fax  : 818-986-5411
+Sherman Oaks, CA 91423                    BBS  : 818-986-5781
+USA
+
+Four Seasons Publishing Co.               Phone: 212-599-2141
+246 East 46th Street                      Fax  : 212-599-3226
+New York, NY 10017
+USA
+
+Functional Software                       Phone: 405-340-1940
+101 E Hurd                                Fax  : 405-340-5594
+Ste E                                     BBS  : 405-340-4714
+Edmond, OK 73034-5005
+USA
+
+GANAHL Software                           Phone: 800-285-3539
+3333 West Comercial Blvd.                 Fax  : 305-486-3649
+Ste# 113                                  BBS  : 305-484-8394
+Ft Lauderdale, FL 33309
+USA
+
+Genus Microprogramming                    Phone: 713-870-0737
+1155 Dairy Ashford                        Fax  : 713-870-0288
+Ste# 200                                  BBS  : 713-266-9362
+Houston, TX 77079
+USA
+
+GG Compu-Systems                          Phone: 416-250-5468
+31 St.Paschal Crt.                        Fax  : 416-250-7562
+Toronto, ON M2M 1X6                       BBS  : 416-250-0475
+CANADA
+
+Gilmore Software Development              Phone: 603-358-3308
+30 Wheelock                               Fax  : 603-352-7919
+Keen, NH 03431
+USA
+
+Grumpfish, Inc.                           Phone: 503-588-1815
+2450 Lancaster NE                         Fax  : 503-588-1980
+Ste#206                                   BBS  : 503-588-7572
+Salem, OR 97305
+USA
+
+HALLoGRAM Publishing                      Phone: 303-752-2086
+1532 South Dawson Street                  Fax  : 303-752-1646
+Aurora, CO 80012
+USA
+
+Index Applications Inc.                   Phone: 800-334-8099
+8546 Broadway                             Fax  : 210-828-5074
+Suite 208
+San Antonio, TX 78217
+USA
+
+Inmark                                    Phone: 415-691-9000
+2065 Landings Dr.
+Mountain View, CA 94043
+USA
+
+Integrated Development Corp.              Phone: 603-329-5522
+190 Main St.                              Fax  : 603-329-4841
+Hampstead, NH 03841                       BBS  : 603-329-4841
+USA
+
+Interface Technologies, Inc.              Phone: 703-765-0805
+2314 Mary Baldwin Drive                   Fax  : 703-527-8222 x123
+Alexandria, VA 22307-1508
+USA
+
+IS Technology                             Phone: 818-304-0614
+10573 West Pico Blvd.                     Fax  : 818-568-2731
+Suite 240
+Los Angeles, CA 90064
+USA
+
+Italian Software Agency (ISA)             Phone: 39-323-922066
+Via Torino 2                              Fax  : 39-323-925208
+Baveno, 28042                             BBS  : 39-323-925428
+ITALY
+
+Lamaura Development                       Phone: 44-707-643278
+Rabley Park                               Fax  : 44-707-643499
+Ridge
+Potters Bar, Herts, EN6-3LX
+U.K.
+
+Liant Software                            Phone: 508-872-8700
+959 Concord St.                           Fax  : 508-626-2221
+Framingham, MA 01701
+USA
+
+Loadstone, Inc.                           Phone: 803-731-9128
+215 Barmount Drive                        Fax  : 803-731-9798
+Columbia, SC 29210                        BBS  : 803-731-4295
+USA
+
+Loesgen Software                          Phone: 416-784-3618
+1712 Avenue Road                          Fax  : 416-784-3768
+Box 54605                                 BBS  : 416-784-9712
+Toronto, ON, M5M 4N5
+CANADA
+
+Micro Consult Nederland BV                Phone: 31-711-70401
+RhijnGeestrerStraatWeg 78                 Fax  : 31-711-56154
+Oegstgeest, 2343BX
+The Netherlands
+
+Moon Microsystems                         Phone: 615-899-1285
+1920 Gunbarrel Rd.                        Fax  : 615-855-4585
+Suite 1014
+Chattanooga, TN 37421
+USA
+
+Objective Software                        Phone: 619-792-9754
+990 Highland Dr.                          Fax  : 619-792-9792
+Suite #212                                BBS  : 619-792-9973
+Solana Beach, CA 92075
+USA
+
+On-Line Resourses                         Phone: 818-332-8879
+20540 East Arrow Hwy.                     Fax  : 818-331-5878
+Suite # N2                                BBS  : 818-331-1290
+Covina, CA 91724
+USA
+
+Periscope Company, Inc.                   Phone: 404-888-5335
+1475 Peachtree Street                     Fax  : 404-888-5520
+Suite #100
+Atlanta, GA 30309
+USA
+
+Pinnacle Publishing                       Phone: 206-251-1900x3038
+18000 72nd Ave. South                     Fax  : 206-251-5057
+Suite 217                                 BBS  : 206-251-6217/6218
+Kent, WA 98032
+USA
+
+Pro-Ware                                  Phone: 402-330-2517
+13930 Gold Circle                         Fax  : 402-330-2496
+Suite 104
+Omaha, NE 68144
+USA
+
+Proware                                   Phone: 703-478-3483
+11250-17 Roger Bacon Dr.                  Fax  : 703-450-6417
+Reston, VA 22090
+USA
+
+ProWorks                                  Phone: 503-567-1459
+735 East Pine                             Fax  : 503-567-8820
+Hermiston, OR 97838                       BBS  : 503-567-0363
+USA
+
+R2Z, Inc.                                 Phone: 510-792-1477
+39120 Argonaut Way                        Fax  : 510-222-7247
+Suite 319                                 BBS  : 510-683-9821
+Fremont, CA 94538
+USA
+
+Rhino Publishing Ltd.                     Phone: 44-302-371711
+P.O. Box 255                              Fax  : 44-302-371710
+Doncaster, DN4 7AW
+ENGLAND
+
+Rosenthal Engineering                     Phone: 805-541-0910
+P.O. Box 1650
+San Luis Obispo, CA 93401
+USA
+
+SBT                                       Phone: 415-331-9900
+One Harbor Drive                          Fax  : 415-331-1621
+Sausalito, CA 94965
+USA
+
+Sequiter Software                         Phone: 403-437-2410
+9644 - 54th Avenue                        Fax  : 403-436-2999
+Suite 209                                 BBS  : 403-437-2229
+Edmonton, AB T6E 5V1
+CANADA
+
+SilverWare, Inc.                          Phone: 214-247-0131
+3010 LBJ Freeway                          Fax  : 214-406-9999
+Suite 740                                 BBS  : 214-247-2177
+Dallas, TX 75234
+USA
+
+Skelton Software                          Phone: 44-977-683296
+Kendal Cottage                            Fax  : 44-977-681650
+Hillam
+Leeds, LS25 5HP
+UK
+
+SofDesign International, Inc.             Phone: 214-644-0098
+1303 Columbia Drive                       Fax  : 214-644-4286
+Suite 209
+Richardson, TX 75801
+USA
+
+Softech Micro Systems                     Phone: 316-729-9315
+2719 South Yellowstone
+Wichita, KS 67215
+USA
+
+South By Southwest                        Phone: 619-723-6558
+411 E. Huntington Drive                   Fax  : 619-723-6517
+Suite 4176
+Arcadia, CA 91006
+USA
+
+SuccessWare 90 Inc.                       Phone: 909-699-9657
+27349 Jefferson Ave.                      Fax  : 909-695-5679
+Suite 101                                 BBS  : 909-694-6891
+Temecula, CA 92590
+USA
+
+Sun Country Software, Inc.                Phone: 505-873-2220
+7102 Ilfield Rd. SW                       Fax  : 505-877-4440
+Alburquerque, NM 87105
+USA
+
+Sun Country Software, Inc.                Phone: 505-873-2220
+7102 Ilfield Road Southwest               Fax  : 505-877-4443
+Albuquerque, NM 87105                     BBS  : 505-877-8354
+USA
+
+TeraTech Inc.                             Phone: 301-424-3903x514
+100 Park Avenue                           Fax  : 301-762-8185
+Suite 360, Dept.514                       BBS  : 301-762-8184
+Rockville, MD 20850
+USA
+
+Touchstone Business Creations             Phone: 909-679-3364
+28613 River Glen Ct. #1                   Fax  : 909-672-2731
+Menifee, CA 92584
+USA
+
+Vermont Creative Software                 Phone: 802-848-7731
+Pinnacle Meadows                          Fax  : 802-848-3502
+Richford, VT 05476
+USA
+
+Videotex Systems, Inc.                    Phone: 214-343-4500
+8499 Greenville Avenue                    Fax  : 214-348-3821
+Suite 205                                 BBS  : 214-343-4365
+Dallas, TX 75231
+USA

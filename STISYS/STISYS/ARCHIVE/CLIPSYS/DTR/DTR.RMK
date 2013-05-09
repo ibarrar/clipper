@@ -1,0 +1,30 @@
+// Filename:      DTR.RMK
+// Date-Started:  Nov 7, 1993
+// Last-Update:   Nov 7, 1993
+
+// Debugging mode
+.prg.obj:
+  clipper $* /b /n /a /m /o$@
+
+// Production Mode
+//.prg.obj:
+//  clipper $* /n /o$@
+
+bundy.obj:      bundy.prg
+dtr.obj:        dtr.prg
+stifunc.obj:    stifunc.prg
+master.obj:     master.prg
+reports1.obj:   reports1.prg
+abrowse4.obj:   abrowse4.prg
+abrowse0.obj:   abrowse0.prg
+maint.obj:      maint.prg
+
+#ifndef nobase
+dtr.exe : dtr.obj bundy.obj master.obj stifunc.obj ABROWSE4.obj ABROWSE0.prg reports1.obj maint.obj
+  rtlink fi dtr,bundy,master,stifunc,ABROWSE4,ABROWSE0,maint,reports1 pll base60
+#else
+dtr.exe : dtr.obj bundy.obj master.obj stifunc.obj ABROWSE4.obj ABROWSE0.prg reports1.obj maint.obj
+  rtlink @dtr
+#endif
+// <eof> - dtr.RMK //
+

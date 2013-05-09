@@ -1,0 +1,168 @@
+A_PRNT_OFF........prnt_off          A_PRNT_ON.........prnt_on
+A_PRT_ESC.........rjsface3          A_RJS_FEED........rjsface2
+A_RJS_PRNT........rjsface1          A_SCAN_OFF........scan_off
+A_SCAN_ON.........scan_on           CHK_CKLOCK........chkcklck
+CHK_DRAWR.........drawer            CHK_JRNAL.........chk_jrnl
+CLOSE_DEV.........pos_init          C_FWRITE..........c_fwrite
+DISPTEXTXY........dtextxy           OPEN_DRAWR........drawer
+READ_CARD.........rid_card          READ_SCAN.........rid_scan
+SET_DEV...........pos_init          SET_KSOUND........getkcode
+SLIP_ESC..........slipesc           SLIP_PRINT........slipprnt
+SOUND_OFF.........sound_of          SOUND_ON..........sound_on
+VALID_PRNT........validprn          VERI_INIT.........verifone
+VERI_RECV.........verifone          VERI_SEND.........verifone
+_ASM_COMMIT.......comitasm          _async_printing...pos_init
+_async_scan.......pos_init          _ASYN_PRNT_OFF....prntasyn
+_ASYN_PRNT_ON.....prntasyn          _ASYN_SCAN_OFF....pfl_scan
+_ASYN_SCAN_ON.....pfl_scan          _buffer_empty.....pos_init
+_checkdgt.........rid_scan          _CHECK_PFL_COM....mpex_2f
+_CHECK_PFL_KLCK...klck_fix          _chk_init_flag....pos_init
+_close_link_dev...support           _clr_disp.........support
+_delay_cnt........pos_init          _del_line.........support
+_error_map........support           _frqwency.........pos_init
+_HOOK_KEYTONE.....pfl_key           _in_sound.........pos_init
+_KLCK_FIX_OFF.....klck_fix          _KLCK_FIX_ON......klck_fix
+_KLCK_STUFF.......klck_fix          _msec_cnt.........pos_init
+_open_serial_dev..support           _PFL_COM_BRECV....pflsrial
+_PFL_COM_DRECV....pflsrial          _PFL_COM_DRECVB...pflsrial
+_PFL_COM_DRECVP...pflsrial          _PFL_COM_DSTS.....pflsrial
+_PFL_COM_INIT.....pflsrial          _PFL_COM_NDSTS....pflsrial
+_PFL_COM_NSEND....pflsrial          _PFL_COM_NSENDB...pflsrial
+_PFL_COM_NSENDP...pflsrial          _PFL_COM_PORT.....pflsrial
+_PFL_COM_RMCR.....pflsrial          _PFL_COM_SEND.....pflsrial
+_PFL_COM_SENDB....pflsrial          _PFL_COM_SENDP....pflsrial
+_PFL_COM_STS......pflsrial          _PFL_COM_WMCR_AND..pflsrial
+_PFL_COM_WMCR_OR..pflsrial          _PFL_GET_LABEL....pfl_scan
+_PFL_KEY_CLEAR....pfl_key2          _PFL_KEY_GETA.....pfl_key2
+_PFL_KEY_GETS.....pfl_key2          _PFL_KEY_GETSA....pfl_key2
+_PFL_KEY_WGETA....pfl_key2          _PFL_KEY_WGETS....pfl_key2
+_PFL_KEY_WGETSA...pfl_key2          _PFL_LPT_INIT.....pfl_lpt
+_PFL_LPT_NSEND....pfl_lpt           _PFL_LPT_SEND.....pfl_lpt
+_PFL_LPT_STS......pfl_lpt           _PFL_RID_KLOCK....pfl_key2
+_pos_setup........pos_init          _print_active.....pos_init
+_print_stop.......pos_init          _READ_COM_PARM....mpex_2f
+_READ_DEV_ID......mpex_2f           _rjs_asyn.........rjs_asyn
+_rjs_asyn1........rjsasyn1          _rjs_asyn2........rjsasyn2
+_rjs_asyn3........rjsasyn3          _set_disp_cursor..support
+_sound_active.....pos_init          _STORE_COM_PARM...mpex_2f
+_s_buff_size......pos_init          _s_dflt_irq.......pos_init
+_s_end_char.......pos_init          _UNHOOK_KEYTONE...pfl_key
+_update_table.....support           
+
+pfl_key2          Offset: 00000010H  Code and data size: 26eH
+  _PFL_KEY_CLEAR    _PFL_KEY_GETA     _PFL_KEY_GETS     _PFL_KEY_GETSA
+  _PFL_KEY_WGETA    _PFL_KEY_WGETS    _PFL_KEY_WGETSA   _PFL_RID_KLOCK
+
+prnt_on           Offset: 00000390H  Code and data size: 8eH
+  A_PRNT_ON       
+
+prnt_off          Offset: 00000610H  Code and data size: 6eH
+  A_PRNT_OFF      
+
+drawer            Offset: 00000810H  Code and data size: caH
+  CHK_DRAWR         OPEN_DRAWR      
+
+chkcklck          Offset: 00000a80H  Code and data size: ceH
+  CHK_CKLOCK      
+
+c_fwrite          Offset: 00000cf0H  Code and data size: beH
+  C_FWRITE        
+
+rjs_asyn          Offset: 00000f10H  Code and data size: 38H
+  _rjs_asyn       
+
+rjsasyn1          Offset: 000010a0H  Code and data size: 336H
+  _rjs_asyn1      
+
+rjsasyn2          Offset: 00001750H  Code and data size: 2fdH
+  _rjs_asyn2      
+
+rjsasyn3          Offset: 00001d90H  Code and data size: a0H
+  _rjs_asyn3      
+
+verifone          Offset: 00002010H  Code and data size: 1d8H
+  VERI_INIT         VERI_RECV         VERI_SEND       
+
+sound_on          Offset: 000023f0H  Code and data size: 3eH
+  SOUND_ON        
+
+sound_of          Offset: 00002570H  Code and data size: 3cH
+  SOUND_OFF       
+
+support           Offset: 000026f0H  Code and data size: 4d3H
+  _close_link_dev   _clr_disp         _del_line         _error_map
+  _open_serial_dev  _set_disp_cursor  _update_table   
+
+scan_on           Offset: 00002f00H  Code and data size: 114H
+  A_SCAN_ON       
+
+scan_off          Offset: 000031e0H  Code and data size: 3cH
+  A_SCAN_OFF      
+
+slipesc           Offset: 00003360H  Code and data size: 412H
+  SLIP_ESC        
+
+slipprnt          Offset: 00003780H  Code and data size: 152H
+  SLIP_PRINT      
+
+validprn          Offset: 00003a90H  Code and data size: 455H
+  VALID_PRNT      
+
+pfl_scan          Offset: 00004280H  Code and data size: c1dH
+  _ASYN_SCAN_OFF    _ASYN_SCAN_ON     _PFL_GET_LABEL  
+
+pfl_lpt           Offset: 000047c0H  Code and data size: 54H
+  _PFL_LPT_INIT     _PFL_LPT_NSEND    _PFL_LPT_SEND     _PFL_LPT_STS
+
+pflsrial          Offset: 000048e0H  Code and data size: 496H
+  _PFL_COM_BRECV    _PFL_COM_DRECV    _PFL_COM_DRECVB   _PFL_COM_DRECVP
+  _PFL_COM_DSTS     _PFL_COM_INIT     _PFL_COM_NDSTS    _PFL_COM_NSEND
+  _PFL_COM_NSENDB   _PFL_COM_NSENDP   _PFL_COM_PORT     _PFL_COM_RMCR
+  _PFL_COM_SEND     _PFL_COM_SENDB    _PFL_COM_SENDP    _PFL_COM_STS
+  _PFL_COM_WMCR_AND                   _PFL_COM_WMCR_OR
+
+prntasyn          Offset: 000051d0H  Code and data size: 1179H
+  _ASYN_PRNT_OFF    _ASYN_PRNT_ON   
+
+klck_fix          Offset: 00005590H  Code and data size: 29H
+  _CHECK_PFL_KLCK   _KLCK_FIX_OFF     _KLCK_FIX_ON      _KLCK_STUFF
+
+mpex_2f           Offset: 00005680H  Code and data size: 93H
+  _CHECK_PFL_COM    _READ_COM_PARM    _READ_DEV_ID      _STORE_COM_PARM
+
+comitasm          Offset: 000057e0H  Code and data size: 13H
+  _ASM_COMMIT     
+
+pfl_key           Offset: 00005880H  Code and data size: 910H
+  _HOOK_KEYTONE     _UNHOOK_KEYTONE 
+
+chk_jrnl          Offset: 00005b50H  Code and data size: caH
+  CHK_JRNAL       
+
+rjsface1          Offset: 00005dd0H  Code and data size: 202H
+  A_RJS_PRNT      
+
+rjsface2          Offset: 00006220H  Code and data size: 19aH
+  A_RJS_FEED      
+
+rjsface3          Offset: 000065a0H  Code and data size: 236H
+  A_PRT_ESC       
+
+rid_scan          Offset: 00006a10H  Code and data size: 2e6H
+  READ_SCAN         _checkdgt       
+
+rid_card          Offset: 00006e10H  Code and data size: 64bH
+  READ_CARD       
+
+getkcode          Offset: 00007810H  Code and data size: c2H
+  SET_KSOUND      
+
+dtextxy           Offset: 00007a40H  Code and data size: 2ccH
+  DISPTEXTXY      
+
+pos_init          Offset: 00007f20H  Code and data size: 7b6H
+  CLOSE_DEV         SET_DEV           _async_printing   _async_scan
+  _buffer_empty     _chk_init_flag    _delay_cnt        _frqwency
+  _in_sound         _msec_cnt         _pos_setup        _print_active
+  _print_stop       _sound_active     _s_buff_size      _s_dflt_irq
+  _s_end_char     

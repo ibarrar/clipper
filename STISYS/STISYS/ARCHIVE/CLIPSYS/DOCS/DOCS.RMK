@@ -1,0 +1,17 @@
+.prg.obj:
+  CLIPPER $* /N /A /M /O$@
+
+DOCS.OBJ:     Docs.prg
+EDITOR.OBJ:   Editor.prg
+HELP.OBJ:     Help.prg
+MAINT.OBJ:    Maint.prg
+SCREEN.OBJ:   Screen.prg
+WINDOWS.OBJ:  Windows.prg
+GAUGE.OBJ:    Gauge.prg
+
+DOCS.EXE : DOCS.OBJ EDITOR.OBJ HELP.OBJ MAINT.OBJ SCREEN.OBJ WINDOWS.OBJ GAUGE.OBJ
+  RTLINK FI DOCS,EDITOR,HELP,MAINT,SCREEN,WINDOWS,GAUGE
+
+
+
+

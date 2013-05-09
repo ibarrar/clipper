@@ -1,0 +1,129 @@
+/***
+*
+*   Gt.api
+*
+*   C language definitions for GT (general terminal) API
+*
+*   Copyright (c) 1992-1993, Computer Associates International, Inc.
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _GT_API
+
+
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+/*
+*
+*  State and Settings
+*
+*/
+extern ERRCODE _gtScrDim(USHORTP, USHORTP);
+extern BOOL    _gtIsColor(void);
+
+extern ERRCODE _gtSetMode(USHORT nRows, USHORT nCols);
+extern USHORT  _gtMaxRow(void);
+extern USHORT  _gtMaxCol(void);
+
+extern ERRCODE _gtRectSize(USHORT top, USHORT left,
+                           USHORT bottom, USHORT right, USHORTP sizeP);
+extern ERRCODE _gtSetSnowFlag(BOOL no_snow);
+extern ERRCODE _gtSetBlink(BOOL lOnOff);
+
+extern void    _gtPreExt(void);
+extern void    _gtPostExt(void);
+
+
+/*
+*
+*  Display buffer control
+*
+*/
+extern ERRCODE _gtDispBegin(void);
+extern ERRCODE _gtDispEnd(void);
+extern USHORT  _gtDispCount(void);
+
+
+/*
+*
+*  Cursor and position
+*
+*/
+extern ERRCODE _gtSetCursor(USHORT type);
+extern ERRCODE _gtGetCursor(USHORTP typeP);
+
+extern ERRCODE _gtSetPos(USHORT row, USHORT col);
+extern ERRCODE _gtGetPos(USHORTP rowP, USHORTP colP);
+
+
+/*
+*
+*  Color
+*
+*/
+extern ERRCODE _gtSetColorStr( BYTEP cP );
+extern ERRCODE _gtGetColorStr( BYTEP cP );
+extern ERRCODE _gtColorSelect( USHORT i );
+
+
+/*
+*
+*  Output
+*
+*/
+extern ERRCODE _gtWriteAt(USHORT row, USHORT col, BYTEP s, USHORT len);
+extern ERRCODE _gtWrite(BYTEP s, USHORT len);
+extern ERRCODE _gtWriteCon(BYTEP s, USHORT len);
+
+extern ERRCODE _gtRepChar(USHORT row, USHORT col, USHORT c, USHORT count);
+
+extern ERRCODE _gtScroll(USHORT top, USHORT left,
+                         USHORT bottom, USHORT right, short vs, short hs);
+
+extern ERRCODE _gtBox(USHORT top, USHORT left,
+                      USHORT bottom, USHORT right, BYTEP framestr);
+extern ERRCODE _gtBoxS(USHORT top, USHORT left,
+                       USHORT bottom, USHORT right);
+extern ERRCODE _gtBoxD(USHORT top, USHORT left,
+                       USHORT bottom, USHORT right);
+
+
+/*
+*
+*  Screen save and restore
+*
+*/
+extern ERRCODE _gtSave(USHORT top, USHORT left,
+                       USHORT bottom, USHORT right, FARP buff);
+
+extern ERRCODE _gtRest(USHORT top, USHORT left,
+                       USHORT bottom, USHORT right, FARP buff);
+
+
+/*
+*
+*  Length for _gtGetColorStr() strings
+*
+*/
+#define CLR_STRLEN            64
+
+
+/*
+*
+*  Box drawing characters
+*
+*/
+#define _B_SINGLE          "ÚÄ¿³ÙÄÀ³"
+#define _B_DOUBLE          "ÉÍ»º¼ÍÈº"
+#define _B_SINGLE_DOUBLE	"ÖÄ·º½ÄÓº"
+#define _B_DOUBLE_SINGLE	"ÕÍ¸³¾ÍÔ³"
+
+
+#define _GT_API
+#endif

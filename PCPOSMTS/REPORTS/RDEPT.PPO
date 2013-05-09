@@ -1,0 +1,515 @@
+#line 1 "C:\PCPOSMTS\HEADER\Janus.ch"
+#line 2 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\inkey.ch"
+#line 3 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\setcurs.ch"
+#line 4 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\memoedit.ch"
+#line 5 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\fileio.ch"
+#line 6 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\directry.ch"
+#line 7 ".\REPORTS\RDEPT.PRG"
+#line 1 "C:\PCPOSMTS\HEADER\its.ch"
+#line 9 ".\REPORTS\RDEPT.PRG"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+memvar n,dStartDate,dEndDate,nLimit, GetList, cReport
+
+
+function RDept()
+
+local cRef,wWindBuff
+local nMaxrow := maxrow()+1, nMaxCol := maxcol()+1
+local aFsize := {}
+
+local nRecCtr := 0, hGauge, nPercent, nGaugeCtr:=1, wUpdate, dDate
+local cName := space(20), dFile, code
+local lNewPage := 0, nLineCtr := 0, nLinelen  := 57+41+6+43, nPageCtr := 1
+local nPageslstot := 0, nPageslsqty := 0, cWindow
+local nReccount := 0, nCtr := 1, ccolor, coldpath
+local nRunslstot := 0, nRunslsqty := 0, count := 0, amount := 0
+local cPname := space(20),  prevdept := space(4), prevdesc := space(20)
+local lFirst := .F., ldate := .T., ncount := 0, namount := 0.00
+local mDept,mDesc,i,nPrevGroup,j
+local aPagetot := {}
+local aGrantot := {}
+local aDept := {}
+local aGroupTot := {}
+local nDiscRate := 0, nGroup
+local lLastTotal := .F.
+
+if !Getvalid()
+  aeval( { {392,1}, {98,1}, {49,5} }, {|t| tone( t[1],t[2] ) }) ; return nil 
+endif 
+
+if netuse("DEPT", .F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "DEPT" )
+else
+   alert("File 'DEPT.DBF' cannot be accessed",{"Quit"})
+   return nil    
+endif     
+
+if netuse("DP", .F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "DP_001" )
+else
+   alert("File 'DP.DBF' cannot be accessed",{"Quit"})
+   return nil    
+endif     
+
+if netuse("ITEM",.F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "I_001" )
+endif
+
+if netuse("PLU", .F., 5)
+    if !.F. ; ordListClear() ; end; ordListAdd( "DATEPLU" )
+else
+   alert("File 'PLU.DBF' cannot be accessed",{"Quit"})
+   return nil    
+endif     
+
+
+cOldPath := SET(6)
+
+Message("Preparing Department Total Report ...")
+
+Set( 19, ".\"+"DEPT.PRN", .F. )
+Set( 18, "ON" )
+Set( 17, "OFF" )
+Set( 23, "OFF" )
+
+window( 19, 1, 22, 60, "BG+*/B,GR+/R+,,,W+/R+" )
+
+lNewPage := .T.
+lFirst := .T.
+aSize(aGroupTot,9)
+aFill(aGroupTot,0)
+aSize(aPagetot,9)
+aFill(aPagetot,0)
+aSize(aGrantot,9)
+aFill(aGrantot,0)
+
+
+while DEPT->(!Eof())
+   if DatesOK(DEPT->DATE)
+
+
+
+
+
+
+
+    if ((n := aScan(aDept,{ |x| x[1] == DEPT->DCODE })) > 0)
+       aDept[n,3] += DEPT->DCOUNT
+       aDept[n,4] += DEPT->DAMOUNT
+
+
+
+     else
+      if DP->(DbSeek(subs(DEPT->DCODE,3,2)))
+         nGroup := DP->DP_003
+      else
+         nGroup := 0
+      endif   
+
+
+
+
+
+       aAdd(aDept,{    DEPT->DCODE, (DEPT->DDESC+space(5)), DEPT->DCOUNT, DEPT->DAMOUNT,0,0,0,    DEPT->DAMOUNT * nDiscRate,    nGroup })
+     endif  
+   endif
+   DEPT->(DbSkip())
+enddo
+DEPT->(DbCloseArea())
+
+while PLU->(!Eof())
+     it999055 ( 1, 1, " Creating " + "Department Sales Summary Report" + "  Please wait ..." )
+    if DatesOK(PLU->DATE)
+
+         it999055 ( 2, 1, " Item Code: " + PLU->CODE + "    " ) 
+        if ITEM->(DbSeek(PLU->CODE))
+            mDept := padl(alltrim(ITEM->I_006),4,"0")
+            if DP->(DbSeek(subs(mDept,3,2)))
+                mDesc := DP->DP_002
+             nGroup := DP->DP_003
+            else
+             mDesc := "Department Not Found     " 
+             nGroup := 0
+            endif 
+        else
+          mDept := "????"
+          mDesc := "Department Not Found     "         
+          nGroup := 0
+        endif
+
+        if ((n := aScan(aDept,{ |x| x[1] == mDept })) > 0)
+          aDept[n,5] += PLU->I_UCOST
+          aDept[n,6] += PLU->RTN_QTY
+          aDept[n,7] += PLU->RTN_AMT
+
+           aDept[n,8] += PLU->DISC_AMT
+
+        else
+
+
+
+
+
+
+
+
+          aAdd(aDept,{    mDept,    mDesc,    0,    0,    PLU->I_UCOST,    PLU->RTN_QTY,    PLU->RTN_AMT,    PLU->DISC_AMT,    nGroup })
+        endif  
+    endif    
+    PLU->(DbSkip())
+enddo
+
+
+if !empty(aDept)
+  asort(aDept,,,{|x,y| (pad(x[9],1)+x[1]) < (pad(y[9],1)+y[1]) } )
+  for j := 1 to len(aDept)
+    if (aDept[j,3] +aDept[j,4] +aDept[j,5] +aDept[j,6] +aDept[j,7] +aDept[j,8] <> 0)
+      exit
+     endif    
+  next
+  nGroup :=  aDept[j,9]
+  nPrevGroup := aDept[j,9]
+endif
+
+for i := j to len(aDept)
+
+
+  if lNewPage  
+
+   QOut( Space(1) + "DEPARTMENT TOTAL REPORT" )
+   QOut( )
+   QOut( Space(1) +chr(254)+ "ORIENTAL" )
+   QOut( Space(1) +"Department Total Report" )
+   QOut( Space(1) +"From "+dtoc(dStartDate)+" to "+dtoc(dEndDate) )
+   QOut( Space(1) +"As of "+dtoc(date())+", "+time() )
+   QOut( )
+   QOut( )
+
+   QOut( Space(1) + padr("DEPT",4) )
+   QQOut( space(1) + padc("Description",25) )
+   QQOut( space(1) + padl("Units",10) )
+   QQOut( space(1) + padl("Sales",14) )
+   QQOut( space(1) + padl("Cost",14) )
+   QQOut( space(1) + padl("Average",10) )
+   QQOut( space(1) + padl("Return",10) )
+   QQOut( space(1) + padl("Return",14) )
+   QQOut( space(1) + padl("Net",10) )
+   QQOut( space(1) + padl("Net",14) )
+   QQOut( space(1) + padl("Net",14) )
+
+   QOut( Space(1) + padr("CODE",4) )
+   QQOut( space(1) + space(25) )
+   QQOut( space(1) + padl("Sold",10) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Per Item",10) )
+   QQOut( space(1) + padl("Qty",10) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Disc",10) )
+   QQOut( space(1) + padl("Units",14) )
+   QQOut( space(1) + padl("Sales",14) )
+
+   QOut( Space(1) + repl("-",nLinelen) )
+
+   QOut( )
+   QOut( )
+
+   lNewpage := .F.
+   nLineCtr := 13
+  endif   
+
+  if (aDept[i,3] +aDept[i,4] +aDept[i,5] +aDept[i,6] +aDept[i,7] +aDept[i,8] <> 0)
+
+
+      if (len(aDept) == i) .OR. ((len(aDept) > i) .AND. (nPrevGroup <> aDept[i,9]))
+        QOut( Space(1)+repl("-",nLineLen) )
+
+
+
+
+
+
+
+
+
+        QOut( Space(1)+"     " + space(25) + space(1) + trans(aGroupTot[1],"999,999.99") +  space(1) + trans(aGroupTot[2],"999,999,999.99") +  space(1) + trans(aGroupTot[3],"999,999,999.99") +  space(1) + trans(aGroupTot[4],"999,999.99") +  space(1) + trans(aGroupTot[5],"999,999.99") +  space(1) + trans(aGroupTot[6],"999,999,999.99") +  space(1) + trans(aGroupTot[7],"999,999,999.99") +  space(1) + trans(aGroupTot[8],"999,999.99") +  space(1) + trans(aGroupTot[9],"999,999,999.99") )
+        QOut( )
+        aFill(aGroupTot,0)
+        nLineCtr += 3
+       nPrevGroup := aDept[i,9]
+       if (len(aDept) == i)
+         lLastTotal := .T.
+       endif
+      endif
+
+      QOut( Space(1) + padl(aDept[i,1],4,"0") )
+     QQOut( space(1) + aDept[i,2] )
+      QQOut( space(1) + trans(aDept[i,3],"999,999.99") )
+      QQOut( space(1) + trans(aDept[i,4],"999,999,999.99") )
+     QQOut( space(1) + trans(aDept[i,5],"999,999,999.99") )
+     QQOut( space(1) + trans((aDept[i,4]/aDept[i,3]),"999,999.99") )
+      QQOut( space(1) + trans(aDept[i,6],"999,999.99") )
+      QQOut( space(1) + trans(aDept[i,7],"999,999,999.99") )
+     QQOut( space(1) + trans(aDept[i,8],"999,999,999.99") )
+      QQOut( space(1) + trans(aDept[i,3]-aDept[i,6],"999,999.99") )
+      QQOut( space(1) + trans(aDept[i,4]-aDept[i,8],"999,999,999.99") )
+
+      nLineCtr += 1     
+
+     aGroupTot[1] += aDept[i,3]
+     aGroupTot[2] += aDept[i,4]
+     aGroupTot[3] += aDept[i,5]
+     aGroupTot[4] += (aDept[i,4]/aDept[i,3])
+     aGroupTot[5] += aDept[i,6]
+     aGroupTot[6] += aDept[i,7]
+     aGroupTot[7] += aDept[i,8]
+     aGroupTot[8] += (aDept[i,3]-aDept[i,6])    
+     aGroupTot[9] += (aDept[i,4]-aDept[i,8])
+
+     aPagetot[1] += aDept[i,3]
+     aPagetot[2] += aDept[i,4]
+     aPagetot[3] += aDept[i,5]
+     aPagetot[4] += (aDept[i,4]/aDept[i,3])
+     aPagetot[5] += aDept[i,6]
+     aPagetot[6] += aDept[i,7]
+     aPagetot[7] += aDept[i,8]
+     aPagetot[8] += (aDept[i,3]-aDept[i,6])    
+     aPagetot[9] += (aDept[i,4]-aDept[i,8])
+
+     aGrantot[1] += aDept[i,3]
+     aGrantot[2] += aDept[i,4]
+     aGrantot[3] += aDept[i,5]
+     aGrantot[4] += (aDept[i,4]/aDept[i,3])
+     aGrantot[5] += aDept[i,6]
+     aGrantot[6] += aDept[i,7]
+     aGrantot[7] += aDept[i,8]
+     aGrantot[8] += (aDept[i,3]-aDept[i,6])    
+     aGrantot[9] += (aDept[i,4]-aDept[i,8])
+
+
+  endif
+
+
+
+  if nLineCtr >= 50 
+    QOut( )
+    QOut( Space(1)+repl("-",nLineLen) )
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"P.Tot" + space(25) +    space(1) + trans(aPagetot[1],"999,999.99") +     space(1) + trans(aPagetot[2],"999,999,999.99") +     space(1) + trans(aPagetot[3],"999,999,999.99") +     space(1) + trans(aPagetot[4],"999,999.99") +     space(1) + trans(aPagetot[5],"999,999.99") +     space(1) + trans(aPagetot[6],"999,999,999.99") +     space(1) + trans(aPagetot[7],"999,999,999.99") +     space(1) + trans(aPagetot[8],"999,999.99") +     space(1) + trans(aPagetot[9],"999,999,999.99") )
+
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"R.Tot" + space(25) +     space(1) + trans(aGrantot[1],"999,999.99") +     space(1) + trans(aGrantot[2],"999,999,999.99") +     space(1) + trans(aGrantot[3],"999,999,999.99") +     space(1) + trans(aGrantot[4],"999,999.99") +     space(1) + trans(aGrantot[5],"999,999.99") +     space(1) + trans(aGrantot[6],"999,999,999.99") +     space(1) + trans(aGrantot[7],"999,999,999.99") +     space(1) + trans(aGrantot[8],"999,999.99") +     space(1) + trans(aGrantot[9],"999,999,999.99") )    
+
+    QOut( Space(1) + padl("Page # "+alltrim(trans(nPageCtr++,"9,999")),nLineLen) )
+    QOut( Space(1)+repl("-",nLineLen) )
+    QOut( )
+
+
+     aFill(aPagetot,0)
+
+     lNewPage := .T.
+
+    QOut( chr(12) )
+  endif
+
+next  
+     if !lLastTotal 
+        QOut( Space(1)+repl("-",nLineLen) )
+
+
+
+
+
+
+
+
+
+        QOut( Space(1)+"     " + space(25) + space(1) + trans(aGroupTot[1],"999,999.99") +  space(1) + trans(aGroupTot[2],"999,999,999.99") +  space(1) + trans(aGroupTot[3],"999,999,999.99") +  space(1) + trans(aGroupTot[4],"999,999.99") +  space(1) + trans(aGroupTot[5],"999,999.99") +  space(1) + trans(aGroupTot[6],"999,999,999.99") +  space(1) + trans(aGroupTot[7],"999,999,999.99") +  space(1) + trans(aGroupTot[8],"999,999.99") +  space(1) + trans(aGroupTot[9],"999,999,999.99") )
+        QOut( )
+        aFill(aGroupTot,0)
+        nLineCtr += 3
+      endif
+
+  if lNewPage  
+
+   QOut( Space(1) + "DEPARTMENT TOTAL REPORT" )
+   QOut( )
+   QOut( Space(1) +chr(254)+ "ORIENTAL" )
+   QOut( Space(1) +"Department Total Report" )
+   QOut( Space(1) +"From "+dtoc(dStartDate)+" to "+dtoc(dEndDate) )
+   QOut( Space(1) +"As of "+dtoc(date())+", "+time() )
+   QOut( )
+   QOut( )
+
+   QOut( Space(1) + padr("DEPT",4) )
+   QQOut( space(1) + padc("Description",25) )
+   QQOut( space(1) + padl("Units",10) )
+   QQOut( space(1) + padl("Sales",14) )
+   QQOut( space(1) + padl("Cost",14) )
+   QQOut( space(1) + padl("Average",10) )
+   QQOut( space(1) + padl("Return",10) )
+   QQOut( space(1) + padl("Return",14) )
+   QQOut( space(1) + padl("Net",10) )
+   QQOut( space(1) + padl("Net",14) )
+   QQOut( space(1) + padl("Net",14) )
+
+   QOut( Space(1) + padr("CODE",4) )
+   QQOut( space(1) + space(25) )
+   QQOut( space(1) + padl("Sold",10) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Per Item",10) )
+   QQOut( space(1) + padl("Qty",10) )
+   QQOut( space(1) + padl("Amount",14) )
+   QQOut( space(1) + padl("Disc",10) )
+   QQOut( space(1) + padl("Units",14) )
+   QQOut( space(1) + padl("Sales",14) )
+
+   QOut( Space(1) + repl("-",nLinelen) )
+
+   QOut( )
+   QOut( )
+
+    QOut( )
+    QOut( Space(1)+repl("-",nLineLen) )
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"P.Tot" + space(25) +    space(1) + trans(aPagetot[1],"999,999.99") +     space(1) + trans(aPagetot[2],"999,999,999.99") +     space(1) + trans(aPagetot[3],"999,999,999.99") +     space(1) + trans(aPagetot[4],"999,999.99") +     space(1) + trans(aPagetot[5],"999,999.99") +     space(1) + trans(aPagetot[6],"999,999,999.99") +     space(1) + trans(aPagetot[7],"999,999,999.99") +     space(1) + trans(aPagetot[8],"999,999.99") +     space(1) + trans(aPagetot[9],"999,999,999.99") )
+
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"R.Tot" + space(25) +     space(1) + trans(aGrantot[1],"999,999.99") +     space(1) + trans(aGrantot[2],"999,999,999.99") +     space(1) + trans(aGrantot[3],"999,999,999.99") +     space(1) + trans(aGrantot[4],"999,999.99") +     space(1) + trans(aGrantot[5],"999,999.99") +     space(1) + trans(aGrantot[6],"999,999,999.99") +     space(1) + trans(aGrantot[7],"999,999,999.99") +     space(1) + trans(aGrantot[8],"999,999.99") +     space(1) + trans(aGrantot[9],"999,999,999.99") )    
+
+    QOut( Space(1) + padl("Page # "+alltrim(trans(nPageCtr++,"9,999")),nLineLen) )
+    QOut( Space(1)+repl("-",nLineLen) )
+    QOut( )
+
+  else   
+
+    QOut( )
+    QOut( Space(1)+repl("-",nLineLen) )
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"P.Tot" + space(25) +    space(1) + trans(aPagetot[1],"999,999.99") +     space(1) + trans(aPagetot[2],"999,999,999.99") +     space(1) + trans(aPagetot[3],"999,999,999.99") +     space(1) + trans(aPagetot[4],"999,999.99") +     space(1) + trans(aPagetot[5],"999,999.99") +     space(1) + trans(aPagetot[6],"999,999,999.99") +     space(1) + trans(aPagetot[7],"999,999,999.99") +     space(1) + trans(aPagetot[8],"999,999.99") +     space(1) + trans(aPagetot[9],"999,999,999.99") )
+
+
+
+
+
+
+
+
+
+
+    QOut( Space(1)+"R.Tot" + space(25) +     space(1) + trans(aGrantot[1],"999,999.99") +     space(1) + trans(aGrantot[2],"999,999,999.99") +     space(1) + trans(aGrantot[3],"999,999,999.99") +     space(1) + trans(aGrantot[4],"999,999.99") +     space(1) + trans(aGrantot[5],"999,999.99") +     space(1) + trans(aGrantot[6],"999,999,999.99") +     space(1) + trans(aGrantot[7],"999,999,999.99") +     space(1) + trans(aGrantot[8],"999,999.99") +     space(1) + trans(aGrantot[9],"999,999,999.99") )    
+
+    QOut( Space(1) + padl("Page # "+alltrim(trans(nPageCtr++,"9,999")),nLineLen) )
+    QOut( Space(1)+repl("-",nLineLen) )
+    QOut( )
+  endif
+
+
+
+
+
+
+
+ QOut( Space(1)+padc("********** End of Report **********",nLineLen ) )  
+ QOut( )
+ QOut( chr(12) )  
+
+Set(19, "")
+Set( 18, "OFF" )
+Set( 17, "ON" )
+
+aFsize := directory("DEPT.PRN")
+
+
+
+
+if aFsize[1][2] < 65535
+
+  cReport:=memoread("DEPT.PRN")
+  if !empty(cReport)
+   if !setmode(50,80) .AND. !setmode(43,80)
+      setmode(nMaxrow,nMaxcol)
+   else
+      _logo()   
+   endif       
+
+   Message("Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+   wWindBuff:=OpenWindow(1,2,maxrow()-1,maxcol()-2,"Department Total Report")
+   MemoEdit(cReport,2,3,maxrow()-2,maxcol()-3,.F.,"EditorFunc",155 )
+   CloseWindow(wWindBuff)
+   setcursor(0)
+   setmode(nMaxrow,nMaxcol)
+  endif
+
+else
+
+ if alert("Report too large to edit, will be directed to printer", {"Print","Quit"}) == 1 
+    Direct2Prn("DEPT.PRN") 
+ endif  
+
+endif  
+
+
+cReport := "" 
+
+DbCloseAll()
+return nil

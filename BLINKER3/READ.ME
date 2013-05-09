@@ -1,0 +1,475 @@
+ READ.ME                  BLINKER 3.0 release notes             93.11.27
+ -------                  -------------------------             --------
+
+  This READ.ME contains IMPORTANT INFORMATION which is not available in
+  the manual. Please read this document before calling for technical
+  support. It describes last minute changes and additions to the BLINKER
+  manual and product made since the manual was printed. Where
+  differences occur, the information contained herein supersedes the
+  Norton Guide, which in turn supersedes the printed manual.
+
+  You may find it worthwhile to print and study this file before using
+  the product. There is a completely updated Norton Guide file which
+  contains the new commands and functions, but we have repeated them
+  below for the benefit of those people who do not have a Norton Guide
+  Reader.
+
+Contents
+--------
+  1. General Notes
+  2. Instructions for specific compilers
+     2.1. Borland C++
+     2.2. CA-Clipper 5.x
+     2.3. Microsoft C/C++
+     2.4. StonyBrook compilers
+  3. DOS extender notes
+     3.1  Memory requirements and memory managers
+     3.2. Add on / 3rd party libraries
+     3.3. General Protection Exceptions / Faults (GPEs / GPFs)
+     3.4. New API functions
+  4. New since the manual
+     4.1. Blinker commands
+     4.2. BLINKER environment settings
+     4.3. Extender API functions
+     4.4. Error messages
+     4.5. MS Windows programs
+
+
+  1. General Notes
+  ----------------
+  Programs linked with the Blinker 3.0 DOS extender require a minimum of
+  HIMEM.SYS to be installed on the destination machine in order to run
+  in protected mode. If there is no memory manager at all present then
+  dual mode programs will revert to running in real mode and extended
+  mode programs will terminate with the following message :
+
+      No host found. (A DPMI, VCPI or XMS host is required)
+
+  All other memory managers such as QEMM, 386MAX , NetRoom etc are fully
+  supported and are used to their full potential.
+
+  We believe that almost all DOS programs in the forseeable future will
+  be created as Dual mode rather than Extended because of the benefits
+  which are gained WITHOUT A TRADEOFF in EXE size, memory requirements
+  or execution speed. The benefits of Dual mode include :
+
+          Compatibility with all machines from 8086 up.
+          Reduced extended memory requirements as only required code and
+             data is loaded into memory.
+          External overlay file(s) for easy distribution
+          Displaying a tailored message if the application really should
+             not be run in Real mode.
+
+
+  2. Instructions for specific compilers
+  --------------------------------------
+  2.1 Borland C++
+  ---------------
+  The Borland C++ sample link script files for DOS extended programs in
+  the manual should include :
+
+          FILE C0LP           # Blinker extender Borland C++ startup
+
+  as the first file, rather than C0L. C0LP.OBJ can be found in the OBJ
+  subdirectory of the BLINKER installation directory.
+
+  Windows programs may require the IMPORT.LIB library to be explicitly
+  SEARCHed to remove the unresolved externals. Simply add the line
+
+          SEARCH IMPORT
+
+  at the start of the list of libraries.
+
+  2.2. CA-Clipper 5.x
+  -------------------
+  If no BEGINAREA and ENDAREA commands are used with BLINKER EXECUTABLE
+  EXTENDED or BLINKER EXECUTABLE DUAL then the CA-Clipper paging system
+  will automatically be disabled.
+
+  In the case of DUAL programs this will create a non-overlaid program
+  which will not require any overlay files at run time, but will still
+  run in either protected or real mode. This is useful for .EXEs such as
+  installation programs which must not return to the disk for overlays.
+
+  In the case of EXTENDED programs this may improve program execution
+  speed.
+
+  2.3. Microsoft C/C++
+  --------------------
+  Windows programs may require the Microsoft libraries to be explicitly
+  specified in the link script file along with the NODEFLIB command.
+
+  2.4. Stony Brook Compilers
+  --------------------------
+
+  The compiler run time libraries, and any libraries produced by the
+  Stony Brook librarian must be SEARCHed. Use of the LIB command on
+  these libraries will result in an internal Blinker error 1191: invalid
+  library number. Alternatively, the libraries may be rebuilt using the
+  Microsoft librarian (LIB.EXE).
+
+  When using overlays, the startup module must be in the root.
+
+  Modula 2
+
+  When using overlays, compile using the LARGE model:
+
+  m2 myprog.mod /CODE:L
+
+  Pascal+
+
+  When using overlays, compile using the LARGE model, and place
+  constants in a separate segment:
+
+  ppc myprog.pas //CODE:L //CONSTANT:L
+
+
+
+  3. DOS extender notes
+  ---------------------
+  3.1.  Memory requirements and memory managers
+  ---------------------------------------------
+
+  Although the Blinker 3.0 DOS extender defaults to looking for a DPMI
+  host first for maximum compatibility, a VCPI or XMS host may provide
+  more memory to a DOS extended application in tight memory situations.
+  As a result, DOS extended programs may run better on smaller machines
+  when only HIMEM.SYS is installed.
+
+  In particular QDPMI allocates around 70kb of conventional memory when
+  a program starts up, and this cannot be swapped out by the SWPRUNCMD()
+  functions. As a result, QDPMI support is automatically disabled when
+  the swapper is linked into a program. This default setting can be
+  overidden with the BLINKER HOST QDPMI command or the /HQ environment
+  setting  (see below).
+
+  Note: When creating a menu program which then swaps out to a DOS
+  extended program it is more memory efficient to make the menu program
+  a real mode program and use the SWPRUNCMD() than to also make the menu
+  program a DOS extended program.
+
+  3.2. Add on / 3rd party libraries
+  ---------------------------------
+  Please note that many add on libraries written in C or Assembler will
+  require updates to allow them to be used in protected mode and dual
+  mode programs.
+
+  When a library is overlaid in a Dual mode program, a special link
+  script or a root portion of the library may be required, in the same
+  way as with a normal overlaid program. Please ensure that you are
+  using the correct link script or library file.
+
+  The file 3RDPARTY.TXT on the distribution disk contains the latest
+  information we have available. The information was supplied by the
+  vendors concerned, so is provided on an as is basis and Blink, Inc
+  makes no guarantee that the information is correct.
+
+  Note: All the overlay manager commands and functions are still
+  applicable to a Dual mode program when it is running in real mode, so
+  be sure to set up an overlay cache, enable OVERLAY PAGEFRAME if
+  possible and set a sufficient overlay area size etc.
+
+  3.3. General Protection Exceptions / Faults (GPEs / GPFs)
+  ---------------------------------------------------------
+  General Protection Exceptions can occur when the program code
+  currently executing attempts to perform an invalid operation, access
+  an invalid segment or access beyond the end of a valid segment. These
+  errors ARE NOT extender or linker errors, they are errors in the
+  protected mode program.
+
+  The SEGMENTS module definition command (see the Windows programming
+  chapter in the manual) can also be used with the DOS extender for
+  interrupt handlers etc to force individual segments to be kept
+  separate and loaded in conventional memory by specifying them as
+  FIXED. For best results the segment should be PUBLIC in the source
+  file rather than PRIVATE, to allow them to be combined at link time.
+
+  E.g.
+
+  BLIINTHAN SEGMENT DWORD PUBLIC 'BLIINTHAN'
+  BLIINTHAN ENDS
+
+  To force it to be fixed :
+
+     DEFBEGIN
+        SEGMENTS 'BLIINTHAN' CLASS 'BLIINTHAN' FIXED
+     DEFEND
+
+  This can also be very useful to isolate the source of a GPF once you
+  have found the segment it is in. Just do the above for the segment
+  where the problem is occurring and it will be placed in a segment on
+  its own, so the offset displayed by the dump will tie in with the
+  offsets from your assembly source and listing files.
+  The GPE dump can be read as follows :
+
+  When a Dual mode program has a GPE it may occur in an overlaid segment in
+  which case the CS value will be relatively high and no segment number will
+  be displayed. In this case relink the program as an Extended mode program
+  to remove overlays and put the segments in the map where the dump function
+  can identify them.
+
+  3.4. New API functions
+  ----------------------
+  To simplify things the "Free" functions have been expanded :
+
+     DosFreeSeg now only frees segments / selectors allocated with
+        DosAllocSeg and DosAllocHugeSeg.
+     DosFreeRealSeg only frees segments / selectors allocated with
+        DosAllocRealSeg.
+     DosFreeSelector frees selectors from other functions such as
+     DosCreateCSAlias etc.
+
+
+  4. New since the manual
+  -----------------------
+  4.1. Blinker commands
+  ---------------------
+
+  BLINKER DEMONSTRATION MINUTES nn
+  This command is not currently supported for Dual mode and Extended
+  mode programs.
+
+  BLINKER HOST QDPMI ON | OFF
+  Quarterdeck's QDPMI requires an extra 60-70kb of memory when a DOS
+  extended program is loaded, and this memory cannot be swapped out by
+  the Blinker memory swap function SWPRUNCMD. For this reason the
+  extender's use of QDPMI is automatically disabled when the swapper is
+  linked in to a program. This may be overridden using BLINKER HOST
+  QDPMI ON to force QDPMI to be enabled, or BLINKER HOST QDPMI OFF to
+  completely disable use of QDPMI.
+
+  Note that this command only affects QDPMI and not any other DPMI
+  server. See also the new /HQ+ environment setting.
+
+  BLINKER HOST MESSAGE ON | OFF
+  This command causes the Blinker extender to display status messages at
+  program start up indicating which memory manager hosts are present and
+  which host mode the extender is running in.
+
+  This command is provided for debugging purposes and would typically
+  not be used in a shipped program. See also the new /HM+ environment
+  setting.
+
+  MIXCASE [EXPORT]
+  The optional parameter EXPORT has been added to the command MIXCASE.
+  By default all export definition names in module definition files are
+  converted to uppercase when they are processed. When MIXCASE EXPORT is
+  specified in the link script file the export names are treated as case
+  sensitive.
+
+  4.2. BLINKER environment settings
+  ---------------------------------
+
+  /DTnnn
+  This run time setting allows the Dual mode threshold specified at link
+  time to be overridden. This can also be used during testing to force
+  the program to run in real mode by setting /DT20000. See the BLINKER
+  EXECUTABLE DUAL command in the manual for more details.
+
+  /HQ+ and /HQ-
+  These run time settings enable and disable the use of a QDPMI host.
+  See the BLINKER HOST QDPMI command documented above for more details.
+
+  /HM+ and /HM-
+  These run time settings enable and disable the displaying of status
+  messages at program start up. See the BLINKER HOST QDPMI command
+  documented above for more details.
+
+  4.3. Extender API functions
+  ---------------------------
+  To simplify things the "Free" functions have been expanded :
+
+     DosFreeSeg now only frees segments / selectors allocated with
+        DosAllocSeg and DosAllocHugeSeg.
+     USHORT BLXAPI DosFreeSeg(SEL sel);
+
+     DosFreeRealSeg only frees segments / selectors allocated with
+        DosAllocRealSeg.
+     USHORT BLXAPI DosFreeRealSeg(SEL sel);
+
+     DosFreeSelector frees selectors from other functions such as
+        DosCreateCSAlias etc.
+     USHORT BLXAPI DosFreeSelector(SEL sel);
+
+  The Blink DOS extender incorporates an extended API to perform certain
+  functions not available through the DPMI interface. This technique
+  conforms with the method defined by the DPMI committee using DPMI call
+  0A00.
+
+  DPMI extended APIs are detected through the use of DPMI function
+  0A00, where an ASCIIZ (zero delimited) constant string indicating the
+  desired API is passed in ES:DI. In the case of the Blink extender, the
+  constant string that should be passed is 'BLINKINC' (in uppercase - case
+  is significant). When running under the Blink extender in protected
+  mode, on return AX contains zero, and ES:DI contains a pointer to the
+  protected mode API entry point. The contents of other general purpose
+  registers are undefined following this call.
+
+  To call a Blink extended API function, put the desired function /
+  subfunction number in AX, and far call the entry point returned from the
+  above installation check.
+
+  The following functions are currently defined:
+
+  Lock Segment (AX=0000)
+  ----------------------
+
+  Parameters:     BX - protected mode selector
+  Return          AX = 0 = success
+
+  This function is provided to prevent a given segment from being swapped
+  out of memory either by a DPMI host, or by the Blink extender's virtual
+  memory system. This function is provided to ensure the segment loader
+  will not be called during a hardware interrupt (or at other times when
+  it is impossible to call DOS to load a segment). Freeing a locked
+  segment causes all locks to be removed. This function is called by
+  loading AX with 0000, and far calling the API entry point.
+
+  UnLock Segment (AX=0001)
+  ------------------------
+
+  Parameters:     BX - protected mode selector
+  Return          AX = 0 = success
+
+  Unlocks a memory segment previously locked using function 0. The
+  extender maintains a lock count on all locked segments - the segment
+  will not be physically unlocked until the lock count is decremented to
+  zero. Freeing a locked segment causes all locks to be unconditionally
+  removed. This function is called by loading AX with 0001, and far
+  calling the API entry point.
+
+  Two new C callable API functions that provide the same functionality as
+  the above two functions have been added:
+
+  BLXAPI DosLockSeg(SEL lockme);
+  BLXAPI DosUnLockSeg(SEL unlockme);
+
+  Direct DPMI CALLS supported
+  ---------------------------
+  If you would like to program directly to DPMI, the following DPMI
+  calls are supported by the Blinker 3.0 DOS Extender, whatever the host
+  memory manager is :
+
+  0000h Allocate LDT descriptors
+  0001h Free LDT descriptor
+  0002h Real segment to selector
+  0003h Get selector increment
+  0006h Get segment base address
+  0007h Set segment base address
+  0008h Set segment limit
+  0009h Set descriptor access rights
+  000Ah Create data alias for Code selector
+  000Bh Get descriptor
+  000Ch Set descriptor
+  0100h Allocate DOS memory block         (Note: Blocksize limited to 64KB)
+  0101h Free DOS memory block
+  0102h Resize DOS memory block           (Note: Blocksize limited to 64KB)
+  0200h Get real mode interrupt vector
+  0201h Set real mode interrupt vector
+  0202h Get processor exception vector
+  0203h Set processor exception vector
+  0204h Get prot-mode interrupt vector
+  0205h Set prot-mode interrupt vector
+  0300h Simulate real mode interrupt
+  0301h Call real mode procedure with RETF frame
+  0303h Allocate real mode call back address
+  0304h Free real mode call back address
+  0400h Get version
+  0500h Get free memory information
+  0600h Does nothing, returns with carry clear
+  0601h Does nothing, returns with carry clear
+  0602h Does nothing, returns with carry clear
+  0603h Does nothing, returns with carry clear
+  0604h Does nothing, returns with carry clear
+  0A00h Get extended API address
+
+        Call in protected mode with ES:DI -> 'BLINKINC',0
+
+        Returns with carry Clear,
+        ES:DI -> API entry point
+
+        Functions supported:
+
+        AX=0000h  Lock segment   (BX=selector)
+        AX=0001h  Unlock segment (BX=selector)
+
+  4.4. Error messages
+  -------------------
+
+  1011 : '<symbol>' has been aliased to two different symbols
+
+  This message indicates that the named symbol has been aliased to more
+  than one different symbol name.
+
+  The second alias symbol is ignored.
+
+  1015 : ignoring duplicate export for symbol '<symbol>'
+
+  This message indicates that a duplicate export definition for the
+  specified symbol has been encountered but ignored.
+
+  1148 : BLINKER CLIPPER SYMBOL OFF required for huge symbol table
+
+  This message will only occur with CA-Clipper 5.x Windows programs, and
+  indicates that the symbol table is too large to perform symbol table
+  compression due to limitations in the CLIPPER.LIB run time.
+
+  Simply add the command BLINKER CLIPPER SYMBOL OFF to the end of the
+  link script file to remove this error message and create the .EXE.
+
+  1149 : use of BLINKER EXECUTABLE DUAL requires an external overlay
+
+  This message indicates that no external overlay name has been
+  specified for the Dual mode program using the SECTION INTO <filename>
+  link script file command.
+
+  One or more external overlay files are currently required for Dual
+  mode programs. Please refer to the SECTION INTO command in the manual
+  for more details.
+
+  1315 : insufficient conventional memory to run program
+
+  This message indicates that the Dual mode program has attempted to
+  load in real mode but has found that there is insufficient
+  conventional (DOS) memory to do so.
+
+  Free up conventional memory by removing TSRs etc before running this
+  program, or refer to the Blinker manual for details of how to overlay
+  more code for a real mode program.
+
+  1316 : VM swap file disk full or VM limit exceeded
+
+  This message indicates that the Blinker 3.0 DOS extender virtual
+  memory system is attempting to swap to disk and the destination is
+  invalid or full, or the maximum swap file size of 64MB has been
+  exceeded.
+
+  By default the swap file will be created in the directory specified by
+  the TMP or TEMP environment variables, or the current directory if
+  neither of these are set. Check that they point to a valid disk with
+  sufficient available space for the DOS Extender's temporary VM swap
+  file.
+  
+  4.5. Windows programs
+  ---------------------
+  This release of Blinker does not support the creation of DLLs as
+  documented in the manual. This functionality will be provided in a
+  subsequent version.
+
+  Consequently the following module definition file commands will be
+  unrecognised :
+
+          IMPORTS
+          LIBRARY
+          OLD
+-------------------------------------------------------------------------------
+
+Blink, Inc.                             Blink, Inc Ltd.
+8001 West Broad Street,                 33, Plassey Street
+Richmond,                               Penarth,
+VA 23294,                               South Glamorgan,
+USA.                                    UK.
+Tel (804) 747-6700                      Tel (222) 712444
+Fax (804) 747-4200                      Fax (222) 700888
+
+<--- End of file --->

@@ -1,0 +1,83 @@
+#
+# Blinker 2.0+ Sample Link file for Clipper Summer '87
+#
+# This sample script is intended to be used as a template for your own scripts
+#
+# Please refer to the manual for specific instructions for 3rd party libraries.
+# In all cases the information provided by the vendor of a library for linking
+# with BLINKER should supercede information in the Blinker manual or files.
+#
+# This script is set up a a development script, that enables incremental
+# linking, and overlays only EXTEND.LIB from the Nantucket libraries. When
+# incremental linking is enabled, applications will use somewhat more memory
+# than normal, due to a certain amount of 'padding' being left at the end
+# of each Clipper procedure, but this is offset by the extremely fast
+# incremental link times.
+#
+# Before shipping a completed application, you should disable the incremental
+# linking feature, which will save memory, and increase execution speed by:
+#
+#         a) Removing the padding between procedures
+#         b) Turning on symbol table compression
+#
+# To disable incremental linking and enable symbol table compression
+# UNCOMMENT the following command:
+#
+#BLINKER INCREMENTAL OFF
+#
+# Burn in your own Clipper variables here eg: F25;E0;R16;V10;
+#
+BLINKER EXECUTABLE CLIPPER F25;E0;R16;V10;
+#
+# Enable free pool defragmentation
+#
+BLINKER MEMORY PACK 10
+#
+# Specify the EXE filename here:
+#
+OUTPUT <EXE filename>
+#
+# List your Clipper S'87 object modules here. The first FILE mentioned in any
+# Blinker link script MUST be a Clipper code module. The first module may be
+# overlaid, so for maximum memory savings overlay all Clipper code.
+#
+FILE <MAIN Clipper routine>
+#
+BEGINAREA
+#
+#   List the rest of your Clipper code files here.
+#
+    FILE <next Clipper file>
+    FILE <next Clipper file>
+#
+#   UNCOMMENT and list you own Clipper code libraries here
+#
+#    LIBRARY <my library>
+#    LIBRARY <my other library>
+#
+#   UNCOMMENT and list your overlayable 3rd party libraries here
+#
+#    LIBRARY <3rd party>
+#    LIBRARY <3rd party>
+ENDAREA
+#
+# If you need the Clipper debugger, UN-COMMENT the following FILE command
+#
+#FILE DEBUG
+#
+# Uncomment and list your 3rd party non overlayable object modules here
+# eg: OVERLAY's RESIDENT.OBJ
+#
+#FILE <3rd party1>,<3rd party2>
+#
+# UNCOMMENT 3rd party non-overlayable libraries
+#
+#LIB <3rd party>
+#
+# Call the distribution script to overlay EXTEND.LIB
+#
+@CL87MIN.LNK
+#
+# Microsoft LLIBCA C library comes last if needed
+#
+# LIB LLIBCA

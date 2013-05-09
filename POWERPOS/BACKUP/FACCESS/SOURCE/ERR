@@ -1,0 +1,9 @@
+283K available
+Compiling BUILDPLU.PRG
+Code size 713, Symbols 128, Constants 295
+
+BLINKER : overlay opsize set to 40Kb - minimum size is 17Kb
+
+BLINKER : link was successful
+
+BUILDPLU.EXE (162 Kb) (0.4 seconds)

@@ -1,0 +1,38 @@
+Publics by module
+
+GRFXBOX      size = 1419
+	GDRAWBOX                          _cDrawBox
+	_cDrawButtn                     
+
+GRFXCOMN     size = 156
+	_SetButtonColor                 
+
+GRFXLINE     size = 779
+	GDRAWLINE                         _cDrawLine
+
+GRFXMISC     size = 1048
+	GCLRDEVICE                        GGRFXCONFG
+	GGRFXSETNW                        _IsEGAVGAdrvr
+	_cStrWidth                        _cTextInfo
+
+GRFXTEXT     size = 1700
+	GDRAWTEXT                         _cDrawText
+
+GRFX_API     size = 367
+	GGRAPHCLOS                        GGRAPHINIT
+	GGRFXTOTXT                        GTXTTOGRFX
+	__graphfreemem                    __graphgetmem
+
+GRFX_BMP     size = 2075
+	GLOAD_BMP                         _BMP_Decoder
+	_BMP_Offset                       _BMP_Palette
+	_Put_Scanline                     _load_bmp
+
+GSCRREST     size = 591
+	GSCRNREST                         _cScrnRest
+
+GSCRSAVE     size = 776
+	GSCRNSAVE                         _cScrnSave
+
+ISCALE       size = 26
+	_iscale                         

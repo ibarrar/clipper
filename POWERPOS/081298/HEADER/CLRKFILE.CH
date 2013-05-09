@@ -1,0 +1,40 @@
+/* 
+   CLRKFILE.CH
+   as of 042696 at 6:30 pm 
+   rci 
+*/  
+
+#ifndef FM_RECORD_OFF
+  #define FM_RECORD_OFF 13
+#endif  
+ 
+#define CRK_CODE_LEN   6
+#define CRK_DESC_LEN  20
+#define CRK_LOCN_LEN   2
+#define CRK_DLTD_LEN   1
+#define CRK_CNTR_LEN   8
+#define CRK_SALE_LEN   8
+#define CRK_DISC_LEN   8
+#define CRK_PQTY_LEN   8
+#define CRK_PAMT_LEN   8
+#define CRK_PDSC_LEN   8
+
+#define CRK_TTLS_LEN  48
+
+#define CRK_CODE_OFF  01
+#define CRK_DESC_OFF  07  /* CRK_CODE_OFF + CRK_CODE_LEN  */
+#define CRK_LOCN_OFF  27  /* CRK_DESC_OFF + CRK_DESC_LEN  */
+#define CRK_DLTD_OFF  29  /* CRK_LOCN_OFF + CRK_LOCN_LEN  */
+#define CRK_CNTR_OFF  30  /* CRK_DLTD_OFF + CRK_DLTD_LEN  */
+#define CRK_SALE_OFF  38  /* CRK_CNTR_OFF + CRK_CNTR_LEN  */
+#define CRK_DISC_OFF  46  /* CRK_SALE_OFF + CRK_SALE_LEN  */
+#define CRK_PQTY_OFF  54  /* CRK_DISC_OFF + CRK_DISC_LEN  */
+#define CRK_PAMT_OFF  62  /* CRK_PQTY_OFF + CRK_PQTY_LEN  */
+#define CRK_PDSC_OFF  70  /* CRK_PAMT_OFF + CRK_PAMT_LEN  */
+
+#define CLERK_SIZE    77  /* (CRK_PDSC_OFF + CRK_PDSC_LEN - CRK_CODE_OFF) */
+
+#define FM_CRK_CODE_OFF  FM_RECORD_OFF
+#define FM_CRK_DESC_OFF  FM_CRK_CODE_OFF + CRK_CODE_LEN
+#define FM_CRK_LOCN_OFF  FM_CRK_DESC_OFF + CRK_DESC_LEN
+#define FM_CRK_DLTD_OFF  FM_CRK_LOCN_OFF + CRK_CONC_LEN

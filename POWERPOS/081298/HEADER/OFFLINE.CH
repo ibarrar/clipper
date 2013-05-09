@@ -1,0 +1,16 @@
+        
+#define OFFLINE_FILENAME  "OFFLINE.TXT"
+
+#define OFF_TIME_LEN   8
+#define OFF_DATE_LEN   8
+#define OFF_CNTR_LEN   8 
+#define OFF_SALE_LEN   8
+
+#define OFF_TIME_OFF   1
+#define OFF_DATE_OFF   OFF_TIME_OFF + OFF_TIME_LEN
+#define OFF_CNTR_OFF   OFF_DATE_OFF + OFF_DATE_LEN
+#define OFF_SALE_OFF   OFF_CNTR_OFF + OFF_CNTR_LEN
+ 
+#define OFF_HEAD_LEN   OFF_SALE_OFF + OFF_SALE_LEN - OFF_TIME_OFF
+
+#define OFF_DATA_LEN   128

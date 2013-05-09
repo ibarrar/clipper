@@ -1,0 +1,31 @@
+
+C_FLAGS= -c -W3 -Ox -AL -Gs -FPa -Zl -I.\header 
+LIB_PARMS= -+drawline -+set_mode -+scr_plot -+drawrect -+is_vga -+rnd_rect \
+-+scrplots -+fillrect
+
+
+// "C" file
+.c.obj:
+   cl $(C_FLAGS) $<
+   
+// obj files
+.obj.lib:
+  lib FX.lib $(LIB_PARMS);
+
+drawline.obj 	: drawline.c
+set_mode.obj	: set_mode.c
+scr_plot.obj	: scr_plot.c
+drawrect.obj	: drawrect.c
+is_vga.obj		: is_vga.c
+rnd_rect.obj 	: rnd_rect.c
+scrplots.obj	: scrplots.c
+fillrect.obj	: fillrect.c
+	
+FX.LIB : drawline.obj set_mode.obj scr_plot.obj drawrect.obj is_vga.obj \
+			rnd_rect.obj scrplots.obj fillrect.obj	
+
+test_vga.exe	: test_vga.obj fx.lib
+	l test_vga
+
+
+ 

@@ -1,0 +1,32 @@
+#
+#  NDX520.LNK - 03/22/93 Version 1.0
+#
+#  Blinker link script for CA-Clipper 5.2
+#
+#  NOTE: Overlaying of RDDs may result in significant performance decrease.
+#
+#  For ease of use this script should be stored in your library directory,
+#  (the directory pointed to by the LIB environment variable), which will allow
+#  Blinker to find the script without you having to specify a full path.
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries (except LLIBCA if it is being used).
+#
+#  example:
+#
+#  FILE one
+#  BEGINAREA
+#       FILE two
+#       FILE three
+#       FILE four
+#  ENDAREA
+#  @CL520MID
+#  @NDX520
+#  LIB LLIBCA # (if used)
+#
+beginarea
+    mod _DBFNDX         # Clipper
+    mod NDX0            # .C
+    mod NDX1            # .C
+endarea
+lib dbfndx

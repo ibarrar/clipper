@@ -1,0 +1,4 @@
+BLINKER INCREMENTAL OFF
+ search clipper,extend,terminal,dbfntx,userlib
+ FI Tutor,user
+ lib userlib

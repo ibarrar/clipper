@@ -1,0 +1,6 @@
+
+lib clipper,extend,terminal,dbfntx,userlib
+
+file dtr,bundy,master,stifunc,ABROWSE4,ABROWSE0,maint,reports1,
+  screen,windows,array,string,locks,omenu,gauge,scrolbar,dbbrowse,printer
+

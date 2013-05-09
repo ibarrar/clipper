@@ -1,0 +1,49 @@
+#
+#  CL87MID.LNK - Summer '87 Clipper/Extend Script
+#
+#  Overlay EXTEND.LIB and moderate amounts of CLIPPER.LIB
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except LLIBCA if it is being used.
+#
+#  NOTE: for ease of use this script should be stored in your library directory,
+#  (the directory pointed to by the LIB environment variable), which will allow
+#  Blinker to find the script without you having to specify a full path.
+#
+#  Modules within CLIPPER.LIB are, by their nature, called very frequently
+#  within any CLIPPER application. Therefore, overlaying these routines
+#  will almost certainly result in some performance degradation, which can
+#  be minimised by increasing the OVERLAY OPSIZE.
+#
+#  The amount of performance degradation will vary from application to
+#  application, so it may be necessary to modify this script by commenting
+#  out some MODULE statements to increase performance to an acceptable level
+#  in some areas.
+#
+#  Please note that some third party libraries may replace or modify routines
+#  in the CLIPPER library, so that they are no longer overlayable. The link
+#  time command BLINKER MESSAGE DUPLICATES may help in determining such
+#  conflicts or replacements.
+#
+lib clipper
+beginarea
+   module dbmemo
+   module dbsdf
+   module errorsys
+   module errsys
+   module icreate
+   module macro
+   module net
+   module ntx
+   module report
+   module segjunk
+   module set
+   module sort
+   module sortof
+   module vall
+   module vnone
+   module vreport
+   module vsort
+   module vstd
+   lib extend
+endarea

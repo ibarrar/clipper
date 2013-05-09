@@ -1,0 +1,29 @@
+// Filename:      BSP.RMK
+// Description:   Bank Settlement Plan Make File Script
+// Updated by:    Rollie C. Ibarra Jr.
+// Date-Started:  August 17, 1993
+// Last-Update:   August 17, 1993
+
+.prg.obj:
+  CLIPPER $* /B /N /A /M /O$@
+
+BSP.OBJ:       Bsp.Prg
+Tickets.OBJ:   Tickets.Prg
+Memos.OBJ:     Memos.Prg
+Acr.OBJ:       Acr.prg
+Reports.OBJ:   Reports.Prg
+Report_A.OBJ:  Report_A.Prg
+Report_B.OBJ:  Report_B.Prg
+Unbilled.OBJ:  Unbilled.Prg
+Report_C.OBJ:  Report_C.Prg
+Maint.OBJ:     Maint.Prg
+c501_mod.obj:  c501_mod.prg
+domp.obj:      domp.prg
+
+BSP.EXE : BSP.OBJ Tickets.OBJ Memos.OBJ Acr.OBJ Reports.OBJ Report_A.OBJ \
+Report_B.OBJ Unbilled.OBJ Report_C.OBJ Maint.OBJ c501_mod.OBJ Domp.OBJ
+  RTLINK FILE BSP,Tickets,Memos,Acr,Reports,Report_A,Report_B,Unbilled,Report_C,Maint,c501_mod,Domp PLL BASE50
+
+
+// <EOF> - BSP.RMK //
+

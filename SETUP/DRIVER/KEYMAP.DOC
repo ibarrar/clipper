@@ -1,0 +1,171 @@
+Introduction                                                      1st Apr 95
+------------                                                      ver 1.0+
+
+KEYMAP.EXE is a TSR program that provide redefinition for the POS 3000's 105
+keyboard, and supports an additional of AT keyboard via the PS/2 mouse port
+which is located at the rear of the system.
+
+
+Installation
+------------
+
+Copy KEYMAP.EXE and KEYBOARD.MAP from the system disk to the harddisk.
+
+
+How to Use
+----------
+
+Start
+
+  At DOS prompt, type "KEYMAP -help" for simple explanation of the usage.
+  Following is the display.
+
+ ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
+ ณ                                                                        ณ
+ ณ Keyboard Redefinition Program for POS System 3000  Version 1.0 Beta    ณ
+ ณ Copyright (C) Spectrum Tech Apr 95. All rights reserved.               ณ
+ ณ                                                                        ณ
+ ณ Usage : keymap [-help] [+/-I] [+/-E] filename[.map]                    ณ
+ ณ                                                                        ณ
+ ณ      -help           This Help screen                                  ณ
+ ณ      +I              Enable internal keyboard mapping [default]        ณ
+ ณ      -I              Disable internal keyboard mapping                 ณ
+ ณ      +E              Enable external AT keyboard through PS/2 aux port ณ
+ ณ      -E              Disable external AT keyboard [default]            ณ
+ ณ      filename[.map]  Keyboard mapping file. [Default:keyboard.map]     ณ
+ ณ                      Default extension is [.map]                       ณ
+ ณ                                                                        ณ
+ ณ   For more help, please refer to KEYMAP.DOC                            ณ
+ ณ                                                                        ณ
+ ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
+
+Explantion of Parameters
+
+  -help      Display a simple help screen.
+
+  +I         The keyboard redefinition will be enabled. If the keyboard
+             mapping filename is omitted, keyboard.map will be used as default.
+             This is the default option if this parameter is omiited.
+
+  -I         The keyboard refinition will be disabled. No mapping will be done.
+
+  +E         External AT keyboard will be supported via the PS/2 auxiliary
+             port.
+
+  -E         No support fo AT keyboard via the PS/2 auxiliary port.
+
+  filename   This is the keyboard redefinition file. If extension is ommited,
+             [.map] will be assumed. Default file is keyboard.map.
+
+Default Setting
+---------------
+
+If KEYMAP is executed without any parameters, the default setting will be as
+followed.
+
+   Keyboard mapping file : KEYBOARD.MAP
+   Internal Keyboard     : Enabled
+   External Keyboard     : Disabled
+
+
+Layout of the orignial POS 105 keyboard
+---------------------------------------
+
+       A   B   C   D   E   F   G   H   I   J   K   L   M   N   P
+     ษอออหอออหอออหอออหอออหอออหอออหอออหอออหอออหอออหอออหอออหอออหอออป
+   1 บ F1บ F2บ F3บ F4บ F5บ F6บ F7บ F8บ F9บF10บInsบHomบPgUบ  บPgDบ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   2 บEscบF11บF12บ [ บ ] บ { บ } บ < บ > บ ? บDelบEndบ  บ  บ-> บ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   3 บTabบ ! บ @ บ # บ $ บ % บ ^ บ & บ * บ ( บ ) บ _ บ = บ / บ -บ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   4 บ q บ w บ e บ r บ t บ y บ u บ i บ   บEntบ 1 บ 2 บ 3 บ * บ   บ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   5 บ a บ s บ d บ f บ g บ h บ j บ k บ l บ : บ 4 บ 5 บ 6 บ - บ   บ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   6 บ z บ x บ c บ v บ b บ n บ m บ o บ p บ ; บ 7 บ 8 บ 9 บ + บ   บ
+     ฬอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออฮอออน
+   7 บCAPบ ` บ ~ บ   บSpcบ \ บ | บ , บ ' บ " บ 0 บ   บ . บEntบ   บ
+     ศอออสอออสอออสอออสอออสอออสอออสอออสอออสอออสอออสอออสอออสอออสอออผ
+
+Format of Keyboard Redefintion file
+-----------------------------------
+
+
+Following is a sample keyboard redefinition file.
+
+ ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
+ ณ                                               ณ
+ ณ  ; Default Keyboard Mapping File              ณ
+ ณ  ; Filename : Keyboard.map                    ณ
+ ณ  ; Date : 15 March 1995                       ณ
+ ณ  ;                                            ณ
+ ณ  $1$A S3B                       ; F1          ณ
+ ณ  $1$B S3C                       ; F2          ณ
+ ณ  $1$C S3D                       ; F3          ณ
+ ณ  $1$D S3E                       ; F4          ณ
+ ณ  $1$E S3F                       ; F5          ณ
+ ณ  $1$F S40                       ; F6          ณ
+ ณ  $1$G S41                       ; F7          ณ
+ ณ  $1$H S42                       ; F8          ณ
+ ณ  $1$I S43                       ; F9          ณ
+ ณ  $1$J S44                       ; F10         ณ
+ ณ  $1$K SE0 S52 SE0 SD2           ; Ins         ณ
+ ณ  $1$L SE0 S47 SE0 SC7           ; Home        ณ
+ ณ  $1$M SE0 S49 SE0 SC9           ; PgUp        ณ
+ ณ  $1$N SE0 S48 SE0 SC8           ; Up Arrow    ณ
+ ณ  $1$O SE0 S51 SE0 SD1           ; PgDn        ณ
+ ณ                                               ณ
+ ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
+
+
+Character          Meaning
+---------          -------
+
+  ;       Anything after this ';' will be considered as comments and will be
+          ignored.
+
+  $R$C    This is used to indicate the position of the key to be redefined.
+   or     R is the row and C is the column of keyboard. The range of R is from
+  $C$R    1 to 7 and for C is from A to O. Please refer to the keyboard layout
+          above for the position of each key. Please note $1$A = $A$1. The
+          order of row and column is not significant.
+
+  SXX     This represents the scan code to be sent to the BIOS. XX is a
+          hexadecimal. Each code must be sepearated with a space.
+
+  AXX     This represents the ascii code to be inserted into the keyboard
+          buffer. XX is a hexadecimal. Each code must be sepearated with a
+          space.
+
+
+A default file, KEYBOARD.MAP, is supplied with the disk. You are encouraged
+to keep the original file, and make any modifcation on another file.
+
+
+Note
+----
+
+Scancode value of 6E and FF is resereved for the system. Do not use them in
+the keyboard redefinition file. For additonal reserved scan codes, please refer
+to IBM Technical Reference.
+
+If any key is undefined, its original scan codes will be used.
+
+If the program encounters any errors in the file, it will abort, and indicate
+the location of the first error it reads.
+
+If a key is redefined again in the same file, the first definition will be
+over-written by the second one.
+
+
+Warning
+-------
+
+Do not attempt to load the program twice. If any changes have to be made,
+please reboot the system and run KEYMAP again.
+
+If external AT keyboard is to be used, do not loaded any drivers that access
+the auxiliary port, for example, mouse driver.
+
+

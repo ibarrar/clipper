@@ -1,0 +1,125 @@
+
+
+*** Parsing  GL.RMK
+
+*** Redefine CLIPFLAGS=/W /N /M /A 
+
+*** Inference  prg to obj
+    clipper $< $(CLIPFLAGS)
+
+*** Target GL.OBJ   depends on  GL.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target CDB.OBJ   depends on  CDB.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target CRB.OBJ   depends on  CRB.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target SB.OBJ   depends on  SB.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target PCV.OBJ   depends on  PCV.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target JV.OBJ   depends on  JV.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target LEDGER.OBJ   depends on  LEDGER.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target LEDGER2.OBJ   depends on  LEDGER2.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target SCHED.OBJ   depends on  SCHED.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target MAINT.OBJ   depends on  MAINT.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target ABROWSE.OBJ   depends on  ABROWSE.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target ABROWSE2.OBJ   depends on  ABROWSE2.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target LOOKUP.OBJ   depends on  LOOKUP.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target COMPUTE.OBJ   depends on  COMPUTE.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target ASSEMBLY.OBJ   depends on  ASSEMBLY.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target BALANCE.OBJ   depends on  BALANCE.PRG 
+    (by inference)
+    clipper $< $(CLIPFLAGS)
+
+*** Target INCOME.OBJ   depends on  INCOME.PRG 
+    clipper $< $(CLIPFLAGS)
+
+*** Target GL.EXE   depends on  GL.OBJ CDB.OBJ CRB.OBJ SB.OBJ PCV.OBJ JV.OBJ LEDGER.OBJ LEDGER2.OBJ SCHED.OBJ MAINT.OBJ ABROWSE.OBJ ABROWSE2.OBJ LOOKUP.OBJ COMPUTE.OBJ ASSEMBLY.OBJ BALANCE.OBJ INCOME.OBJ 
+    BLINKER3 @GL
+*** Trying GL.OBJ because... well, just because.
+*** Trying CDB.OBJ because... well, just because.
+*** Trying CRB.OBJ because... well, just because.
+*** Trying SB.OBJ because... well, just because.
+*** Trying PCV.OBJ because... well, just because.
+*** Trying JV.OBJ because... well, just because.
+*** Trying LEDGER.OBJ because... well, just because.
+*** Trying LEDGER2.OBJ because... well, just because.
+*** Trying SCHED.OBJ because... well, just because.
+*** Trying MAINT.OBJ because... well, just because.
+*** Trying ABROWSE.OBJ because... well, just because.
+*** Trying ABROWSE2.OBJ because... well, just because.
+*** Trying LOOKUP.OBJ because... well, just because.
+*** Trying COMPUTE.OBJ because... well, just because.
+*** Trying ASSEMBLY.OBJ because... well, just because.
+*** Trying BALANCE.OBJ because... well, just because.
+*** Trying INCOME.OBJ because... well, just because.
+*** Trying GL.EXE because... well, just because.
+*** Will make GL.EXE because of  GL.OBJ
+*** Will make GL.EXE because of  CDB.OBJ
+*** Will make GL.EXE because of  CRB.OBJ
+*** Will make GL.EXE because of  SB.OBJ
+*** Will make GL.EXE because of  PCV.OBJ
+*** Will make GL.EXE because of  JV.OBJ
+*** Will make GL.EXE because of  LEDGER.OBJ
+*** Will make GL.EXE because of  LEDGER2.OBJ
+*** Will make GL.EXE because of  SCHED.OBJ
+*** Will make GL.EXE because of  MAINT.OBJ
+*** Will make GL.EXE because of  ABROWSE.OBJ
+*** Will make GL.EXE because of  ABROWSE2.OBJ
+*** Will make GL.EXE because of  LOOKUP.OBJ
+*** Will make GL.EXE because of  COMPUTE.OBJ
+*** Will make GL.EXE because of  ASSEMBLY.OBJ
+*** Will make GL.EXE because of  BALANCE.OBJ
+*** Will make GL.EXE because of  INCOME.OBJ
+*** Will make GL.EXE because it doesn't exist.
+BLINKER3 @GL
+
+
+BLINKER : 1004 : GL.OBJ(GL) : 'STI_LOGO' is duplicated in
+                 SCREEN.OBJ(SCREEN) 
+
+BLINKER : overlay opsize set to 40kb - minimum is 15kb (STI_LOGO)
+
+BLINKER : 1 Warning error(s), 0 Fatal error(s)
+
+GL.EXE (527 kb) (0.2 seconds)

@@ -1,0 +1,21 @@
+prelink
+output base60
+
+fi screen,windows,array,locks,string,gauge,omenu,scrolbar,dbbrowse,printer
+
+lib clipper,extend,terminal,dbfntx,userlib
+
+refer _VOPS,_VMACRO,_VDB,_VDBF,_VDBFNTX
+refer _VTERM,_VPICT,_VGETSYS
+refer _VDBG
+refer ISDATA
+refer FILLOCK,RECLOCK,NETUSE,ADDREC
+refer BARACTIVAT,BARNEW,MENUNEW,PROMPTADD,PROMPTADDL,PROMPTADDS
+refer MENUADD,PROMPTQUIC
+refer GAUGENEW,GAUGEDISPL,GAUGEUPDAT
+refer DBBROWSE
+refer BKGNDSCREE,MESSAGE,HEADING,STI_LOGO
+refer OPENWINDOW,CLOSEWINDO
+refer SETPRINTER,PRTUNDERLI
+
+exclude ERRORSYS

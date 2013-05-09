@@ -1,0 +1,30 @@
+BLINKER EXECUTABLE CLIPPER F:100;
+BLINKER INCREMENTAL OFF
+file pcposmts
+#,btrvclrk,mscxbtrv
+BEGINAREA
+file Department,makedbf1,createdbf,createntx,dstktrn
+file Vendor,Brand,Class,items,d2fm,Po,abrowse0,abrowse1,abrowse2,abrowse3,window,dPost,dailysa
+file stkrec,stkret,stkadj,dstkret,dStkRec,dPurOrd,dItem,aClosing,mClosing
+file pcount,maint,abrowse4,cashier,stktrn,abrowse5,fmfile,dload_fc,getdata
+file makedbf2,abrowse6,security,card,term_imp,plu_imp
+file dbflkup,sc_rpt,foreign,unit,clkmaint,dept_imp,hour_imp,retn_imp
+file cash_imp,rterm,rcashier,rhour,monitor,acc_rep,ccd_imp,itemtxt,itemvtxt
+file download,upload,up_stock,nplu,r_dload
+
+# REPORTS not enabled
+file it3100,it310001,it310002,it310003,it310005,it310006,it310007,it310008
+file it310009,it310012,it3300,r_stktrn,changepr
+file it3200,it320001,it320002,it320003,it320004,ssreg,it320005,crdtcrd
+file it390002,it390003,it390006,it390007,pconcess,consign,pconsign,r_slsrpt
+file rdept,itlst_dp,itlst_br,d_slsrpt,voidprev,br_move,br_movei,rsuplier,q_item,concess
+#rclerk,
+# END of report modules
+
+allocate userlib, extend
+ENDAREA
+search clipper,cl4clip.lib
+
+
+
+

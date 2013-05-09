@@ -1,0 +1,20 @@
+// Make file for all text file browse samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+TBR28.OBJ : tbr28.prg
+TBR29.OBJ : tbr29.prg
+TBR30.OBJ : tbr30.prg
+
+.obj.exe:
+   SET RTLINKCMD=/free
+   RTLINK FILE $<
+
+TBR28.EXE : tbr28.obj
+TBR29.EXE : tbr29.obj
+TBR30.EXE : tbr30.obj
+
+// eof //

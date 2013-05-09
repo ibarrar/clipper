@@ -1,0 +1,4 @@
+BLINKER INCREMENTAL OFF
+ search clipper,extend,terminal,dbfntx,userlib
+ FI Tutor,user,screen,windows,array,string,locks
+ Fi omenu,gauge,scrolbar,dbbrowse,printer

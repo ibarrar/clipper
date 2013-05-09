@@ -1,0 +1,31 @@
+// Filename:      PS.RMK
+// Date-Started:  NOV 7, 1993
+// Last-Update:   Nov 7, 1993
+
+// Debugging mode
+.prg.obj:
+  clipper $* /b /n /a /m /o$@
+
+// Production Mode
+//.prg.obj:
+//  clipper $* /n /o$@
+
+ps.obj:         ps.prg
+master.obj:     master.prg
+abrowse0.obj:   abrowse0.prg
+abrowse1.obj:   abrowse1.prg
+abrowse2.obj:   abrowse2.prg
+abrowse3.obj:   abrowse3.prg
+abrowse4.obj:   abrowse4.prg
+table.obj:      table.prg
+reports1.obj:   reports1.prg
+reports2.obj:   reports2.prg
+payslip.obj:    payslip.prg
+maint.obj:      maint.prg
+stifunc.obj:    stifunc.prg
+
+ps.exe : ps.obj master.obj stifunc.obj abrowse0.obj abrowse1.obj abrowse2.obj abrowse3.obj abrowse4.obj table.obj reports1.obj reports2.obj payslip.obj maint.obj
+  rtlink fi ps,master,abrowse0,abrowse1,abrowse2,abrowse3,abrowse4,stifunc,table,reports1,reports2,payslip,maint pll base50
+
+// <eof> - ps.RMK //
+

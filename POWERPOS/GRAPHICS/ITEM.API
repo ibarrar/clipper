@@ -1,0 +1,67 @@
+/***
+*
+*   Item.api
+*
+*   C language definitions for Clipper ITEM API
+*
+*   Copyright (c) 1992-1993, Computer Associates, International
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _ITEM_API
+
+
+typedef void _near * ITEM;
+
+typedef struct
+{
+   USHORT type;
+   USHORT paramCount;
+   ITEM   item[ 10 ];
+} EVALINFO;
+
+typedef EVALINFO far * EVALINFOP;
+
+extern ITEM    _itemNew( ITEM item );
+               
+extern USHORT  _itemType( ITEM item );
+extern USHORT  _itemSize( ITEM item );
+
+extern ITEM    _itemPutL ( ITEM item, BOOL log );
+extern ITEM    _itemPutC ( ITEM item, BYTEP str );
+extern ITEM    _itemPutCL( ITEM item, BYTEP str, USHORT len );
+extern ITEM    _itemPutNL( ITEM item, long lnum );
+extern ITEM    _itemPutND( ITEM item, XDOUBLE nd );
+extern ITEM    _itemPutDS( ITEM item, BYTEP dstr );
+
+extern BOOL    _itemGetL ( ITEM item );
+extern BYTEP   _itemGetC ( ITEM item );
+extern long    _itemGetNL( ITEM item );
+extern BYTEP   _itemGetDS( ITEM item, BYTEP buf );
+extern XDOUBLE _itemGetND( ITEM item );
+
+extern USHORT  _itemCopyC( ITEM item, BYTEP buf, USHORT len );
+extern BOOL    _itemFreeC( BYTEP str );
+
+extern ITEM    _itemArrayNew( USHORT uiSize );
+extern ITEM    _itemArrayGet( ITEM itemArr, USHORT uiElem );
+extern ITEM    _itemArrayPut( ITEM itemArr, USHORT uiElem, ITEM item );
+
+
+extern ITEM    _itemParam ( USHORT uiParam );
+extern ITEM    _itemReturn( ITEM item );
+
+extern BOOL    _itemRelease( ITEM item );
+
+extern BOOL    _evalNew     ( EVALINFOP evalP, ITEM eval );
+extern BOOL    _evalPutParam( EVALINFOP evalP, ITEM param );
+extern ITEM    _evalLaunch  ( EVALINFOP evalP );
+extern BOOL    _evalRelease ( EVALINFOP evalP );
+
+
+#define _ITEM_API
+#endif

@@ -1,0 +1,4 @@
+file tsms,master,view,abrowse,config,mapclust,read,reading,reports,termcon
+file deptcon,hourcon,reports1,reports2,f_clos,reset
+search clipper,extend, \tc\lib\cl.lib
+

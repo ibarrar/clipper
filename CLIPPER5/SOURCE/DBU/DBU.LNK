@@ -1,0 +1,15 @@
+BLINKER INCREMENTAL OFF
+file dbu
+file dbuutil
+file dbuhelp
+file dbuview
+file dbuindx
+file dbuedit
+file dbucopy
+file dbustru
+file dbunet
+
+lib  clipper
+lib  extend
+lib  dbfntx
+lib  terminal

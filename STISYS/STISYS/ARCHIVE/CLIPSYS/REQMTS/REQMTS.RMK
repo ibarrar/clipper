@@ -1,0 +1,15 @@
+.prg.obj:
+  CLIPPER $* /N /A /M /O$@
+
+REQMTS.OBJ:   Reqmts.prg
+EDITOR.OBJ:   Editor.prg
+HELP.OBJ:     Help.prg
+SCREEN.OBJ:   Screen.prg
+WINDOWS.OBJ:  Windows.prg
+
+REQMTS.EXE : REQMTS.OBJ EDITOR.OBJ HELP.OBJ SCREEN.OBJ WINDOWS.OBJ
+  RTLINK FI REQMTS,EDITOR,HELP,SCREEN,WINDOWS
+
+
+
+

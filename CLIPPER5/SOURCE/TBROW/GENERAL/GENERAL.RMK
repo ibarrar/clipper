@@ -1,0 +1,60 @@
+// Make file for all browse samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+MAKEBASE.OBJ : makebase.prg
+TBR1.OBJ     : tbr1.prg
+TBR2.OBJ     : tbr2.prg
+TBR3.OBJ     : tbr3.prg
+TBR4.OBJ     : tbr4.prg
+TBR5.OBJ     : tbr5.prg
+TBR6.OBJ     : tbr6.prg
+TBR7.OBJ     : tbr7.prg
+TBR8.OBJ     : tbr8.prg
+TBR9.OBJ     : tbr9.prg
+TBR9A.OBJ    : tbr9a.prg
+TBR10.OBJ    : tbr10.prg
+TBR11.OBJ    : tbr11.prg
+TBR12.OBJ    : tbr12.prg
+TBR13.OBJ    : tbr13.prg
+TBR14.OBJ    : tbr14.prg
+TBR15.OBJ    : tbr15.prg
+TBR16.OBJ    : tbr16.prg
+TBR17.OBJ    : tbr17.prg
+TBR18.OBJ    : tbr18.prg
+TBKEYACT.OBJ : tbkeyact.prg
+BRFUNC.OBJ   : brfunc.prg
+TBR32.OBJ    : tbr32.prg
+TBR33.OBJ    : tbr33.prg
+
+.obj.exe:
+   SET RTLINKCMD=/posi
+   RTLINK $**;
+
+MAKEBASE.EXE : makebase.obj
+TBR1.EXE     : tbr1.obj
+TBR2.EXE     : tbr2.obj
+TBR3.EXE     : tbr3.obj
+TBR4.EXE     : tbr4.obj
+TBR5.EXE     : tbr5.obj
+TBR6.EXE     : tbr6.obj
+TBR7.EXE     : tbr7.obj
+TBR8.EXE     : tbr8.obj
+TBR9.EXE     : tbr9.obj
+TBR9A.EXE    : tbr9a.obj
+TBR10.EXE    : tbr10.obj
+TBR11.EXE    : tbr11.obj
+TBR12.EXE    : tbr12.obj
+TBR13.EXE    : tbr13.obj
+TBR14.EXE    : tbr14.obj
+TBR15.EXE    : tbr15.obj
+TBR16.EXE    : tbr16.obj
+TBR17.EXE    : tbr17.obj
+TBR18.EXE    : tbr18.obj
+TBR32.EXE    : tbr32.obj tbkeyact.obj brfunc.obj
+TBR33.EXE    : tbr33.obj
+
+// eof //

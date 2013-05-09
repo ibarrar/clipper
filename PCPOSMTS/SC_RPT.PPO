@@ -1,0 +1,679 @@
+#line 1 "C:\CLIPPER5\INCLUDE\fileio.ch"
+#line 2 "SC_RPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\inkey.ch"
+#line 3 "SC_RPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\setcurs.ch"
+#line 4 "SC_RPT.PRG"
+#line 1 "C:\PCPOSMTS\HEADER\its.ch"
+#line 5 "SC_RPT.PRG"
+#line 1 "C:\CLIPPER5\INCLUDE\Memoedit.ch"
+#line 6 "SC_RPT.PRG"
+#line 1 "C:\PCPOSMTS\HEADER\janus.ch"
+#line 8 "SC_RPT.PRG"
+
+
+memvar getlist,nUnit,n,dStartDate,dEndDate,nLimit, cReport
+
+static nMaxLen, nChrSize 
+
+function ScreenEdit( ThisFile,  nLnt, cTitle, nFont )
+local clr:=Setcolor()
+local wWindBuff,nMaxrow := maxrow()+1,nMaxcol := maxcol()+1
+cReport := MemoRead(ThisFile+".PRN")
+nMaxLen := nLnt
+nChrSize := nFont 
+
+ scroll(03,01,maxrow(),maxcol())
+
+ if !setmode(50,80) .AND. !setmode(43,80)
+    setmode(nMaxrow,nMaxcol)    
+ endif 
+
+ _logo() 
+
+ wWindBuff:=OpenWindow(2,1,maxrow()-2,78,cTitle)
+
+ Message("  Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.",nUnit) 
+
+ if !empty(cReport)
+    MemoEdit(cReport,3,2,maxrow()-2,77,.F.,"MyEditFunc",nMaxLen )
+ else
+    alert(" Error:00006 File "+ThisFile+" does not exist")
+ endif
+
+ Setcolor(clr)
+ setcursor(0)
+ CloseWindow(wWindBuff)
+ setmode(nMaxrow,nMaxcol)  
+return (lastkey()==27) 
+
+
+function MyEditFunc(nMode,nLine,nCol)
+memvar initRow,initCol,initRelRow,initRelCol
+local nRetVal,lKey,nKey,isReady,nLines,nCurrLine,n,nLineCtr:=0
+local cLine,cColor
+   initRow:=nLine ; initCol:=nCol ; initRelRow:=Row()-1 ; initRelCol:=Col()-1
+   if nMode==0
+      SetCursor(0)
+      cColor:=SetColor("W+/RB")
+
+      DevPos( 02, 58 ) ; DevOut( "Line"+Transform(nLine,"9999")+"  Col"+ Transform(nCol+1,"9999") )
+      SetColor(cColor)
+      SetCursor(1)
+   else
+      lKey:=LastKey()
+      do case
+         case lKey==-9
+            Message("Press ENTER to print report, ESC to abort....")
+            nKey:=0
+            while (nKey<>13) .AND. (nKey<>27)
+               nKey:=Inkey(0)
+            enddo
+            if nKey=13
+               isReady:=.F.
+               while (nKey<>27) .AND. (!isReady)
+                  isReady:=IsPrinter()
+                  if isReady
+
+                     Message("Insert paper on printer then press "+ "ENTER to print.")
+                     nKey:=0
+                     while nKey<>13 ; nKey:=Inkey(0) ; enddo
+                     nLineCtr:=0
+                     Message("Printing....please wait!")
+                     Set(17,.F.)
+                     Set(23,.T.)
+
+
+                     GetCharSize(nChrSize)   
+
+                     nLines:=MLCount(cReport,254)
+                     for nCurrLine:=1 to nLines
+                        cLine:=MemoLine(cReport,nMaxLen,nCurrLine)
+                        if nLineCtr>60
+
+                           nLineCtr:=0
+                        endif
+                        QOut( "    " + cLine )
+                        nLineCtr++
+                     next
+
+                     qqout(chr(18))
+                     Set(17,.T.)
+                     Set(23,.F.)
+                     Set(19,"")
+                     Set(18,.F.)
+                     Set(19, "")
+                  else
+                     Message("Printer not ready....")
+                     Tone(100,3)
+                     Inkey(2)
+                     Message("Press any key to retry, Esc to abort....")
+                     nKey:=Inkey(0)
+                     Message("")
+                  endif
+               enddo
+            endif
+
+
+            Message("  Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+         otherwise
+            nRetVal:=0
+      endcase
+   endif
+return nRetVal
+
+
+
+
+
+
+
+function lChkFSize( ThisFile )
+ local lStat := .F., nFSize, nFHandle
+
+ IF !FILE(THISFILE+".PRN")
+  QQOut( CHR(7) )
+  ALERT("File : " + ThisFile + " not found !!!")
+ ENDIF 
+
+ nFHandle := fOpen(ThisFile+".PRN")           
+
+
+ nFSize   := fSeek(nFHandle, 0, 2)
+ fClose(nFHandle)
+
+
+return (nFSize < (memory(1) * 768))   
+
+
+
+
+
+
+
+function Repgen( cRepID, cRepName, nCharType, nMaxLen )  
+ local nGoPrint := 2, cStr
+ local nHandle
+
+
+
+
+   if lChkFSize(cRepID)         
+     ScreenEdit( cRepID, nMaxLen, cRepName, 1 )
+   else
+    QQOut( CHR(7) )
+
+    if Alert("File : "+cRepID+" too large, will be directed to PRINTER",  {"Proceed", "Quit"} ) == 1
+
+      while nGoPrint <> 1
+       if isprinter()
+        alert("Presss Any Key to Start Printing")     
+        Message("Printing FILE : "+cRepID+".PRN") 
+
+        Set( 17, "OFF" )
+        Set( 23, "ON" )
+
+        GetCharSize(nCharType)
+
+         while ((nHandle := fopen(cRepID+".PRN",0)) == -1)
+             if alert("Error Opening "+cRepID+".PRN...",{"Retry","Abort"}) <> 1
+                return nil
+             endif
+         enddo      
+
+         while !Feof(nHandle)
+          cStr := Freadstr(nHandle,(memory(1) * 768))
+          QQOut( cStr )
+         enddo
+
+         fClose(nHandle) 
+
+        qqout(chr(18))
+        qqout(chr(27)+chr(80)) 
+        Set( 23, "OFF" )
+        Set( 17, "ON" )
+        exit
+      else
+       nGoPrint := alert("Printer Not Ready ! ", {"Quit", "Retry"})  
+     endif  
+     enddo 
+    endif 
+   endif  
+
+
+
+
+
+return nil
+
+
+static function GetCharSize(cSize)
+ do case
+   case cSize == 0
+     qqout(chr(18))
+   case cSize == 1
+     qqout(chr(27)+chr(77))
+     qqout(chr(15))
+   case cSize == 2
+     qqout(chr(15))
+ end   
+
+return nil
+
+
+function Qty2Disp()
+local wValid
+  nLimit:=100
+    Message("Enter number of items to list")
+    wValid := OpenWindow(09,12,14,66,"Printing Validation Box")
+    DispBox( 10, 12, 14, 66, 2 )    
+      DevPos( 12, 17 ) ; DevOut( "Enter item count to display" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( nLimit, "nLimit", "999999",, ):display() )
+      SetCursor(1)
+      aeval( { {392,1}, {880,1} }, {|t| tone( t[1],t[2] ) })
+      ReadModal(GetList) ; GetList := {}
+      SetCursor(0)
+    CloseWindow(wValid)
+return lastkey() <> 27
+
+
+function GetValid()
+local wValid
+    dStartDate :=  dEndDate := date()
+    Message("Enter dates of last updates to cover reports")
+    wValid := OpenWindow(09,12,15,66,"Printing Validation Box")
+    DispBox( 10, 12, 15, 66, 2 )    
+      DevPos( 12, 17 ) ; DevOut( "Enter starting date (MM-DD-YY format)" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( dStartDate, "dStartDate", "@D",, ):display() )
+      DevPos( 13, 17 ) ; DevOut( "        Ending date (MM-DD-YY format)" ) ; SetPos( Row(), Col()+1 ) ; AAdd( GetList, _GET_( dEndDate, "dEndDate", "@D",, ):display() )
+      SetCursor(1)
+      aeval( { {392,1}, {880,1} }, {|t| tone( t[1],t[2] ) })
+      ReadModal(GetList) ; GetList := {}
+      SetCursor(0)
+    CloseWindow(wValid)
+return if(LastKey()==27,.F.,.T.)
+
+function DatesOk(cFile)
+local lRetVal
+
+  if empty(dStartDate) .AND. empty(dEndDate) 
+     lRetVal := .T.
+  elseif empty(dStartDate)
+     lRetVal := cFile <= dEndDate
+  elseif empty(dEndDate)
+     lREtVal := cFile >= dStartdate
+  else    
+     lRetval := cFile >= dStartDate .AND. cFile <= dEndDate
+  endif        
+
+return lretVal
+
+function DatesOk2(dDate)
+local lRetVal
+
+  if empty(dStartDate) .AND. empty(dEndDate) 
+     lRetVal := .T.
+  elseif empty(dStartDate)
+     lRetVal := dDate <= dEndDate
+  elseif empty(dEndDate)
+     lREtVal := dDate >= dStartdate
+  else    
+     lRetval := dDate >= dStartDate .AND. dDate <= dEndDate
+  endif        
+
+return lretVal
+
+
+function EditorFunc(nMode,nLine,nCol)
+memvar initRow,initCol,initRelRow,initRelCol
+local nRetVal,lKey,nKey,isReady,nLines,nCurrLine,n,nLineCtr:=0
+local cLine,cColor
+   initRow:=nLine ; initCol:=nCol ; initRelRow:=Row()-1 ; initRelCol:=Col()-1
+   if nMode==0
+      SetCursor(0)
+      cColor:=SetColor("W+/RB")
+
+      DevPos( 01, 58 ) ; DevOut( "Line"+Transform(nLine,"9999")+"  Col"+ Transform(nCol+1,"9999") )
+      SetColor(cColor)
+      SetCursor(1)
+   else
+      lKey:=LastKey()
+      do case
+         case lKey==-9
+            Message("Press ENTER to print report, ESC to abort....")
+            nKey:=0
+            while (nKey<>13) .AND. (nKey<>27)
+               nKey:=Inkey(0)
+            enddo
+            if nKey=13
+               isReady:=.F.
+               while (nKey<>27) .AND. (!isReady)
+                  isReady:=IsPrinter()
+                  if isReady
+
+                     Message("Insert paper on printer then press "+ "ENTER to print.")
+                     nKey:=0
+                     while nKey<>13 ; nKey:=Inkey(0) ; enddo
+                     nLineCtr:=0
+                     Message("Printing....please wait!")
+                     Set(17,.F.)
+                     Set(23,.T.)
+                     nLines:=MLCount(cReport,200)
+
+
+             QOut( chr(15) )
+
+                     for nCurrLine:=1 to nLines
+                        cLine:=MemoLine(cReport,200,nCurrLine)
+
+                        if nLineCtr>60
+
+                           nLineCtr:=0
+                        endif
+
+                        QOut( cLine )
+                        nLineCtr++
+                     next
+
+
+
+                     Set(17,.T.)
+                     Set(23,.F.)
+                     Set(19,"")
+                     Set(18,.F.)
+                     Set(19, "")
+                            QQOut( chr(18) )
+                  else
+                     Message("Printer not ready....")
+                     Tone(100,3)
+                     Inkey(2)
+                     Message("Press any key to retry, Esc to abort....")
+                     nKey:=Inkey(0)
+                     Message("")
+                  endif
+               enddo
+            endif
+
+            Message("Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+         otherwise
+            nRetVal:=0
+      endcase
+   endif
+return nRetVal
+
+
+function Editor2Func(nMode,nLine,nCol)
+memvar initRow,initCol,initRelRow,initRelCol
+local nRetVal,lKey,nKey,isReady,nLines,nCurrLine,n,nLineCtr:=0
+local cLine,cColor
+   initRow:=nLine ; initCol:=nCol ; initRelRow:=Row()-1 ; initRelCol:=Col()-1
+   if nMode==0
+      SetCursor(0)
+      cColor:=SetColor("W+/RB")
+
+      DevPos( 01, 58 ) ; DevOut( "Line"+Transform(nLine,"9999")+"  Col"+ Transform(nCol+1,"9999") )
+      SetColor(cColor)
+      SetCursor(1)
+   else
+      lKey:=LastKey()
+      do case
+         case lKey==-9
+            Message("Press ENTER to print report, ESC to abort....")
+            nKey:=0
+            while (nKey<>13) .AND. (nKey<>27)
+               nKey:=Inkey(0)
+            enddo
+            if nKey=13
+               isReady:=.F.
+               while (nKey<>27) .AND. (!isReady)
+                  isReady:=IsPrinter()
+                  if isReady
+
+                     Message("Insert paper on printer then press "+ "ENTER to print.")
+                     nKey:=0
+                     while nKey<>13 ; nKey:=Inkey(0) ; enddo
+                     nLineCtr:=0
+                     Message("Printing....please wait!")
+                     Set(17,.F.)
+                     Set(23,.T.)
+                     nLines:=MLCount(cReport,80)
+
+
+
+                     for nCurrLine:=1 to nLines
+                        cLine:=MemoLine(cReport,80,nCurrLine)
+
+
+                        if nLineCtr>60
+
+                           nLineCtr:=0
+                        endif
+
+                        QOut( cLine )
+                        nLineCtr++
+                     next
+
+
+
+                     Set(17,.T.)
+                     Set(23,.F.)
+                     Set(19,"")
+                     Set(18,.F.)
+                     Set(19, "")
+                  else
+                     Message("Printer not ready....")
+                     Tone(100,3)
+                     Inkey(2)
+                     Message("Press any key to retry, Esc to abort....")
+                     nKey:=Inkey(0)
+
+                  endif
+               enddo
+            endif
+
+            Message("Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+         otherwise
+            nRetVal:=0
+      endcase
+   endif
+
+return nRetVal
+
+
+
+
+function Editor3Func(nMode,nLine,nCol)
+memvar initRow,initCol,initRelRow,initRelCol
+local nRetVal,lKey,nKey,isReady,nLines,nCurrLine,n,nLineCtr:=0
+local cLine,cColor
+   initRow:=nLine ; initCol:=nCol ; initRelRow:=Row()-1 ; initRelCol:=Col()-1
+   if nMode==0
+      SetCursor(0)
+      cColor:=SetColor("W+/RB")
+
+      DevPos( 01, 58 ) ; DevOut( "Line"+Transform(nLine,"9999")+"  Col"+ Transform(nCol+1,"9999") )
+      SetColor(cColor)
+      SetCursor(1)
+   else
+      lKey:=LastKey()
+      do case
+         case lKey==-9
+            Message("Press ENTER to print report, ESC to abort....")
+            nKey:=0
+            while (nKey<>13) .AND. (nKey<>27)
+               nKey:=Inkey(0)
+            enddo
+            if nKey=13
+               isReady:=.F.
+               while (nKey<>27) .AND. (!isReady)
+                  isReady:=IsPrinter()
+                  if isReady
+
+                     Message("Insert paper on printer then press "+ "ENTER to print.")
+                     nKey:=0
+                     while nKey<>13 ; nKey:=Inkey(0) ; enddo
+                     nLineCtr:=0
+                     Message("Printing....please wait!")
+                     Set(17,.F.)
+                     Set(23,.T.)
+                     nLines:=MLCount(cReport,80)
+
+
+
+                     for nCurrLine:=1 to nLines
+                        cLine:=MemoLine(cReport,186,nCurrLine)
+
+
+                        if nLineCtr>60
+
+                           nLineCtr:=0
+                        endif
+
+                        QOut( cLine )
+                        nLineCtr++
+                     next
+
+
+
+                     Set(17,.T.)
+                     Set(23,.F.)
+                     Set(19,"")
+                     Set(18,.F.)
+                     Set(19, "")
+                  else
+                     Message("Printer not ready....")
+                     Tone(100,3)
+                     Inkey(2)
+                     Message("Press any key to retry, Esc to abort....")
+                     nKey:=Inkey(0)
+
+                  endif
+               enddo
+            endif
+
+            Message("Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+         otherwise
+            nRetVal:=0
+      endcase
+   endif
+
+return nRetVal
+
+
+
+function Editor4Func(nMode,nLine,nCol)
+
+
+memvar initRow,initCol,initRelRow,initRelCol
+local nRetVal,lKey,nKey,isReady,nLines,nCurrLine,n,nLineCtr:=0
+local cLine,cColor
+   initRow:=nLine ; initCol:=nCol ; initRelRow:=Row()-1 ; initRelCol:=Col()-1
+   if nMode==0
+      SetCursor(0)
+      cColor:=SetColor("W+/RB")
+
+      DevPos( 01, 58 ) ; DevOut( "Line"+Transform(nLine,"9999")+"  Col"+ Transform(nCol+1,"9999") )
+      SetColor(cColor)
+      SetCursor(1)
+   else
+      lKey:=LastKey()
+      do case
+         case lKey==-9
+            Message("Press ENTER to print report, ESC to abort....")
+            nKey:=0
+            while (nKey<>13) .AND. (nKey<>27)
+               nKey:=Inkey(0)
+            enddo
+            if nKey=13
+               isReady:=.F.
+               while (nKey<>27) .AND. (!isReady)
+                  isReady:=IsPrinter()
+                  if isReady
+
+                     Message("Insert paper on printer then press "+ "ENTER to print.")
+                     nKey:=0
+                     while nKey<>13 ; nKey:=Inkey(0) ; enddo
+                     nLineCtr:=0
+                     Message("Printing....please wait!")
+                     Set(17,.F.)
+                     Set(23,.T.)
+                     nLines:=MLCount(cReport,230)
+
+
+             QOut( chr(15) )
+
+                     for nCurrLine:=1 to nLines
+                        cLine:=MemoLine(cReport,230,nCurrLine)
+
+                        if nLineCtr>60
+
+                           nLineCtr:=0
+                        endif
+
+                        QOut( cLine )
+                        nLineCtr++
+                     next
+
+
+
+                     Set(17,.T.)
+                     Set(23,.F.)
+                     Set(19,"")
+                     Set(18,.F.)
+                     Set(19, "")
+                            QQOut( chr(18) )
+                  else
+                     Message("Printer not ready....")
+                     Tone(100,3)
+                     Inkey(2)
+                     Message("Press any key to retry, Esc to abort....")
+                     nKey:=Inkey(0)
+                     Message("")
+                  endif
+               enddo
+            endif
+
+            Message("Use cursor keys to navigate, press F10 to print, "+  "Esc to abort.")
+         otherwise
+            nRetVal:=0
+      endcase
+   endif
+return nRetVal
+
+
+function Direct2Prn(cFName)
+local nFH, cStr := "", cReadStr := ""
+local nctr := 1, nContinue := 0, lReady := .F.
+
+
+
+
+  while !IsPrinter() 
+    aeval( { {392,1}, {98,1}, {49,5} }, {|t| tone( t[1],t[2] ) })
+    if Alert("Printer not ready / on-line, ESC - Abort",{"Retry", "Quit"}) <> 1
+      return nil   
+    endif
+  enddo
+
+  Message("Printing....please wait!")
+  Set(17,.F.)
+  Set(23,.T.)
+  QQOut( chr(15) ) 
+  setprc(0,0)
+
+  nFH := fopen(cfName, 0)
+
+  while !feof(nFH)
+
+   cStr := ""
+   while (cReadStr := freadstr(nFh,1)) <> chr(13) .AND. !feof(nFH)
+     cStr += cReadStr
+     cReadStr := ""
+   enddo  
+
+   lReady := IsPrinter()  
+
+   if lReady 
+    QQOut( cStr )
+   else
+    aeval( { {392,1}, {98,1}, {49,5} }, {|t| tone( t[1],t[2] ) })
+    nContinue := alert("I/O error : Printer not ready", {"Retry","Quit"})
+   endif 
+
+
+
+   if nContinue == 2
+    exit
+    __Eject()
+   endif 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   nCtr += 1
+   if nCtr > 60
+    __Eject()
+    nCtr := 0
+   endif
+
+
+
+
+
+  enddo 
+
+  Set(17,.T.)
+  Set(23,.F.)
+
+ fclose(nFH)
+return nil

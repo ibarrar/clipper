@@ -1,0 +1,29 @@
+DEBUG.DOC                 BLINKER 3.0 debugger notes                93.11.27
+---------                 --------------------------                --------
+
+  Turbo Debugger support in real mode
+  -----------------------------------
+
+  Blinker support for Turbo debugger currently consists of real mode
+  programs, displaying module source code with line numbers, public data
+  symbols and non-overlaid public code symbols. We do not currently
+  support overlaid code under the Turbo Debugger, but plan to in a
+  subsequent release. TDCONVRT handles non-overlaid programs fine.
+
+  If a program contains C or ASM overlays then the -c option must be
+  used to create an external .TDS file, otherwise a Blinker 1203 error
+  will occur at run time. This is because TDCONVRT places the debugging
+  information directly after the root of the .EXE file. It also creates
+  unusually large .TDS files with overlaid programs due to some internal
+  confusion, but they appear to function correctly for the root part of
+  the program.
+
+  Overlaid programs will otherwise run correctly, but breakpoints on
+  overlaid code will be ignored and display meaningless code at the
+  symbol addresses.
+
+  Turbo Debugger does not currently recognise the _main symbol as output
+  from Blinker and TDCONVRT, so when running a program under the
+  debugger select GOTO (Ctl G) and enter "main" to locate the start of
+  the program.
+

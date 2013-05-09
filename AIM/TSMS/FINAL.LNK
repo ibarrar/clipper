@@ -1,0 +1,6 @@
+BLINKER INCREMENTAL OFF
+file tsms,master,view,abrowse,config,mapclust,read,reading,reports,termcon
+file deptcon,hourcon,reports1,reports2,f_clos,reset,array,c501_mod,dbbrowse,gauge,locks
+file omenu,printer,screen,scrolbar,sounds,string,windows
+search clipper
+

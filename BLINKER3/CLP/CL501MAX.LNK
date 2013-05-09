@@ -1,0 +1,103 @@
+#
+#  CL501MAX.LNK - Clipper 5.01 Clipper/Extend Script
+#
+#  Overlay EXTEND.LIB and large amounts of CLIPPER.LIB
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except LLIBCA if it is being used.
+#
+#  NOTE: for ease of use this script should be stored in your library directory,
+#  (the directory pointed to by the LIB environment variable), which will allow
+#  Blinker to find the script without you having to specify a full path.
+#
+#  Modules within CLIPPER.LIB are, by their nature, called very frequently
+#  within any CLIPPER application. Therefore, overlaying these routines
+#  will almost certainly result in some performance degradation, which can
+#  be minimised by increasing the OVERLAY OPSIZE.
+#
+#  The amount of performance degradation will vary from application to
+#  application, so it may be necessary to modify this script by commenting
+#  out some MODULE statements to increase performance to an acceptable level
+#  in some areas.
+#
+#  Please note that some third party libraries may replace or modify routines
+#  in the CLIPPER library, so that they are no longer overlayable. The link
+#  time command BLINKER MESSAGE DUPLICATES may help in determining such
+#  conflicts or replacements.
+#
+lib clipper                   #  Main part of CLIPPER goes in the root
+beginarea                     #  Select modules from CLIPPER to be overlayed
+   mod accept
+   mod acopy
+   mod adel
+   mod aeval
+   mod ains
+   mod appinit
+   mod atail
+   mod box
+   mod cmem
+   mod date
+   mod dbcmd0
+   mod dbcmd1
+   mod dbcmd2
+   mod dbcmd3
+   mod dbcmd4
+   mod dbcmd5
+   mod dbcreate
+   mod dbf0
+   mod dbf1
+   mod dbfdyn
+   mod dbjunct
+   mod dbstruct
+   mod dtx0
+   mod dtx1
+   mod dtxdyn
+   mod dynina
+   mod errsys0
+#  mod errsys1                # Overlay this one if not using PS ERROR
+   mod fget
+   mod getenv
+   mod gets0
+   mod gets1
+   mod gets2
+   mod gx
+   mod joinlist
+   mod lupdate
+   mod memory
+   mod mrelease
+   mod msave
+   mod net
+   mod oldbox
+   mod oldclear
+   mod philes
+   mod run
+   mod saverest
+   mod sdf0
+   mod sdf1
+   mod seq
+   mod setcurs
+   mod sortbloc
+   mod startsym
+   mod tb
+#  mod txopen                 #  Overlay this one if NOT using NETLIB
+   mod vall
+   mod vblock
+   mod vdb
+   mod vdbg
+   mod version
+   mod vmacro
+   mod vnone
+   mod vops
+   mod vpict
+   mod vterm
+   mod workarea
+   mod xmacro
+   lib extend                 #  Overlay all of EXTEND.LIB
+endarea
+#
+# mod tbrowse0                #  Uncomment these three lines
+# mod tbrowse1                #  to speed up TBROWSE and DBEDIT
+# mod linelen                 #  by forcing them to the root.
+#
+lib terminal
+lib dbfntx

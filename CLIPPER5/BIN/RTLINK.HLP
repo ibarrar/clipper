@@ -1,0 +1,294 @@
+#              HELP TEXT FOR BOTH FREEFORMAT AND POSITIONAL SYNTAX
+#
+#                        .RTLink, Clipper 5.0 Version
+#
+# (C) Copyright Pocket Soft Inc. 1987-1992.  All Rights Reserved.
+#
+# Lines from this file are printed 23 lines per screen
+# Lines which begin with a "#" are not printed
+#
+#
+# EACH SCREENFUL OF MESSAGES CONTAINS 23 LINES OF TEXT #######################
+FREEFORMAT syntax:
+
+RTLINK [FILE <objFile list> [OUTPUT <outputFile>]
+       [LIBRARY [<libFile list>] [<linkOption list>]] | [@<scriptFile>]
+
+POSITIONAL syntax:
+
+RTLINK [<objFile list>, [<outputFile>], [<mapFile>],
+       [<libFile list>] [<linkOption list>]] | [@<scriptFile>][;]
+
+If used without arguments, .RTLink enters prompt mode.
+
+<objFile list> is a list of object (.OBJ) files to link.  
+
+<outputFile> is the name of the file (.EXE or .PLL/.PLT) to be generated.
+
+<mapFile> is the name of a map (.MAP) file to generate.
+
+<libFile list> is the list of library (.LIB) files to search.
+
+<linkOption list> is a list one or more linker options described below.
+
+<scriptFile> is the name of a linker script (.lnk) file.
+# 23 LINES OF TEXT ###########################################################
+
+For many options, two syntaxes are given and the correct one depends on the
+input mode used.  Specifying options in POSITIONAL mode requires the option
+to begin with a forward slash (if no forward slash is included in the syntax,
+the option is allowed only in FREEFORMAT).  FREEFORMAT mode allows you to use
+either syntax, and where there is only one syntax representation it allows
+you to omit both the slash and the colon.
+
+
+
+Configuration Options
+
+
+/FREEFORMAT | /POSITIONAL
+
+Configures the linker interface to FREEFORMAT or POSITIONAL input mode when
+.RTLink switches to a new input stream.  /FREEFORMAT is default input mode. 
+/FREEFORMAT and /POSITIONAL are special configuration options that may only
+be specified as part of the RTLINKCMD environment variable, within
+RTLINK.CFG, or on the RTLINK command-line if you are linking with a script
+file.  The forward slash is required regardless of the current input mode.
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Dynamic Overlay Options
+
+
+/DYNAMIC[:<ovlFile>]
+DYNAMIC [INTO <ovlFile>]
+
+DYNAMIC forces the linker to place any subsequent Clipper-compiled modules
+into a dynamic overlay instead of placing the module in the root section. 
+The <ovlFile> causes .RTLink to generate an external overlay (.OVL) file.  If
+not specified, the overlay code is written to the .EXE file.  DYNAMIC is the
+opposite of RESIDENT and is the default mode.
+
+
+
+/RESIDENT
+
+Causes subsequent Clipper-compiled modules to be loaded into the root section
+of the current program, overriding the automatic creation of dynamic overlays
+for all Clipper-compiled code. RESIDENT is the opposite of DYNAMIC.  
+
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Help and Debugging Options
+
+/DEBUG
+
+Causes the .RTLink overlay manager to display a message that identifies each
+overlay as it is loaded into memory during program execution.
+
+
+/HELP
+
+Lists the linker options to the console.
+
+
+/MAP[:<mapOption list>]
+MAP [= <mapFile>] [<mapOption list>]
+
+Generates a map file containing one or more reports about the link session. 
+The available MAP options are S to report segments with assigned addresses, N
+to report public symbols with addresses sorted by symbol, and A to report
+public symbols with addresses sorted by address.
+
+(continued on next page)
+# 23 LINES OF TEXT ###########################################################
+
+Help and Debugging Options (continued)
+
+
+/SILENT
+
+Suppresses the display of the linker prompts and responses when .RTLink is
+invoked with a script file.
+
+
+
+/VERBOSE[:<level>]
+
+Causes .RTLink to display status messages during linking indicating the
+modules being linked and in what order.  <level> specifies the amount of
+information to display (0, 1, or 2).
+
+
+
+
+
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Incremental Linking Options
+
+
+/INCREMENTAL[:<wastedSpace>] | /NOINCREMENTAL
+
+INCREMENTAL enables incremental linking of Clipper-compiled modules.  When a
+program is linked, only modules that have changed are re-linked. 
+<wastedSpace> is a numeric parameter that controls the percentage of wasted
+space allowed in the .EXE file that .RTLink will tolerate before re-linking
+the entire application.  Use of the INCREMENTAL option causes .RTLink to
+generate and maintain an information (.inf) file.  NOINCREMENTAL is the
+default.
+
+
+
+
+
+
+
+
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Miscellaneous Options
+
+/BATCH | /NOBATCH
+
+BATCH prevents the linker from prompting you when it is unable to locate a
+file.  NOBATCH is the default.
+
+
+/DEFAULTLIBRARYSEARCH | /NODEFAULTLIBRARYSEARCH
+
+NODEFAULTLIBRARYSEARCH causes .RTLink to ignore any library names embedded by
+the compiler.  Clipper automatically embeds CLIPPER.LIB, EXTEND.LIB, and
+DBFNTX.LIB in all of the .OBJ files that it generates unless you change the
+default using the /R compiler option.  DEFAULTLIBRARYSEARCH is the default.
+
+
+/EXTDICTIONARY | /NOEXTDICTIONARY
+
+/NOEXTDICTIONARY causes the linker not to search the extended dictionary. 
+/EXTDICTIONARY is the default.  
+
+(continued on next page)
+# 23 LINES OF TEXT ###########################################################
+
+Miscellaneous Options (continued)
+
+
+/IGNORECASE | /NOIGNORECASE
+
+NOIGNORECASE causes case to be significant in symbol and segment names. 
+IGNORECASE is the default.  
+
+
+/STACK:<sizeBytes>
+
+Specifies a program stack overriding the stack size specified in the object
+module.  <sizeBytes> is a numeric values up to 65,535.
+
+
+
+
+
+
+
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Pre-link Options
+
+
+/EXCLUDE:<symbol>
+EXCLUDE <symbol list>
+
+In pre-link mode (PRELINK linker option specified), causes any module
+defining the specified symbol(s) to be excluded from the link.
+
+
+
+/PLL:<prelinkLib>
+
+Used in link mode to specify a pre-linked library file that the resulting
+executable file depends on.  This option may also be used in pre-link mode in
+order to create a pre-linked library that depends on another pre-linked
+library; however, this nesting of pre-linked libraries is allowed only one
+level deep.
+
+
+
+(continued on next page)
+# 23 LINES OF TEXT ###########################################################
+
+Pre-link Options (continued)
+
+
+/PRELINK
+
+Changes .RTLink to pre-link mode.  In this mode .RTLink generates two output
+files, a pre-linked library (.PLL) and a pre-linked transfer (.PLT) file,
+instead of an executable (.EXE) file.
+
+
+
+/REFER:<symbol>
+REFER <symbol list>
+
+In pre-link mode, forces .RTLink to search all specified libraries in order
+to load the necessary code associated with the specified symbols.
+
+
+
+
+
+
+# 23 LINES OF TEXT ###########################################################
+
+Static Overlay Options
+
+
+BEGINAREA
+.
+. <linker freeformat options>
+.
+ENDAREA
+
+Designates a static overlay area with all sections specified between these
+two commands becoming static overlay sections within the overlay area. 
+Static overlay areas may be nested by specifying a BEGINAREA...ENDAREA
+construct inside of another.
+
+
+
+MODULE <moduleName list>
+
+Moves the segments from the specified modules into the current static overlay
+section.
+
+(continued on next page)
+# LAST PAGE HAS 19 LINES OF TEXT #############################################
+
+Static Overlay Options (continued)
+
+
+PRELOAD
+
+Causes the current static overly section to be loaded into memory before the
+program begins execution.  Normally, only the resident sections of the
+program are loaded into memory before execution begins.
+
+
+
+SECTION [= <sectionName>] [INTO <ovlFile>]
+
+Creates a static overlay section, and causes segments within any non-Clipper
+object modules specified in subsequent FILE or LIBRARY options to become a
+part of that section.  The <ovlFile> causes .RTLink to generate an external
+overlay (.OVL) file.  If not specified, the overlay code is written to the 
+.EXE file

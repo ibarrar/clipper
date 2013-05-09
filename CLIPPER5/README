@@ -1,0 +1,614 @@
+========================================================================
+   Welcome to CA-Clipper Version 5.2!
+   
+   Copyright (c) 1993, Computer Associates International, Inc.
+   All rights reserved.
+   
+   This file, README, contains information on issues that did not
+   make the printed or online documentation.  It also contains some
+   corrections to errors in the printed documentation.
+   
+========================================================================
+1. Contents
+   
+   The following topics are covered in this documentation file:
+   
+    1.  Contents
+    2.  Installation
+    3.  Online Documentation
+    4.  Drivers
+    5.  Error Handling
+    6.  New Error Messages
+    7.  Utilities
+    8.  Sample Programs
+    9.  Memory
+   10.  Compatibility Issues
+   11.  Errata
+   12.  Technical Reference
+   13.  Copyright
+
+========================================================================
+2. Installation
+   
+   The interactive installation program, INSTALL.EXE, copies the
+   CA-Clipper 5.2 files to the appropriate directories and
+   subdirectories of your hard disk.  The installation procedure is
+   documented in Chapter 2 of the Getting Started Guide, but this
+   section contains additional information that you may need to
+   successfully install CA-Clipper 5.2.
+   
+   Important:  The CA-Clipper 5.2 installation program default
+   installation directory is \CLIPPER5.  If you have a previous
+   version of CA-Clipper installed into a directory with this name,
+   you will need to modify the install program default directory
+   (when prompted), otherwise your previous version of CA-Clipper
+   will be overwritten.
+   
+   ---------------------------------------------------------------------
+   2.1  Command Line Arguments
+   
+   The following table shows the command line arguments for
+   INSTALL.EXE.
+   
+   INSTALL.EXE Command Line Arguments
+   -----------------------------------------------------------
+   
+   Argument       Description
+   -----------------------------------------------------------
+   
+   /NOSWAP        Do not swap to EMS or disk
+   /BW            Monochrome for color display (for Laptops)
+   /MONO          Force monochrome display
+   -----------------------------------------------------------
+   
+   ---------------------------------------------------------------------
+   2.2  Default Directory Structure
+   
+   The CA-Clipper 5.2 directory structure created by the installation
+   procedure is as follows:
+   
+   \CLIPPER5        Master CA-Clipper 5.2 directory
+      \BIN             Executable (.EXE and .COM), batch (.BAT), and
+                       help (.hlp) files
+      \INCLUDE         Header (.CH and .H) files
+      \LIB             Library (.LIB) files
+      \PLL             Prelinked library (.PLL, .PLT, and .LNK) files
+      \OBJ             Object (.OBJ) files
+      \SOURCE          Master directory for source (.prg) files
+         \DBU             Database Utility source files
+         \PE              Program editor source files
+         \RL              Report and Label Utility source files
+         \SYS             Source files for runtime systems
+                          (Get system, Error system, runtime portions
+                          of the Report and Label system, and
+                          Rddsys.prg)
+         \SAMPLE          Sample program source files
+   \NG              The Guide to CA-Clipper files
+   
+   ---------------------------------------------------------------------
+   2.3  Modifying Your Environment Variables
+   
+   Certain environment variables (e.g., PATH, LIB, INCLUDE) should be
+   set for CA-Clipper 5.2.  If you elected to modify the AUTOEXEC.BAT
+   file during the installation process, your file should be up-to-
+   date.  Otherwise, the appropriate settings are written to a file
+   called AUTOEXEC.NEW located in the root directory of the boot
+   drive.  In either case, it is important that your AUTOEXEC.BAT
+   file contain these additional settings so that CA-Clipper 5.2 will
+   find your files.  The required settings are as follows:
+   
+   1. The PATH variable should include the directory where CA-Clipper
+      5.2 executable files reside (example: C:\CLIPPER5\BIN).
+      
+   2. The LIB variable should include the directory where CA-Clipper
+      5.2 library files reside (example: C:\CLIPPER5\LIB).
+      
+   3. The INCLUDE variable should include the directory where
+      CA-Clipper 5.2 include files reside (example:
+      C:\CLIPPER5\INCLUDE).
+      
+   4. The PLL variable should include the directory where CA-Clipper
+      5.2 prelinked library files reside (example: C:\CLIPPER5\PLL).
+      
+   For example:
+   
+   SET PATH=C:\CLIPPER5\BIN;%PATH%
+   SET LIB=C:\CLIPPER5\LIB
+   SET INCLUDE=C:\CLIPPER5\INCLUDE
+   SET PLL=C:\CLIPPER5\PLL
+   
+   You may also wish to set other environment variables.  For a
+   summary of environment variables used and supported by CA-Clipper
+   5.2, refer to Chapter 10 of the Quick Reference Guide.  For more
+   information on setting up and using the CA-Clipper development
+   environment, refer to the Programming and Utilities Guide.  For
+   general information about the DOS environment and setting
+   environment variables, refer to your DOS manual.
+   
+   The installation program modifies CONFIG.SYS to:
+   
+   FILES=25
+   BUFFERS=15
+   
+   If you choose to retain your current CONFIG.SYS the installation
+   program creates a file named CONFIG.NEW and places it in the root
+   directory of your boot drive.
+   
+========================================================================
+3. Online Documentation
+   
+   The online documentation consists of the Norton Instant Access
+   Engine (NG.EXE) and the following documentation databases:
+   
+   C52G01B.NG   The Guide To CA-Clipper
+               (CA-Clipper Language Reference and Tables)
+   C52G02B.NG   Error Messages
+               (Compiler, Linker, RMAKE, Runtime, and DOS errors)
+   C52G03B.NG   Technical Reference (not included)
+               (Available through the Computer Associates
+                Supplemental Offer.  To order, refer to the enclosed
+                slip card)
+   C52G04B.NG   Utilities and Environment Variables
+               (Reference documentation for Utilities (Compiler,
+                Linker, RMAKE, PE, DBU, RL, and CLD) and DOS (SET)
+                Environment Variables)
+   C52G05B.NG   Release Notes
+               (Version Specific Information (i.e., Change Summaries)
+   C52G06B.NG   Sample Programs
+               (Sample Program Reference)
+   C52G07B.NG   CA-Clipper Drivers Documentation
+               (Complete Drivers Guide online)
+   
+   All of the documentation databases and the Instant Access Engine
+   are installed in the \NG directory, which exists at the same level
+   as the \CLIPPER5 directory.
+   
+========================================================================
+4. Drivers
+   
+   CA-Clipper 5.2 includes new replaceable database drivers (RDDs) as
+   well as enhanced functionality in the default DBFNTX and the
+   DBFNDX drivers.  The included database drivers are DBFNTX
+   (CA-Clipper indexes), DBFNDX (dBASE III compatible indexes),
+   DBFMDX (dBASE IV compatible multiple indexes), DBFCDX (FoxPro
+   compatible indexes) and DBPX (Paradox compatible tables).
+   
+   CA-Clipper 5.2 documentation includes a Drivers Guide that
+   describes the RDDs, their new and enhanced command set, and the
+   alternate Terminal drivers.
+   
+   Please note:  The online version of the DBFNTX Driver
+   documentation contains "new" information about DBFNTX's optional
+   new locking scheme.  Please be sure to refer to this section if
+   using the DBFNTX driver.
+   
+   ---------------------------------------------------------------------
+   4.1  Alternate Terminal Drivers Instructions
+   
+   The GT.OBJ supplied in the \CLIPPER5\OBJ directory must be used
+   with the Alternate Terminal Drivers PCBIOS and ANSITERM.  This
+   object replaces the default GT.OBJ that is contained in
+   CLIPPER.LIB.  Failing to link in this replacement GT.OBJ will
+   result in improper screen displays and possibly cause the computer
+   to hang when using the alternate drivers.
+   
+   Note:  GT.OBJ does not support the horizontal argument in the
+   SCROLL() function nor does it support _gtDispBegin(),
+   _gtDispEnd(), or _gtDispCount().
+   
+   ---------------------------------------------------------------------
+   4.2     Nantucket Tools II Instructions
+
+   The CT2PATCH.OBJ supplied in the \CLIPPER5\OBJ directory adds 
+   TOOLS II compatibility to CA-Clipper 5.2.  You should always use 
+   it with CA-Clipper 5.2 applications that utilize TOOLS II.  This 
+   is not necessary for users that do not have TOOLS II.  The 
+   CTUS.OBJ supplied in the \CLIPPER5\OBJ directory replaces the 
+   NT2US50.OBJ object initially shipped with TOOLS II.  Use CTUS.OBJ
+   with CA-Clipper 5.2 applications that utilize TOOLS II and 
+   NT2US50.OBJ.  This is not necessary for users that do not have 
+   TOOLS II.
+
+   ---------------------------------------------------------------------
+   4.3  Database Driver Interoperability
+   
+   When using the APPEND FROM and COPY TO commands with either
+   DELIMITED or SDF data, the allowable data types are limited to
+   valid CA-Clipper data types.  Drivers that support "extended" data
+   types will only be able to copy to and from DELIMITED or SDF data
+   using databases that contain only valid CA-Clipper data types.
+   
+   ---------------------------------------------------------------------
+   4.4  Addendum: to Drivers Reference Chapter
+   
+   Commands and functions that open indexes behave differently than
+   documented when using (.mdx) and (.cdx) indexes.  On these "multi-
+   tag" indexes, the index order is not automatically set to the
+   first tag in the index.  Instead, the order is set to 0 (natural
+   order).  Therefore, you must set the index order to the desired
+   tag before performing any action that requires an index (e.g.,
+   SEEK).  This affects the following commands and functions: SET
+   INDEX, DBSETINDEX(), and ORDLISTADD().
+   
+   ---------------------------------------------------------------------
+   4.5  DBFCDX Driver note
+   
+   EVAL and EVERY clauses of the INDEX ON command
+   
+   The EVAL clause functions differently in the DBFCDX driver than it
+   does in other RDDs.  The EVAL block is evaluated at the beginning
+   and at the end of each indexing process as well as at each record
+   as in other RDDs.  At the beginning of the index process both
+   BOF() and EOF() are true (.T.).  At the end of the indexing
+   process only EOF() is true (.T.).
+   
+   ---------------------------------------------------------------------
+   4.6.1  DBPX Driver Notes
+   
+   Creating Secondary Indexes
+   
+   The DBPX Driver automatically creates two index files of the same
+   name as the table whenever indexes are created.  These files have
+   the extensions (.x??) and (.y??) where "??" represents the ordinal
+   position of the key field.
+   
+   Example:
+   
+      USE Customer               // Contains fields Lastname
+                                 // and Phone
+      
+      INDEX ON Lastname TO Temp1 // Creates CUSTOMER.X01 and
+                                 // CUSTOMER.Y01.
+                                 // The name "Temp1" is ignored
+      
+      INDEX ON Phone TO Temp2    // Creates CUSTOMER.X02 and
+                                 // CUSTOMER.Y02.
+                                 // The name "Temp2" is ignored.
+      
+   ---------------------------------------------------------------------
+   4.6.2  Opening Secondary Indexes
+   
+   Since all secondary indexes take the name of the table, you open
+   and access them by the name of their key field.
+   
+   Example:
+   
+      // Continuing the example in 4.6.1:
+      
+      SET INDEX TO Lastname          // Open the index using the
+      
+                                     // name of the key field,
+                                     // not "Temp1"
+      
+      SET INDEX TO Lastname, Phone   // Open the indexes using the
+                                     // names of the key fields.
+      
+      ORDSETFOCUS("Phone")           // Set "Phone" as the
+                                     // controlling index
+      
+========================================================================
+5. Error Handling
+   
+   ---------------------------------------------------------------------
+   5.1  (b) LOCKERRHAN
+   
+   During abnormal program terminations or when the program is
+   canceled by Alt-C, CA-Clipper 5.2 produces a trace back of all the
+   functions active at the time of termination.  Users who are used
+   to this information will find a new item in the trace back that
+   looks like (b) LOCKERRHAN.  This is a special error handler that
+   is automatically installed as an INIT procedure.  This is normal.
+   Other error handlers installed by INIT procedures, created by
+   third-party vendors or applications developers will show up in
+   this manner as well.
+   
+========================================================================
+6. New Error Messages
+   
+   ---------------------------------------------------------------------
+   6.1  DBFCDX/1050  Create error
+   
+   Explanation:  The maximum number of Orders per Order Bag was
+   exceeded.  The allowable number of Orders that an Order Bag can
+   contain varies by database driver.  See the Drivers guide.
+   
+   Action:  Create a new Order Bag (index file).
+   
+   ---------------------------------------------------------------------
+   6.2  DBFMDX/1028  Create error
+   
+   Explanation:  The maximum number of Orders per Order Bag was
+   exceeded.  The allowable number of Orders that an Order Bag can
+   contain varies by database driver.  See the Drivers guide.
+   
+   Action:  Create a new Order Bag (index file).
+   
+   ---------------------------------------------------------------------
+   6.3  DBPX/306  Create error
+   
+   Explanation:  Insufficient memory for an operation like SORT.  It
+   is unlikely that this error will occur in the current version.
+   
+   Action:  Allocate more conventional memory.  Do this by removing
+   TSRs, using a 386 memory manager, etc.  Ensure that any C or
+   assembly language code in use is using the virtual memory system
+   if it is performing dynamic memory allocation.  Any memory
+   allocated using the Fixed Memory Allocator function (_xalloc() and
+   _xgrab()) reduces the amount of conventional memory available.
+   Free this memory as soon as possible after use.
+   
+   ---------------------------------------------------------------------
+   6.4  DBPX/503  Create error
+   
+   Explanation:  An error was encountered creating, reading or
+   writing a table, a lock file, or a temporary file.
+   
+   Action:  Make sure that sufficient disk space and directory
+   entries are available.  If the file exists, make sure it is not
+   marked read-only.  In a network environment, make sure the
+   application has the necessary rights to create the file.
+   
+   See Also:  INDEX command, Network Programming chapter in the
+   Programming and Utilities guide
+   
+========================================================================
+7. Utilities
+   
+   ---------------------------------------------------------------------
+   7.1  DBU Network Capable Features
+   
+   The DBU sample program has been updated to allow shared use of
+   databases.  By default, DBU now opens all databases in shared mode
+   and automatically performs the necessary record locks when writing
+   data.
+   
+   Additionally, anytime a database must be opened exclusively (e.g.,
+   CREATE INDEX, MODIFY STRUCTURE, ZAP) DBU automatically reopens the
+   file in exclusive mode.  Should opening the file in exclusive mode
+   fail, DBU attempts to reopen it in shared mode so that you can
+   continue.
+   
+   All operations are done transparently.  If an error occurs, the
+   user is notified and recovery is automatic.  In Browse mode,
+   changes made by another user are automatically reflected in your
+   Browse screen.
+   
+========================================================================
+8. Sample Programs
+   
+   ---------------------------------------------------------------------
+   8.1  SAMPLES.LIB
+   
+   Included in the \CLIPPER5\LIB directory is a new library called
+   SAMPLES.LIB.  It contains most of the samples in compiled, ready
+   to use form.  To use any of the sample functions you can include
+   SAMPLES.LIB in your link line as follows:
+   
+     RTLINK FI <appObjectList> LIB SAMPLES
+   
+========================================================================
+9. Memory
+   
+   9.1  Free Memory and Load size
+   
+   Free Memory is the amount of memory available to run applications.
+   You can find this value by using the MEM command in DOS version
+   5.0, or CHKDSK in earlier versions of DOS.
+   
+   Load Size is the amount of memory used by the application as it is
+   loaded into memory by DOS.  .RTLink reports this value (in
+   Kilobytes) at the end of a successful link.
+   
+   Applications require an amount of memory beyond Load Size, for
+   data storage.  The approximate total memory to run an application
+   is :
+   
+                                 minimum:    120K over load size
+          desirable for best performance:   +160K over load size
+   
+   ---------------------------------------------------------------------
+   9.2  Fixed Memory (FM) Usage
+   
+   To reduce the memory requirement of your application, you should
+   convert your C and ASM modules to use Virtual Memory instead of
+   Fixed Memory.  The VM.API headers accompany these files, but the
+   documentation will be available later (be sure to mail the
+   included card).
+   
+   ---------------------------------------------------------------------
+   9.3  CA-Clipper File Services
+   
+   You may reduce the load size of a CA-Clipper application by using
+   the built-in CA-Clipper file I/O services instead of the Microsoft
+   runtime services.  The FILESYS.API headers accompany these files,
+   but the documentation will be available later (be sure to mail the
+   included card).
+   
+========================================================================
+10.Compatibility Issues
+   
+   ---------------------------------------------------------------------
+   Compiler Kit for dBASE IV
+   
+   The dBASE IV Kit, version 1.10 is not compatible with CA-Clipper
+   5.2.  You can only use version 1.5 of the dBASE IV Kit with
+   CA-Clipper 5.2.
+   
+========================================================================
+11.Errata
+   
+   11.1  Reference Guide
+   
+   ---------------------------------------------------------------------
+   11.1.1  Page 2-62, (Compound Assign) operator
+   
+   The documentation states that the correct operator for doing
+   compound exponentiation/assignment is **=.  This is not correct.
+   The correct operator is ^=.  Thus, the syntax and all references
+   to **= must be changed to ^=.  There is also a note in this
+   entry that states:
+   
+   Note:  The exponentiation operator (^) does not have a
+   corresponding compound assignment operator.  The exponentiation
+   compound assignment operator is **=.
+   
+   Replace this paragraph with:
+   
+   Note:  The exponentiation operator (**) does not have a
+   corresponding compound assignment operator.  The exponentiation
+   compound assignment operator is ^=.
+   
+   ---------------------------------------------------------------------
+   11.1.2  Page 2-244, DBSETFILTER() function
+   
+   The description of the <cCondition> parameter should read:
+   
+   <cCondition> stores the filter condition as a character string
+   for later retrieval by the DBFILTER() function.  If you omit
+   this optional parameter, the DBFILTER() function will return an
+   empty string for the work area.
+   
+   ---------------------------------------------------------------------
+   11.1.3  Page 2-373, Get class
+   
+   Under the Examples heading, the last line of code:
+   
+      objGet:postBlock := { |cValue| !EMPTY(cValue) }
+      
+   should read:
+   
+      objGet:postBlock := { |oGet| !EMPTY(oGet:varGet()) }
+      
+   ---------------------------------------------------------------------
+   11.1.4  Page 2-479, OUTSTD() function
+   
+   The reference to SIMPLIO.CH in both the Description and Files
+   section of the OUTSTD() function entry should be SIMPLIO.CH.
+   
+   ---------------------------------------------------------------------
+   11.1.5  Page 2-525, REINDEX command
+   
+   The command syntax has too many square brackets at the end.  The
+   syntax should read:
+   
+      REINDEX [EVAL <lCondition>]
+         [EVERY <nRecords>]
+      
+   ---------------------------------------------------------------------
+   11.1.6  Page 2-416, LASTREC() function
+   
+   Because of the expanded functionality of RECNO() to encompass the
+   concept of "identity", we wish to state here that the LASTREC()
+   function continues to return only record numbers - not identities.
+   LASTREC() has no expanded functionality so it is not "identity
+   aware"
+   
+   ---------------------------------------------------------------------
+   11.2  Programming and Utilities Guide
+   
+   ---------------------------------------------------------------------
+   11.2.1.  Page 11-3,  RMAKE [/S] switch
+   
+   The RMAKE /S switch is no longer supported.
+   
+   ---------------------------------------------------------------------
+   11.3.  Quick Reference Guide
+   
+   ---------------------------------------------------------------------
+   11.3.1.  Page 7-7,  RMAKE [/S] switch
+   
+   The RMAKE /S switch is no longer supported.
+   
+   ---------------------------------------------------------------------
+   11.3.2.  Page 8-1,  PE [/E] switch
+   
+   PE has no switches.  It accepts only the filename as a
+   parameter.
+   
+   ---------------------------------------------------------------------
+   11.3.3.  Page 8-1,  DBU /e switch
+   
+   This switch is optional and not case-sensitive.
+   
+   ---------------------------------------------------------------------
+   11.4.  CA-Clipper Drivers Guide
+   
+   ---------------------------------------------------------------------
+   11.4.1.  Page 2-3,  RDDSYS.PRG
+   
+   The first line of code in RDDSYS.PRG (#include "rddsys.ch") should
+   be omitted.
+   
+   ---------------------------------------------------------------------
+   11.4.2.  Page 3-27,  ORDCREATE()
+   
+   In the ORDCREATE() syntax, the code block is not optional.  The
+   syntax should be:
+   
+      ORDCREATE( <cOrderBagName>,[<cOrderName>],
+         <cExpKey>, <bExpKey>, [<lUnique>]) --> NIL
+      
+   ---------------------------------------------------------------------
+   11.4.3  Page 8-6,  Primary Indexes
+   
+   To clarify the documentation on the creation of key violation
+   tables: a key violation table (KEYVIOL.DB) is created only on the
+   APPEND FROM command, when the source is a (.db) file and the
+   destination is a keyed (.db) file.
+   
+   ---------------------------------------------------------------------
+   11.4.4  Page 8-7,  Temporary Indexes
+   
+   This version of DBPX does NOT support Temporary (partial) indexes
+   
+   ---------------------------------------------------------------------
+   11.4.5  Page 8-7,  Secondary Indexes
+   
+   Secondary Indexes, contrary to the documentation, ARE maintained
+   the same way normal DBFNTX indexes are maintained.
+   
+   ---------------------------------------------------------------------
+   11.4.6  Page 8-8,  Passwords and Security
+   
+   The current Paradox driver, contrary to the documentation, does
+   NOT support Passwords and Security.
+   
+   Contrary to the documentation, you may have more than twenty-four
+   Paradox tables open at one time.  The number of files is
+   determined by the available memory.  You may have up to fifteen
+   secondary indexes open in any work area.
+   
+========================================================================
+12.Technical Reference
+   
+   The Technical Reference Guide which includes API (Advanced
+   Programming Interface) documentation on the Extend, Fixed Memory,
+   Virtual Memory, Terminal, Replaceable Database Driver, and several
+   additional APIs is available through the Computer Associates
+   Supplemental Offer.  To order, refer to the enclosed slip card.
+   
+========================================================================
+13.Copyright
+   
+   The installation program used to install CA-Clipper 5.2, INSTALL,
+   is based on licensed software provided by Knowledge Dynamics Corp,
+   P. O. Box 1558, Canyon Lake, Texas 78130-1558 (USA).  INSTALL is
+   Copyrighted (c) 1987-1991 by Knowledge  Dynamics Corp which
+   reserves all copyright protection worldwide.  INSTALL is provided
+   to you for the exclusive purpose of installing CA-Clipper 5.2.
+   Computer Associates has made modifications to the software as
+   provided by Knowledge Dynamics Corp, and thus the performance and
+   behavior of the INSTALL program shipped with CA-Clipper 5.2 may
+   not represent the performance and behavior of INSTALL as shipped
+   by Knowledge Dynamics Corp.  Computer Associates is exclusively
+   responsible for the support of CA-Clipper 5.2, including support
+   during the installation phase.  In no event will Knowledge
+   Dynamics Corp be able to provide any technical support for
+   CA-Clipper 5.2.
+   
+   All trade names referenced herein are either trademarks or
+   registered trademarks of their respective companies.
+   
+
+                              *  *  *
+

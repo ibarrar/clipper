@@ -1,0 +1,234 @@
+clipper POWERPOS.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling POWERPOS.PRG
+Code size 1437, Symbols 864, Constants 755
+clipper CONFIG.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling CONFIG.PRG
+Code size 1323, Symbols 384, Constants 1189
+clipper KEYMAP.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling KEYMAP.PRG
+Code size 1481, Symbols 336, Constants 1575
+clipper DEV_STRT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DEV_STRT.PRG
+Code size 1454, Symbols 320, Constants 1986
+clipper ERRORLOG.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling ERRORLOG.PRG
+Code size 361, Symbols 192, Constants 151
+clipper ASK_SERV.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling ASK_SERV.PRG
+Code size 1582, Symbols 400, Constants 850
+clipper NVR_FUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling NVR_FUNC.PRG
+Code size 6159, Symbols 1424, Constants 1041
+clipper NVR_FILE.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling NVR_FILE.PRG
+Code size 2011, Symbols 480, Constants 597
+clipper FILE_ACC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling FILE_ACC.PRG
+Code size 1286, Symbols 304, Constants 154
+clipper DEV_END.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DEV_END.PRG
+Code size 318, Symbols 224, Constants 146
+clipper DISPLAY.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DISPLAY.PRG
+Code size 929, Symbols 352, Constants 383
+clipper DISP_ERR.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DISP_ERR.PRG
+Code size 402, Symbols 144, Constants 446
+clipper INPUT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling INPUT.PRG
+Code size 4176, Symbols 752, Constants 1648
+clipper POS_DISP.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling POS_DISP.PRG
+Code size 485, Symbols 192, Constants 203
+clipper SIGN_ON.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling SIGN_ON.PRG
+Code size 1159, Symbols 560, Constants 521
+clipper TRANSACT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling TRANSACT.PRG
+Code size 6620, Symbols 1872, Constants 3460
+clipper PLU_FUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PLU_FUNC.PRG
+Code size 1491, Symbols 1040, Constants 557
+clipper DEPTFUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DEPTFUNC.PRG
+Code size 1891, Symbols 816, Constants 781
+clipper TERMINAL.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling TERMINAL.PRG
+Code size 13829, Symbols 928, Constants 4827
+clipper REPORTS.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling REPORTS.PRG
+Code size 15078, Symbols 1168, Constants 5242
+clipper MISCFUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling MISCFUNC.PRG
+Code size 928, Symbols 256, Constants 640
+clipper VOIDFUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling VOIDFUNC.PRG
+Code size 3189, Symbols 752, Constants 1179
+clipper RET_EXCH.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling RET_EXCH.PRG
+Code size 5599, Symbols 1424, Constants 2449
+clipper BANKCARD.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling BANKCARD.PRG
+Code size 2784, Symbols 672, Constants 1488
+clipper DISCFUNC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DISCFUNC.PRG
+Code size 2936, Symbols 784, Constants 1016
+clipper CASHIER.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling CASHIER.PRG
+Code size 14719, Symbols 1136, Constants 5393
+clipper GOSERVER.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling GOSERVER.PRG
+Code size 3478, Symbols 816, Constants 1450
+clipper SUSP_RES.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling SUSP_RES.PRG
+Code size 2832, Symbols 864, Constants 1024
+clipper ERRORSYS.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling ERRORSYS.PRG
+Code size 769, Symbols 384, Constants 191
+clipper D_LOGO.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling D_LOGO.PRG
+Code size 172, Symbols 160, Constants 148
+clipper BACKUP.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling BACKUP.PRG
+Code size 573, Symbols 256, Constants 307
+clipper PASSWORD.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PASSWORD.PRG
+Code size 602, Symbols 256, Constants 262
+clipper ADD_ON.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling ADD_ON.PRG
+Code size 738, Symbols 464, Constants 318
+clipper REFUND.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling REFUND.PRG
+Code size 2319, Symbols 704, Constants 849
+clipper TRANVOID.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling TRANVOID.PRG
+Code size 4119, Symbols 1088, Constants 1769
+clipper RE_PRINT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling RE_PRINT.PRG
+Code size 1828, Symbols 368, Constants 700
+clipper STNDMISC.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling STNDMISC.PRG
+Code size 1834, Symbols 432, Constants 902
+clipper PO.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PO.PRG
+Code size 587, Symbols 320, Constants 165
+clipper PLU_FILE.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PLU_FILE.PRG
+Code size 4542, Symbols 784, Constants 1314
+clipper DEPTFILE.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DEPTFILE.PRG
+Code size 1361, Symbols 416, Constants 303
+clipper GRFXUTIL.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling GRFXUTIL.PRG
+Code size 64, Symbols 48, Constants 0
+clipper SCREEN.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling SCREEN.PRG
+Code size 848, Symbols 256, Constants 256
+clipper D_RECIT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling D_RECIT.PRG
+Code size 209, Symbols 128, Constants 95
+clipper D_BOLDCH.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling D_BOLDCH.PRG
+Code size 227, Symbols 128, Constants 125
+clipper D_SCROLL.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling D_SCROLL.PRG
+Code size 4672, Symbols 528, Constants 384
+clipper D_PAYAMT.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling D_PAYAMT.PRG
+Code size 742, Symbols 160, Constants 186
+clipper ALOOKUP.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling ALOOKUP.PRG
+Code size 1279, Symbols 240, Constants 257
+clipper DISP_MSG.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DISP_MSG.PRG
+Code size 275, Symbols 144, Constants 109
+clipper DISPSIGN.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling DISPSIGN.PRG
+Code size 73, Symbols 64, Constants 71
+clipper EOD.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling EOD.PRG
+Code size 470, Symbols 400, Constants 330
+clipper PARSER.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PARSER.PRG
+Code size 1140, Symbols 256, Constants 460
+clipper PLU_ONLY.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling PLU_ONLY.PRG
+Code size 867, Symbols 384, Constants 349
+clipper GET_GRFX.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling GET_GRFX.PRG
+Code size 2079, Symbols 272, Constants 257
+clipper FOREIGN.PRG -L -ES2 -N -A -M -W -DDEF_GRAPHICS -I.\HEADER  
+266K available
+Compiling FOREIGN.PRG
+Code size 1515, Symbols 496, Constants 805
+cl -c -W3 -Oalt -AL -Gs -FPa -Zl -Gh CHP2514.C
+
+C:\POWERPOS>clipper -c
+259K available
+Compiling -C.PRG
+Cannot open, assumed external
+                                   
+No code generated
+
+C:\POWERPOS>if not errorlevel 1 rtlink file -c
+
+BLINKER @PPOSGRFX.LNK 
+
+BLINKER : overlay opsize set to 50Kb - minimum size is 17Kb
+
+BLINKER : link was successful
+
+POWERPOS.EXE (265 Kb) (0.9 seconds)

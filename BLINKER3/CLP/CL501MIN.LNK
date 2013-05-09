@@ -1,0 +1,24 @@
+#
+#  CL501MIN.LNK - Clipper 5.01 Clipper/Extend Script
+#
+#  Minimal overlaying - overlay most of EXTEND.LIB except TBROWSE
+#
+#  This script must be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except LLIBCA if it is being used.
+#
+#  NOTE: for ease of use this script should be stored in your library
+#  directory, (the directory pointed to by the LIB environment variable),
+#  which will allow Blinker to find the script without you having to
+#  specify a full path.
+#
+lib clipper                   #  Main part of CLIPPER goes in the root
+beginarea
+   lib extend                 #  Overlay all of EXTEND
+endarea
+#
+# mod tbrowse0                #  Uncomment these three lines
+# mod tbrowse1                #  to speed up TBROWSE and DBEDIT
+# mod linelen                 #  by forcing them to the root.
+#
+lib terminal
+lib dbfntx

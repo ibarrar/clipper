@@ -1,0 +1,146 @@
+/***
+*
+*   Filesys.api
+*
+*   C language definitions for Clipper low level file I/O system
+*
+*   Copyright (c) 1992-1993, Computer Associates International, Inc.
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _FILESYS_API
+
+  
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+
+#ifndef _ERROR_API
+#include "error.api"
+#endif
+
+
+
+/*
+*  Make sure HANDLE is defined
+*/
+#ifndef FHANDLE_DEFINED
+
+typedef USHORT FHANDLE;
+typedef FHANDLE fhandle;
+typedef FHANDLE far * FHANDLEP;
+
+#define FHANDLE_DEFINED
+#endif
+
+
+
+/*
+*   DOS predefined standard handles
+*/
+
+#define STDIN    0
+#define STDOUT   1
+#define STDERR   2
+#define STDAUX   3
+#define STDPRN   4
+
+
+/*
+*   Error value
+*/
+
+#define FS_ERROR      0xFFFF
+
+
+/*
+*   OPEN modes
+*/
+
+// access flags
+#define FO_READ       0x0000
+#define FO_WRITE      0x0001
+#define FO_READWRITE  0x0002
+
+// sharing flags
+#define FO_COMPAT     0x0000
+#define FO_EXCLUSIVE  0x0010
+#define FO_DENYWRITE  0x0020
+#define FO_DENYREAD   0x0030
+#define FO_DENYNONE   0x0040
+#define FO_SHARED     0x0040
+
+// inheritance flags
+#define FO_INHERITED  0x0000
+#define FO_PRIVATE    0x0080
+
+
+/*
+*   CREATE attributes
+*/
+
+#define FC_NORMAL     0x0000  
+#define FC_READONLY   0x0001
+#define FC_HIDDEN     0x0002
+#define FC_SYSTEM     0x0004
+
+
+
+/*
+*  SEEK modes
+*/
+
+#define FS_SET        0x0000
+#define FS_RELATIVE   0x0001
+#define FS_END        0x0002
+
+
+
+/*
+*   LOCK modes
+*/
+
+#define FL_LOCK       0x0000
+#define FL_UNLOCK     0x0001
+
+
+
+/*
+*   Extend file open modes
+*/
+/* _txopen() extended mode flags */
+
+#define FXO_TRUNCATE   0x0100
+#define FXO_APPEND     0x0200
+#define FXO_FORCEEXT   0x0800
+#define FXO_DEFAULTS   0x1000
+#define FXO_DEVICERAW  0x2000
+
+
+
+/*
+*   Function prototypes
+*/
+
+extern FHANDLE _fsCreate( BYTEP filename, USHORT attribute );
+extern void    _fsDelete( BYTEP filename );
+extern FHANDLE _fsOpen( BYTEP filename, USHORT flags );
+extern void    _fsClose( FHANDLE h );
+extern USHORT  _fsRead( FHANDLE h, BYTEP buff, USHORT count );
+extern USHORT  _fsWrite( FHANDLE h, BYTEP buff, USHORT count );
+extern ULONG   _fsSeek( FHANDLE h, LONG offset, USHORT mode );
+extern void    _fsRename( BYTEP oldname, BYTEP newname );
+extern BOOL    _fsLock( FHANDLE h, ULONG start, ULONG length, USHORT mode );
+extern void    _fsCommit( FHANDLE h );
+extern FHANDLE _fsExtOpen( BYTEP filename, BYTEP defExt, USHORT flags,
+                           BYTEP paths, ERRORP error );
+extern USHORT  _fsError(void);
+
+
+#define _FILESYS_API
+#endif

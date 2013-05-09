@@ -1,0 +1,32 @@
+CH_PATH= "c:\powerpos\header\"
+C_FLAGS= -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -I$(CH_PATH)
+
+//.c language
+.c.obj:
+  c:\c600\bin\CL $(C_FLAGS) $<
+
+// c
+bcd_clip.obj : bcd_clip.c 
+bcdtoa.obj   : bcdtoa.c
+faccess.obj  : faccess.c faccess.h
+itemfile.obj : itemfile.c faccess.h btrieve.h
+fmf_file.obj : fmf_file.c faccess.h btrieve.h
+cashfile.obj : cashfile.c faccess.h btrieve.h cashfile.h $(CH_PATH)cashier.ch
+mscxbtrv.obj : mscxbtrv.c faccess.h btrieve.h 
+plu_file.obj : plu_file.c faccess.h btrieve.h plu_file.h $(CH_PATH)plu_file.ch
+deptfile.obj : deptfile.c faccess.h btrieve.h deptfile.h $(CH_PATH)deptfile.ch 
+clrkfile.obj : clrkfile.c faccess.h btrieve.h clrkfile.h $(CH_PATH)clrkfile.ch 
+rtrnfile.obj : rtrnfile.c faccess.h btrieve.h rtrnfile.h $(CH_PATH)rtrnfile.ch
+return.obj   : return.c   faccess.h btrieve.h return.h   $(CH_PATH)return.ch
+plu_temp.obj : plu_temp.c faccess.h btrieve.h plu_temp.h $(CH_PATH)plu_temp.ch
+plucount.obj : plucount.c faccess.h btrieve.h plucount.c $(CH_PATH)plu_file.ch
+
+faccess.lib : bcd_clip.obj bcdtoa.obj faccess.obj itemfile.obj
+        c:\c600\binb\lib faccess -+bcd_clip -+bcdtoa -+faccess -+itemfile;
+
+faccess.lib : fmf_file.obj cashfile.obj mscxbtrv.obj plu_file.obj plucount.obj
+        c:\c600\binb\lib faccess -+fmf_file -+cashfile -+mscxbtrv -+plu_file -+plucount;
+
+faccess.lib : deptfile.obj clrkfile.obj rtrnfile.obj return.obj plu_temp.obj 
+        c:\c600\binb\lib faccess -+deptfile -+clrkfile -+rtrnfile -+return -+plu_temp;        
+

@@ -1,0 +1,22 @@
+////////
+// SPRDSHT.RMK
+//
+// Make file for the spreadsheet program
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+SPRDSHT.OBJ  : sprdsht.prg  sprdsht.ch
+QUITIT.OBJ   : quitit.prg
+BUTTOMS.OBJ  : buttons.prg  buttons.ch
+MISCSPRD.OBJ : miscsprd.prg sprdsht.ch
+
+.obj.exe:
+   SET RTLINKCMD=/posi
+   RTLINK $**;
+
+SPRDSHT.EXE : sprdsht.obj quitit.obj buttons.obj miscsprd.obj
+
+// eof //

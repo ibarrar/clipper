@@ -1,0 +1,153 @@
+@DGROUP...........GRAPH             BMP_Decoder.......GRFX_BMP
+BMP_Offset........GRFX_BMP          BMP_Palette.......GRFX_BMP
+cDrawBox..........GRFXBOX           cDrawButtn........GRFXBOX
+cDrawLine.........GRFXLINE          cDrawText.........GRFXTEXT
+cScrnRest.........GSCRREST          cScrnSave.........GSCRSAVE
+cStrWidth.........GRFXMISC          cTextInfo.........GRFXMISC
+GCLRDEVICE........GRFXMISC          GDRAWBOX..........GRFXBOX
+GDRAWLINE.........GRFXLINE          GDRAWTEXT.........GRFXTEXT
+GGRAPHCLOS........GRFX_API          GGRAPHINIT........GRFX_API
+GGRFXCONFG........GRFXMISC          GGRFXSETNW........GRFXMISC
+GGRFXTOTXT........GRFX_API          GLOAD_BMP.........GRFX_BMP
+GSCRNREST.........GSCRREST          GSCRNSAVE.........GSCRSAVE
+GTXTTOGRFX........GRFX_API          IsEGAVGAdrvr......GRFXMISC
+load_bmp..........GRFX_BMP          Put_Scanline......GRFX_BMP
+SetButtonColor....GRFXCOMN          _arc..............GRAPHC
+_bar..............GRAPH             _bar3d............GRAPH
+_circle...........GRAPHC            _cleardevice......GRAPHC
+_clearviewport....GRAPHC            _closegraph.......GRAPHC
+_detectgraph......GRAPHC            _drawpoly.........GRAPH
+_ellipse..........GRAPH             _fillellipse......GRAPH
+_fillpoly.........GRAPH             _floodfill........GRAPH
+_getarccoords.....GRAPH             _getaspectratio...GRAPHC
+_getbkcolor.......GRAPHC            _getcolor.........GRAPHC
+_getdefaultpalette..GRAPH           _getdrivername....GRAPHC
+_getfillpattern...GRAPHC            _getfillsettings..GRAPHC
+_getgraphmode.....GRAPHC            _getimage.........GRAPH
+_getlinesettings..GRAPHC            _getmaxcolor......GRAPH
+_getmaxmode.......GRAPH             _getmaxx..........GRAPHC
+_getmaxy..........GRAPHC            _getmodename......GRAPHC
+_getmoderange.....GRAPHC            _getpalette.......GRAPHC
+_getpalettesize...GRAPH             _getpixel.........GRAPH
+_gettextsettings..GRAPHC            _getviewsettings..GRAPHC
+_getx.............GRAPHC            _gety.............GRAPHC
+_graphdefaults....GRAPHC            _grapherrormsg....GRAPHC
+_graphfreemem.....GRFX_API          _graphgetmem......GRFX_API
+_graphresult......GRAPHC            _imagesize........GRAPHC
+_initgraph........GRAPHC            _installuserdriver..GRAPHC
+_installuserfont..GRAPHC            _iscale...........ISCALE
+_line.............GRAPH             _linerel..........GRAPHC
+_lineto...........GRAPHC            _moverel..........GRAPHC
+_moveto...........GRAPHC            _outtext..........GRAPHC
+_outtextxy........GRAPH             _pieslice.........GRAPHC
+_postdevice.......GRAPH             _putimage.........GRAPHC
+_putpixel.........GRAPH             _rectangle........GRAPHC
+_registerfarbgidriver..GRAPHC       _registerfarbgifont..GRAPHC
+_restorecrtmode...GRAPHC            _sector...........GRAPH
+_setactivepage....GRAPH             _setallpalette....GRAPHC
+_setaspectratio...GRAPHC            _setbkcolor.......GRAPHC
+_setcolor.........GRAPH             _setfillpattern...GRAPHC
+_setfillstyle.....GRAPHC            _setgraphbufsize..GRAPHC
+_setgraphmode.....GRAPHC            _setlinestyle.....GRAPHC
+_setpalette.......GRAPHC            _setrgbpalette....GRAPH
+_settextjustify...GRAPHC            _settextstyle.....GRAPHC
+_setusercharsize..GRAPHC            _setviewport......GRAPHC
+_setvisualpage....GRAPH             _setwritemode.....GRAPH
+_textheight.......GRAPHC            _textwidth........GRAPH
+__autodetect......GRAPH             __backcolor.......GRAPHC
+__BGI_ADD.........GRAPHC            __BGI_auto........GLOAD
+__BGI_ovr.........GLOAD             __DDO_ADD.........GRAPHC
+__drawcolor.......GRAPHC            __fillcolor.......GRAPHC
+__fillstyle.......GRAPHC            __FON_ADD.........GRAPHC
+__GraphNotInstalled..GRAPHC         __GRP_ovr.........BGIOVR
+__gr_cleardevice..GRAPH             __gr_detectgraph..GRAPH
+__gr_ErrCode......GRAPHC            __gr_getmodename..GRAPH
+__gr_imagesize....GRAPH             __gr_lineto.......GRAPH
+__gr_moveto.......GRAPH             __gr_putimage.....GRAPH
+__gr_restorecrtmode..GRAPH          __gr_setallpalette..GRAPH
+__gr_setbkcolor...GRAPH             __gr_setfillpattern..GRAPH
+__gr_setfillstyle..GRAPH            __gr_setgraphmode..GRAPH
+__gr_setlinestyle..GRAPH            __gr_setpalette...GRAPH
+__gr_settextjustify..GRAPH          __gr_settextstyle..GRAPH
+__gr_setusercharsize..GRAPH         __gr_setviewport..GRAPH
+__gr_textheight...GRAPH             __initdevice......GRAPH
+__installdevice...GRAPH             __linestyle.......GRAPHC
+__OverScanColor...GRAPHC            __reinstalldevice..GRAPH
+__StatOfs.........GRAPHC            __StatSeg.........GRAPHC
+___move...........GRAPHC            
+
+GRFX_API          Offset: 00000010H  Code and data size: 13eH
+  GGRAPHCLOS        GGRAPHINIT        GGRFXTOTXT        GTXTTOGRFX
+  _graphfreemem     _graphgetmem    
+
+GRFXTEXT          Offset: 00000360H  Code and data size: 652H
+  cDrawText         GDRAWTEXT       
+
+GRFXMISC          Offset: 00000d00H  Code and data size: 3c2H
+  cStrWidth         cTextInfo         GCLRDEVICE        GGRFXCONFG
+  GGRFXSETNW        IsEGAVGAdrvr    
+
+GRFXLINE          Offset: 00001450H  Code and data size: 2ddH
+  cDrawLine         GDRAWLINE       
+
+GRFXBOX           Offset: 000018d0H  Code and data size: 554H
+  cDrawBox          cDrawButtn        GDRAWBOX        
+
+GRFX_BMP          Offset: 000020a0H  Code and data size: 7d9H
+  BMP_Decoder       BMP_Offset        BMP_Palette       GLOAD_BMP
+  load_bmp          Put_Scanline    
+
+GRFXCOMN          Offset: 00002b20H  Code and data size: 8eH
+  SetButtonColor  
+
+GSCRSAVE          Offset: 00002c80H  Code and data size: 30dH
+  cScrnSave         GSCRNSAVE       
+
+GSCRREST          Offset: 00003150H  Code and data size: 253H
+  cScrnRest         GSCRNREST       
+
+ISCALE            Offset: 00003540H  Code and data size: 1aH
+  _iscale         
+
+GLOAD             Offset: 000035e0H  Code and data size: 6H
+  __BGI_auto        __BGI_ovr       
+
+GRAPHC            Offset: 00003660H  Code and data size: 1eeaH
+  _arc              _circle           _cleardevice      _clearviewport
+  _closegraph       _detectgraph      _getaspectratio   _getbkcolor
+  _getcolor         _getdrivername    _getfillpattern   _getfillsettings
+  _getgraphmode     _getlinesettings  _getmaxx          _getmaxy
+  _getmodename      _getmoderange     _getpalette       _gettextsettings
+  _getviewsettings  _getx             _gety             _graphdefaults
+  _grapherrormsg    _graphresult      _imagesize        _initgraph
+  _installuserdriver                  _installuserfont  _linerel
+  _lineto           _moverel          _moveto           _outtext
+  _pieslice         _putimage         _rectangle        _registerfarbgidriver
+  _registerfarbgifont                 _restorecrtmode   _setallpalette
+  _setaspectratio   _setbkcolor       _setfillpattern   _setfillstyle
+  _setgraphbufsize  _setgraphmode     _setlinestyle     _setpalette
+  _settextjustify   _settextstyle     _setusercharsize  _setviewport
+  _textheight       __backcolor       __BGI_ADD         __DDO_ADD
+  __drawcolor       __fillcolor       __fillstyle       __FON_ADD
+  __GraphNotInstalled                 __gr_ErrCode      __linestyle
+  __OverScanColor   __StatOfs         __StatSeg         ___move
+
+GRAPH             Offset: 00006a10H  Code and data size: a32H
+  @DGROUP           _bar              _bar3d            _drawpoly
+  _ellipse          _fillellipse      _fillpoly         _floodfill
+  _getarccoords     _getdefaultpalette                  _getimage
+  _getmaxcolor      _getmaxmode       _getpalettesize   _getpixel
+  _line             _outtextxy        _postdevice       _putpixel
+  _sector           _setactivepage    _setcolor         _setrgbpalette
+  _setvisualpage    _setwritemode     _textwidth        __autodetect
+  __gr_cleardevice  __gr_detectgraph  __gr_getmodename  __gr_imagesize
+  __gr_lineto       __gr_moveto       __gr_putimage     __gr_restorecrtmode
+  __gr_setallpalette                  __gr_setbkcolor   __gr_setfillpattern
+  __gr_setfillstyle                   __gr_setgraphmode
+  __gr_setlinestyle                   __gr_setpalette   __gr_settextjustify
+  __gr_settextstyle                   __gr_setusercharsize
+  __gr_setviewport  __gr_textheight   __initdevice      __installdevice
+  __reinstalldevice                 
+
+BGIOVR            Offset: 00007d00H  Code and data size: 199aH
+  __GRP_ovr       

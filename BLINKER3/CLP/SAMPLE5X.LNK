@@ -1,0 +1,80 @@
+#
+# Blinker 2.x Sample Link file for Clipper 5.x
+#
+# This sample script is intended to be used as a template for your own scripts
+#
+# Please refer to the manual for specific instructions for 3rd party libraries.
+# In all cases the information provided by the vendor of a library for linking
+# with BLINKER should supercede information in the Blinker manual or files.
+#
+# This script is set up a a development script, that enables incremental
+# linking, and overlays only EXTEND.LIB from the Nantucket libraries. When
+# incremental linking is enabled, applications will use somewhat more memory
+# than normal, due to a certain amount of 'padding' being left at the end
+# of each Clipper procedure, but this is offset by the extremely fast
+# incremental link times.
+#
+# Before shipping a completed application, you should disable the incremental
+# linking feature, which will save memory, and increase execution speed by:
+#
+#         a) Enabling the 5.x Clipper paging system
+#         b) Removing the padding between procedures
+#         c) Turning on symbol table compression
+#
+# For final links - UN-COMMENT the following command:
+#
+#BLINKER INCREMENTAL OFF
+#
+# Burn in your own Clipper variables here eg: F25;SWAPPATHC:\;
+#
+BLINKER EXECUTABLE CLIPPER F25;SWAPPATHC:\SWP;
+#
+# Specify the EXE filename here:
+#
+OUTPUT <EXE filename>
+#
+# List your Clipper 5.x object modules here. The first FILE mentioned in any
+# Blinker link script MUST be a Clipper code module. The first module may be
+# overlaid if required.
+#
+FILE <MAIN Clipper routine>
+#
+BEGINAREA
+#
+#   List the rest of your Clipper code files here.
+#
+    FILE <next Clipper file>
+    FILE <next Clipper file>
+#
+#   UNCOMMENT and list your own Clipper code libraries here
+#
+#    LIBRARY <my library>
+#    LIBRARY <my other library>
+#
+#   UNCOMMENT and list your overlayable 3rd party libraries here
+#
+#    LIBRARY <3rd party>
+#    LIBRARY <3rd party>
+ENDAREA
+#
+# Uncomment and list your 3rd party non overlayable object modules here
+# eg: OVERLAY's RESIDENT.OBJ
+#
+#FILE <3rd party1>,<3rd party2>
+#
+# UNCOMMENT and list 3rd party non-overlayable libraries here:
+#
+#LIB <3rd party>
+#
+# If you want the 5.x debugger UN-COMMENT the following:
+# NOTE: The 5.x debugger library MUST be specified as a FILE
+#
+# FILE CLD.LIB
+#
+# Call the distribution script to overlay EXTEND.LIB
+#
+@CL501MIN.LNK
+#
+# Microsoft LLIBCA C library comes last if needed
+#
+# LIB LLIBCA

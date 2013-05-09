@@ -1,0 +1,164 @@
+/**
+* System......... Powerpos for Spectrum
+* Filename....... plu_file.ch
+* Description.... PLU file structure (btrieve file)
+*
+* rci 12.05.96
+*/
+
+#ifndef FM_RECORD_OFF
+  #define FM_RECORD_OFF 13
+#endif  
+
+#define PRICE_LEVEL_0  "0"
+#define PRICE_LEVEL_1  "1"
+#define PRICE_LEVEL_2  "2"
+#define PRICE_LEVEL_3  "3"
+#define PRICE_LEVEL_4  "4"
+#define PRICE_LEVEL_5  "5"
+
+#define PLU_CODE_LEN  14 
+#define PLU_ITEM_LEN  12
+#define PLU_DESC_LEN  20
+#define PLU_SIZE_LEN   2
+#define PLU_COLO_LEN   2
+#define PLU_CLAS_LEN   4
+#define PLU_DEPT_LEN   4
+#define PLU_CONC_LEN   4
+#define PLU_PRIC_LEN   8
+#define PLU_PRI1_LEN   8
+#define PLU_PRI2_LEN   8 
+#define PLU_PRI3_LEN   8
+#define PLU_PRI4_LEN   8
+#define PLU_PRI5_LEN   8
+#define PLU_PRI6_LEN   8
+#define PLU_STRT_LEN   4
+#define PLU_ENDT_LEN   4 
+#define PLU_BQTY_LEN   4
+#define PLU_DOWK_LEN   8
+#define PLU_DRAT_LEN   8
+#define PLU_DAMT_LEN   8
+#define PLU_SSDR_LEN   8
+#define PLU_SSDA_LEN   8
+#define PLU_TAX1_LEN   8
+#define PLU_STAT_LEN  16
+#define PLU_DLTD_LEN   1
+#define PLU_STCK_LEN   8
+
+#define PLU_CNTR_LEN   8
+#define PLU_AMNT_LEN   8
+#define PLU_DISC_LEN   8
+#define PLU_COST_LEN   8
+#define PLU_PL0Q_LEN   8
+#define PLU_PL0A_LEN   8
+#define PLU_PL1Q_LEN   8
+#define PLU_PL1A_LEN   8
+#define PLU_PL2Q_LEN   8
+#define PLU_PL2A_LEN   8
+#define PLU_PL3Q_LEN   8
+#define PLU_PL3A_LEN   8
+#define PLU_PL4Q_LEN   8
+#define PLU_PL4A_LEN   8
+#define PLU_PL5Q_LEN   8
+#define PLU_PL5A_LEN   8
+#define PLU_PCTR_LEN   8
+#define PLU_PAMT_LEN   8
+#define PLU_PDSC_LEN   8
+
+#define PLU_TTLS_LEN   152
+
+#define PLU_CODE_OFF  1
+#define PLU_ITEM_OFF  15  /* PLU_CODE_OFF + PLU_CODE_LEN */
+#define PLU_DESC_OFF  27  /* PLU_ITEM_OFF + PLU_ITEM_LEN */
+#define PLU_SIZE_OFF  47  /* PLU_DESC_OFF + PLU_DESC_LEN */
+#define PLU_COLO_OFF  49  /* PLU_SIZE_OFF + PLU_SIZE_LEN */
+#define PLU_CLAS_OFF  51  /* PLU_COLO_OFF + PLU_COLO_LEN */
+#define PLU_DEPT_OFF  55  /* PLU_CLAS_OFF + PLU_CLAS_LEN */
+#define PLU_CONC_OFF  59  /* PLU_DEPT_OFF + PLU_DEPT_LEN */
+#define PLU_PRIC_OFF  63  /* PLU_CONC_OFF + PLU_CONC_LEN */
+#define PLU_PRI1_OFF  71  /* PLU_PRIC_OFF + PLU_PRIC_LEN */
+#define PLU_PRI2_OFF  79  /* PLU_PRI1_OFF + PLU_PRI1_LEN */
+#define PLU_PRI3_OFF  87  /* PLU_PRI2_OFF + PLU_PRI2_LEN */
+#define PLU_PRI4_OFF  95  /* PLU_PRI3_OFF + PLU_PRI3_LEN */
+#define PLU_PRI5_OFF  103 /* PLU_PRI4_OFF + PLU_PRI4_LEN */
+#define PLU_PRI6_OFF  111 /* PLU_PRI5_OFF + PLU_PRI5_LEN */
+#define PLU_STRT_OFF  119 /* PLU_PRI6_OFF + PLU_PRI6_LEN */
+#define PLU_ENDT_OFF  123 /* PLU_STRT_OFF + PLU_STRT_LEN */
+#define PLU_BQTY_OFF  127 /* PLU_ENDT_OFF + PLU_ENDT_LEN */
+#define PLU_DOWK_OFF  131 /* PLU_BQTY_OFF + PLU_BQTY_LEN */
+#define PLU_DRAT_OFF  139 /* PLU_DOWK_OFF + PLU_DOWK_LEN */
+#define PLU_DAMT_OFF  147 /* PLU_DRAT_OFF + PLU_DRAT_LEN */
+#define PLU_SSDR_OFF  155 /* PLU_DAMT_OFF + PLU_DAMT_LEN */
+#define PLU_SSDA_OFF  163 /* PLU_SSDR_OFF + PLU_SSDR_LEN */
+#define PLU_TAX1_OFF  171 /* PLU_SSDA_OFF + PLU_SSDA_LEN */
+#define PLU_STAT_OFF  179 /* PLU_TAX1_OFF + PLU_TAX1_LEN */
+#define PLU_DLTD_OFF  195 /* PLU_STAT_OFF + PLU_STAT_LEN */
+#define PLU_STCK_OFF  196 /* PLU_DLTD_OFF + PLU_DLTD_LEN */
+
+#define PLU_SIZE      203 /* (PLU_STCK_OFF + PLU_STCK_LEN - PLU_CODE_OFF) */
+
+#define PCO_CODE_OFF  1
+#define PCO_ITEM_OFF  15
+#define PCO_DESC_OFF  27
+#define PCO_STCK_OFF  47
+#define PCO_PQTY_OFF  55
+#define PCO_PAMT_OFF  63
+#define PCO_PCST_OFF  71
+#define PCO_PDSC_OFF  79
+#define PCO_PL0Q_OFF  87
+#define PCO_PL0A_OFF  95
+#define PCO_PL0C_OFF  103
+#define PCO_PL0D_OFF  111
+#define PCO_PL1Q_OFF  119
+#define PCO_PL1A_OFF  127
+#define PCO_PL1C_OFF  135
+#define PCO_PL1D_OFF  143
+#define PCO_PL2Q_OFF  151
+#define PCO_PL2A_OFF  159
+#define PCO_PL2C_OFF  167
+#define PCO_PL2D_OFF  175
+#define PCO_PL3Q_OFF  183 
+#define PCO_PL3A_OFF  191
+#define PCO_PL3C_OFF  199
+#define PCO_PL3D_OFF  207
+#define PCO_PL4Q_OFF  215
+#define PCO_PL4A_OFF  223
+#define PCO_PL4C_OFF  231
+#define PCO_PL4D_OFF  239
+#define PCO_PL5Q_OFF  247
+#define PCO_PL5A_OFF  255
+#define PCO_PL5C_OFF  263
+#define PCO_PL5D_OFF  271
+#define PCO_CNTR_SIZE  278
+
+#define FM_PLU_CODE_OFF  FM_RECORD_OFF
+#define FM_PLU_ITEM_OFF  FM_PLU_CODE_OFF + PLU_CODE_LEN
+#define FM_PLU_DESC_OFF  FM_PLU_ITEM_OFF + PLU_ITEM_LEN
+#define FM_PLU_SIZE_OFF  FM_PLU_DESC_OFF + PLU_DESC_LEN
+#define FM_PLU_COLO_OFF  FM_PLU_SIZE_OFF + PLU_SIZE_LEN
+#define FM_PLU_CLAS_OFF  FM_PLU_COLO_OFF + PLU_COLO_LEN
+#define FM_PLU_DEPT_OFF  FM_PLU_CLAS_OFF + PLU_CLAS_LEN
+#define FM_PLU_CONC_OFF  FM_PLU_DEPT_OFF + PLU_DEPT_LEN
+#define FM_PLU_PRIC_OFF  FM_PLU_CONC_OFF + PLU_CONC_LEN
+#define FM_PLU_PRI1_OFF  FM_PLU_PRIC_OFF + 10
+#define FM_PLU_PRI2_OFF  FM_PLU_PRI1_OFF + 10
+#define FM_PLU_PRI3_OFF  FM_PLU_PRI2_OFF + 10
+#define FM_PLU_PRI4_OFF  FM_PLU_PRI3_OFF + 10
+#define FM_PLU_PRI5_OFF  FM_PLU_PRI4_OFF + 10
+#define FM_PLU_PRI6_OFF  FM_PLU_PRI5_OFF + 10
+#define FM_PLU_STRT_OFF  FM_PLU_PRI6_OFF + 10
+#define FM_PLU_ENDT_OFF  FM_PLU_STRT_OFF + PLU_STRT_LEN
+#define FM_PLU_BQTY_OFF  FM_PLU_ENDT_OFF + PLU_ENDT_LEN
+#define FM_PLU_DOWK_OFF  FM_PLU_BQTY_OFF + PLU_BQTY_LEN
+#define FM_PLU_DRAT_OFF  FM_PLU_DOWK_OFF + PLU_DOWK_LEN
+#define FM_PLU_DAMT_OFF  FM_PLU_DRAT_OFF + 04
+#define FM_PLU_SSDR_OFF  FM_PLU_DAMT_OFF + 10
+#define FM_PLU_SSDA_OFF  FM_PLU_SSDR_OFF + 04
+#define FM_PLU_TAX1_OFF  FM_PLU_SSDA_OFF + 10
+#define FM_PLU_STAT_OFF  FM_PLU_TAX1_OFF + 10
+#define FM_PLU_DLTD_OFF  FM_PLU_STAT_OFF + PLU_STAT_LEN
+#define FM_PLU_STCK_OFF  FM_PLU_DLTD_OFF + PLU_DLTD_LEN
+#define FM_PLU_TTLS_OFF  FM_PLU_STCK_OFF + 10
+    
+
+/* EOF */

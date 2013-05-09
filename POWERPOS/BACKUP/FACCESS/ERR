@@ -1,0 +1,44 @@
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ BCD_CLIP.C
+BCD_CLIP.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ BCDTOA.C
+BCDTOA.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ FACCESS.C
+FACCESS.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ ITEMFILE.C
+ITEMFILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ FMF_FILE.C
+FMF_FILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ CASHFILE.C
+CASHFILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ MSCXBTRV.C
+MSCXBTRV.C
+MSCXBTRV.C(158) : warning C4127: conditional expression is constant
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ PLU_FILE.C
+PLU_FILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ DEPTFILE.C
+DEPTFILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ CLRKFILE.C
+CLRKFILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ RTRNFILE.C
+RTRNFILE.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ RETURN.C
+RETURN.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ PLU_TEMP.C
+PLU_TEMP.C
+c:\c600\bin\CL -c -W4 -Oalt -AL -Gs -FPa -Zl -Gh -Zp -J -Ic:\powerpos\header\ PLUCOUNT.C
+PLUCOUNT.C
+c:\c600\binb\lib faccess -+bcd_clip -+bcdtoa -+faccess -+itemfile;
+
+Microsoft (R) Library Manager  Version 3.17    
+Copyright (C) Microsoft Corp 1983-1990.  All rights reserved.
+
+c:\c600\binb\lib faccess -+fmf_file -+cashfile -+mscxbtrv -+plu_file -+plucount;
+
+Microsoft (R) Library Manager  Version 3.17    
+Copyright (C) Microsoft Corp 1983-1990.  All rights reserved.
+
+c:\c600\binb\lib faccess -+deptfile -+clrkfile -+rtrnfile -+return -+plu_temp;        
+
+Microsoft (R) Library Manager  Version 3.17    
+Copyright (C) Microsoft Corp 1983-1990.  All rights reserved.
+

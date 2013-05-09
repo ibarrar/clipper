@@ -1,0 +1,313 @@
+#line 1 ".\header\pfl_clip.ch"
+#line 2 "BANKCARD.PRG"
+#line 1 ".\header\message.ch"
+#line 1 "powerpos.ch"
+#line 3 "message.ch"
+#line 3 "BANKCARD.PRG"
+#line 1 ".\header\keymap.ch"
+#line 1 "powerpos.ch"
+#line 5 "keymap.ch"
+#line 1 ".\header\keymap2.ch"
+#line 11 "keymap.ch"
+#line 4 "BANKCARD.PRG"
+#line 1 ".\header\config.ch"
+#line 5 "BANKCARD.PRG"
+#line 1 ".\header\terminal.ch"
+#line 6 "BANKCARD.PRG"
+#line 1 ".\header\spec_key.ch"
+#line 1 ".\header\keymap.ch"
+#line 9 "spec_key.ch"
+#line 7 "BANKCARD.PRG"
+#line 1 "powerpos.ch"
+#line 9 "BANKCARD.PRG"
+#line 1 ".\header\grfx_all.ch"
+#line 1 ".\header\GRFXDRVR.CH"
+#line 16 "grfx_all.ch"
+#line 1 ".\header\GRFX_API.CH"
+#line 17 "grfx_all.ch"
+#line 1 ".\header\GRFXCOLR.CH"
+#line 18 "grfx_all.ch"
+#line 1 ".\header\GRFXFILL.CH"
+#line 19 "grfx_all.ch"
+#line 1 ".\header\GRFXFONT.CH"
+#line 20 "grfx_all.ch"
+#line 1 ".\header\GRFXLINE.CH"
+#line 21 "grfx_all.ch"
+#line 1 ".\header\GRFXMISC.CH"
+#line 22 "grfx_all.ch"
+#line 1 ".\header\GRFXTEXT.CH"
+#line 23 "grfx_all.ch"
+#line 1 ".\header\GRFXMENU.CH"
+#line 25 "grfx_all.ch"
+#line 1 ".\header\GRFXSCRN.CH"
+#line 27 "grfx_all.ch"
+#line 11 "BANKCARD.PRG"
+#line 1 ".\header\get_grfx.ch"
+
+
+
+
+
+
+
+
+
+memvar getlist         
+#line 12 "BANKCARD.PRG"
+
+
+
+
+function Bank_Payment(nMisc,cKeyBuff)
+local cWindow
+local nPaymAmt := val(put_decimal(cKeyBuff))
+local nTotal := nvr_nSUBtotal()
+local nDueAmt := (nvr_nSUBtotal()*nvr_nPHP_Rate())
+local nChange := 0
+local nQty := nvr_nQtyitems()
+local lRetVal := .F.
+local out_text
+
+local status     := 0
+local track_no   := 2
+local bytes_Read := 0
+local cancel_Pos := 1
+local str_buffer := space(20)
+local date_today := (UPPER(subs(CMONTH(date()),1,3))+subs(dtoc(date()),7,2))
+
+local cCode1:="",cCode2 := ""
+local cExpDate := "",cCode3 := "" 
+local i,k
+local cTemp
+
+
+
+
+
+
+
+
+
+
+
+local aMonth := { "JAN",  "FEB",  "MAR",  "APR",  "MAY",  "JUN",  "JUL",  "AUG",  "SEP",  "OCT",  "NOV",  "DEC" }
+local aBankCards_ := {}                  
+local aBankDescs_ := {}                  
+
+  cancel_Pos := val(config(055))
+  if cancel_Pos < 1 .OR. cancel_Pos > 105
+    cancel_Pos := 1
+  endif          
+
+
+  out_text := trans(nDueAmt,"999999.99")
+  nDueAmt := val(out_text)
+
+  if nPaymAmt > nDueAmt
+     ErrorDisp("EXCESS CHARGE AMOUNT")
+     return lRetVal
+  endif        
+
+
+  disp_clr()
+
+  if !( valtype(nMisc) == "N" .AND. nMisc > 0 .AND. nMisc <= 50 )
+
+    MsgAreaDisp("Enter Bank Code...")
+    for i := 1 to 50
+       if GetMType(i) == "0" .AND. !empty(GetMDesc(i) )       
+          aAdd( aBankCards_ , {GetMDesc(i), GetMCode(i), i } )
+          aAdd( aBankDescs_, GetMDesc(i) )
+       endif   
+    next
+
+    while .T. 
+     if len(aBankCards_) > 18
+        nMisc := aLookUp(17, 35, aBankDescs_ )
+     else
+        nMisc := aLookUp(25, 35, aBankDescs_ )
+     endif   
+       if nMisc == 0
+          return lRetVal
+       elseif nMisc > 0 .AND. GetMtype(aBankCards_[nMisc][3]) == "0"  
+          DISPTEXTXY(3, 1, 0, 0, 0, 0, "CODE FOUND !!!      ")
+          MsgAreaDisp(aBankCards_[nMisc][1])
+          aeval ( { {680, .5}, {850, .2}, {900, .1} }, { |t| tone( t[1], t[2] ) } )
+          tone(15,15)                  
+          exit
+        else
+          DISPTEXTXY(3, 1, 0, 0, 0, 0, "                    ")           
+          ErrorDisp("BANK CODE NOT FOUND!")        
+        endif       
+    enddo
+
+  endif
+
+
+  Disp_BoldChar(nDueAmt, "Amount Due")
+
+  if nPaymAmt == 0
+      nPaymAmt := nDueAmt
+  endif
+
+
+
+  cWindow := OpenWindow(22, 34, 83, 70, "CREDIT CARD")
+
+  SayString(45,28,"Subtotal",)
+  SayString(49,28,padr(GetMDesc(nMisc),12),) 
+  SayString(53,28,"Account No.",)
+  SayString(57,28,"Expiry Date",)
+
+  SayString(45,46,":",)
+  SayString(49,46,":",)
+  SayString(53,46,":",)
+  SayString(57,46,":",)
+
+  SayString(45,49,trans(nDueAmt,"999,999.99"),)
+  SayString(49,49,trans(nPaymAmt,"999,999.99"),) 
+  SayString(53,49,"_",)
+
+  MsgAreaDisp(" Swipe Card to <ENTER> Account Number ")
+
+
+  DISPTEXTXY(1, 1, 0, 0, 0, 0, pad(GetMDesc(nMisc),11)+trans(nPaymAmt,"99,999.99"))
+  DISPTEXTXY(2, 1, 0, 0, 1, 1, "ACCT. # :           ")
+
+  while .T.
+
+       DISPTEXTXY(2, 1, 0, 0, 1, 1, "ACCT. # :           ")    
+       MsgAreaDisp("SWIPE CARD FOR ACCT#")         
+       DISPTEXTXY(3, 1, 0, 0, 2, 1, "                    " )
+       track_no   := 2
+       bytes_read := 0
+      status := 38
+       str_buffer := space(40)
+
+
+       status := READ_CARD( @track_no, @bytes_read, @str_buffer, cancel_pos )
+
+
+
+
+       do case
+          case status == 0
+               cCode1 := ""
+               for k:=1 to bytes_read               
+                if isdigit(subs(str_buffer,k,1))
+                  cCode1 += subs(str_buffer,k,1)
+                else
+                  exit
+                endif
+               next
+               cTemp := subs(str_buffer,at("=",str_buffer)+1,4)
+               cTemp := subs(cTemp,3,2)+"-01-"+subs(cTemp,1,2)
+               cExpDate := ctod(cTemp)
+               if !empty(cExpDate) .AND. year(cExpDate) > 1980
+                 cExpDate := UPPER(subs(cmonth(cExpDate),1,3)+subs(cTemp,7,2))
+
+
+               else 
+                 cExpDate := ""
+               endif  
+               if !empty(cCode1)
+                 exit                
+               endif                       
+          case status == 38
+               MsgAreaDisp("Enter Account Number...")
+
+            cCode1 := space(20)
+            aadd(getlist,{0,0,"",53,49,{|v| if(pcount() > 0, cCode1 := v, cCode1) },"99999999999999999999","Enter Account Number...",,})
+            readmodal()
+               exit
+          otherwise
+               MsgAreaDisp("ERROR, READ AGAIN...")
+               aeval ( { {808, .2}, {570, .1} }, { |t| tone( t[1], t[2] ) } )
+               tone(300, 3)               
+       endcase   
+    enddo            
+
+    if empty(cCode1)
+
+
+         CloseWindow(cWindow)
+
+       Disp_BoldChar(nvr_nSUBtotal(), "Total Amount")
+       return lRetVal
+    endif   
+
+
+    cCode1 := padl(alltrim(cCode1),20,"0")      
+    DISPTEXTXY(2, 1, 0, 0, 2, 1, "#"+subs(cCode1,2) )
+
+
+        SayString(53,49,cCode1,)
+        if !empty(cExpDate)
+        SayString(57,49,cExpDate,)
+        else
+          SayString(57,49,"_",)
+        endif   
+
+
+    while .T. 
+
+      if empty(cExpDate)
+         MsgAreaDisp("ENTER EXPIRY DATE...")
+         DISPTEXTXY(3, 1, 0, 0, 1, 1, "EXP.DATE(MMYY):_    ")
+            cExpDate := space(5)
+        aadd(getlist,{0,0,"",57,49,{|v| if(pcount() > 0, cExpDate := v, cExpDate) },,"Enter Expiry Date...",,})
+        readmodal()
+         if empty(cExpDate)
+
+
+              CloseWindow(cWindow)
+
+            Disp_BoldChar(nvr_nSUBtotal(), "Total Amount")
+            return lRetVal
+         else
+            cTemp := cExpDate
+               cTemp := subs(cTemp,1,2)+"-01-"+subs(cTemp,3,2)
+               cExpDate := ctod(cTemp)
+                if !empty(cExpDate) .AND. year(cExpDate) > 1980
+                  cExpDate := UPPER(subs(cmonth(cExpDate),1,3)+subs(cTemp,7,2))
+
+
+               else 
+                 cExpDate := ""
+               endif
+         endif
+
+      endif  
+
+       DISPTEXTXY(3, 1, 0, 0, 1, 1, "EXPIRY DATE : "+cExpDate)
+
+        SayString(57,49,cExpDate,)
+
+
+
+
+
+
+
+
+
+
+       if len(cExpDate) <> 5 .OR.  (val(subs(cExpDate,4,2))+(ascan(aMonth,subs(cExpDate,1,3))/12)) <  (val(subs(date_today,4,2))+(ascan(aMonth,subs(date_today,1,3))/12))
+           aeval ( { {735, .7}, {975, .3} }, { |t| tone( t[1], t[2] ) } )                
+           ErrorDisp("INVALID DATE !!!    ")
+           cExpDate := ""
+
+            SayString(57,49,"_",)
+
+       else
+
+             MsgAreaDisp("Press Any Key to Continue...")
+             input()
+
+             CloseWindow(cWindow)
+             MsgAreaDisp(if(lPO_entered(), "Enter Quantity or Item...", "Enter P.O. Number or Press PO Key..."))
+
+           exit    
+       endif                        
+
+    enddo

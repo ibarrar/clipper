@@ -1,0 +1,12 @@
+*** System Error Occurred ***
+DATE : 07-19-98
+TIME : 04:17:30
+DESCRIPTION : SPECTRUM POS KEYBOARD device check failed...
+*** System Error Occurred ***
+DATE : 07-19-98
+TIME : 04:24:34
+DESCRIPTION : SPECTRUM POS KEYBOARD device check failed...
+*** System Error Occurred ***
+DATE : 07-19-98
+TIME : 14:12:34
+DESCRIPTION : SPECTRUM POS KEYBOARD device check failed...

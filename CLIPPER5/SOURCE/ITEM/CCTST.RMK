@@ -1,0 +1,22 @@
+//
+// Charcount Version 1 Test
+//
+// Copyright (C) 1993, Computer Associates, Inc. All Rights Reserved
+//
+#include "rules.rmk"
+
+src = ".\"
+
+// testc = the C routine to test
+// testclip = the clipper source to test the C program
+//
+testc = "cc"
+testclip = "cctst"
+
+testbed.obj:  testbed.prg
+
+$(testc).obj:  $(testc).c
+
+$(testclip).obj:  $(testclip).prg
+
+$(testclip).exe:  $(testclip).obj  $(testc).obj testbed.obj 

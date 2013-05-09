@@ -1,0 +1,38 @@
+#
+#  CL520MIN.LNK - 03/22/93 Version 1.0
+#
+#  Blinker link script for CA-Clipper 5.2
+#
+#  Minimal overlaying - overlay EXTEND.LIB
+#
+#  For ease of use this script should be stored in your library
+#  directory, (the directory pointed to by the LIB environment variable),
+#  which will allow Blinker to find the script without you having to
+#  specify a full path.
+#
+#  This script must be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except the RDDs and LLIBCA if it is being used.
+#
+#  example:
+#
+#  FILE one
+#  BEGINAREA
+#       FILE two
+#       FILE three
+#       FILE four
+#  ENDAREA
+#  @CL520MIN
+#  LIB DBFCDX
+#  LIB LLIBCA # (if used)
+
+
+# mod tbrowse0            #  Uncomment these three lines
+# mod tbrowse1            #  to speed up TBROWSE by forcing
+# mod linelen             #  it into the root.
+#
+lib clipper
+beginarea
+   lib extend
+endarea
+lib terminal
+lib dbfntx

@@ -1,0 +1,8 @@
+BLINKER3 @BASELIB
+
+BLINKER : 1004 : C501_MOD.OBJ(C501_MOD) : 'STI_LOGO' is duplicated in
+                 SCREEN.OBJ(SCREEN) 
+
+BLINKER : 1 Warning error(s), 0 Fatal error(s)
+
+ARRAY.EXE (282 kb) (0.1 seconds)

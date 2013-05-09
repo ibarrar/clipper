@@ -1,0 +1,21 @@
+//
+//  Pe.rmk
+//
+//  Make file for PE, Clipper simple program editor.
+//
+//  Copyright (c) 1991-1993, Computer Associates International, Inc.
+//  All rights reserved.
+//
+
+.prg.obj:
+    clipper $< /m/n/w
+
+.obj.exe:
+    set rtlinkcmd=/posi
+    rtlink $**, $@ ;
+
+
+pe.obj: pe.prg
+
+pe.exe: pe.obj
+

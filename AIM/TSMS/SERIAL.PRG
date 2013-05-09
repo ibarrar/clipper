@@ -1,0 +1,3 @@
+
+function VerifySerial()
+local serial :=

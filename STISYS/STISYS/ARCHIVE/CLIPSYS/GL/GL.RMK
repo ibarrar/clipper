@@ -1,0 +1,35 @@
+// Filename:      GL.RMK
+// Description:   Accounting System Make File Script
+// Date-Started:  June 10, 1993
+// Last-Update:   June 10, 1993
+
+CLIPFLAGS=  /W /N /M /A 
+
+.prg.obj:
+  clipper $< $(CLIPFLAGS)
+
+GL.OBJ:       Gl.prg
+CDB.OBJ:      Cdb.prg
+CRB.OBJ:      Crb.prg
+SB.OBJ:       Sb.prg
+PCV.OBJ:      Pcv.prg
+JV.OBJ:       Jv.prg
+LEDGER.OBJ:   Ledger.prg
+LEDGER2.OBJ:  Ledger2.prg
+SCHED.OBJ:    Sched.prg
+MAINT.OBJ:    Maint.prg
+ABROWSE.OBJ:  Abrowse.prg
+ABROWSE2.OBJ: Abrowse2.prg
+LOOKUP.OBJ:   Lookup.prg
+COMPUTE.OBJ:  Compute.prg
+ASSEMBLY.OBJ: Assembly.prg
+BALANCE.OBJ:  Balance.prg
+INCOME.OBJ:   Income.prg
+	clipper $< $(CLIPFLAGS)
+	
+GL.EXE : GL.OBJ CDB.OBJ CRB.OBJ SB.OBJ PCV.OBJ JV.OBJ LEDGER.OBJ LEDGER2.OBJ \
+SCHED.OBJ MAINT.OBJ ABROWSE.OBJ ABROWSE2.OBJ LOOKUP.OBJ COMPUTE.OBJ \
+ASSEMBLY.OBJ BALANCE.OBJ INCOME.OBJ
+  BLINKER3 @GL
+
+// end-of-file

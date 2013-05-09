@@ -1,0 +1,16 @@
+#
+#  CL87MIN.LNK - Summer '87 Clipper/Extend Script
+#
+#  Minimal overlaying - only overlay EXTEND.LIB
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except LLIBCA if it is being used.
+#
+#  NOTE: for ease of use this script should be stored in your library directory,
+#  (the directory pointed to by the LIB environment variable), which will allow
+#  Blinker to find the script without you having to specify a full path.
+#
+lib clipper
+beginarea
+   lib extend
+endarea

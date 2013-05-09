@@ -1,0 +1,215 @@
+
+#  CL520MAX.LNK - 03/22/93 Version 1.0
+#
+#  Blinker link script for CA-Clipper 5.2
+#
+#  This script may help with very tight memory situations, and when using the
+#  Clipper debugger (CLD) with large programs.
+#
+#  For ease of use this script should be stored in your library directory,
+#  (the directory pointed to by the LIB environment variable), which will allow
+#  Blinker to find the script without you having to specify a full path.
+#
+#  This script MUST be included outside of any BEGINAREA / ENDAREA commands
+#  and after all libraries except the RDDs and LLIBCA if it is being used.
+#
+#  example:
+#
+#  FILE one
+#  BEGINAREA
+#       FILE two
+#       FILE three
+#       FILE four
+#  ENDAREA
+#  @CL520MAX
+#  LIB DBFCDX
+#  LIB LLIBCA # (if used)
+#
+#  Modules within CLIPPER.LIB are, by their nature, called very frequently
+#  within any CLIPPER application. Therefore, overlaying these routines
+#  will almost certainly result in some performance degradation, which can
+#  be minimised by increasing the OVERLAY OPSIZE.
+#
+#  You may also wish to consider using BLINKER OVERLAY PAGEFRAME ON to expand
+#  the overlay pool to 64K, and remove it from conventional memory, to both
+#  increase available memory and performance.
+#
+#  ie BLINKER OVERLAY PAGEFRAME ON
+#
+#  Blinker 2.0+ users will find that specifying an overlay cache will increase
+#  execution speed significantly.
+#
+#  eg BLINKER CACHE XMS 128
+#     BLINKER CACHE EMS 128
+#
+#  The amount of performance degradation will vary from application to
+#  application, - it may be necessary to modify this script by commenting
+#  out some MODULE statements to increase performance to an acceptable level
+#  in some areas.
+#
+#  Please note that some third party libraries may replace or modify routines
+#  in the CLIPPER library, so that they are no longer overlayable. The link
+#  time command BLINKER MESSAGE DUPLICATES may help in determining such
+#  conflicts or replacements.
+#
+#
+#  mod tbrowse0          #  Uncomment these three lines
+#  mod tbrowse1          #  to speed up TBROWSE by forcing
+#  mod linelen           #  it into the root.
+#
+lib clipper
+mod DISKIO       # .c
+mod FILESYS      # .asm
+mod PHILES       # .c
+mod EMMALLOC     # .asm
+mod EMMCOUNT     # .asm
+mod EMMFREE      # .asm
+mod EMMINST      # .asm
+mod EMMPAGE      # .asm
+mod EMMREALL     # .asm
+mod EMMSTAT      # .asm
+mod EMMVERS      # .asm             
+beginarea
+    mod ADEL            # .c
+    mod AEVAL           # .c
+    mod APPEXIT         # .c
+    mod APPINIT         # .c
+    mod COLOR           # .c
+    mod DATE            # .c 
+    mod DBJUNCT         # .c  
+    mod ERRORSYS        # Clipper
+    mod ERRSYS0         # .c
+    mod ERRSYS1         # .c      (Overlay if not using PS ERROR)
+    mod EXACTCMP        # .c
+    mod FIELD           # .c
+    mod GETENV          # .c  
+    mod INITEXIT        # .c
+    mod INSTD           # .asm          
+    mod MAIN            # .c    
+    mod MEMORY          # .c    
+    mod OSDATE          # .asm
+    mod OUTSTD          # .c    
+    mod SCROLL          # .c    
+    mod SEND            # .c
+    mod SET             # .c    
+    mod SORTBLOC        # .c
+    mod SQUAWK          # .asm
+    mod STARTSYM        # .asm
+    mod TB              # .c
+    mod TXOPEN          # .c       (Overlay if not using NETLIB)
+    mod PICT            # .c    
+    mod DBGAPI    from NULL      # .c       // exclude if not debug 
+    mod _DBFLIST  from NULL      # Clipper    
+    mod _DBGHELP  from NULL      # Clipper
+    mod _DBGMENU  from NULL      # Clipper    
+    
+    mod _APPINI         # Clipper    
+    mod _HELPKEY        # Clipper    
+
+    mod ACCEPT    from NULL        # .c
+    mod ACOPY     from NULL        # .c
+    mod AINS      from NULL        # .c
+    mod ATAIL     from NULL        # .c
+    mod BOX       from NULL        # .c
+    mod DBCMD0    from NULL        # .c
+    mod DBCMD1    from NULL        # .c
+    mod DBCMD2    from NULL        # .c
+    mod DBCMD3    from NULL        # .c
+    mod DBCMD4    from NULL        # .c
+    mod DBCMD5    from NULL        # .c
+    mod DBCREATE  from NULL        # .c
+    mod DBF0      from NULL        # .c
+    mod DBF1      from NULL        # .c
+    mod DBFDYN    from NULL        # .asm
+
+    mod DBGSHADO  from NULL        # .c
+    mod DBNUBS    from NULL        # .asm
+    mod DBSTRUCT  from NULL        # .c
+    mod DELIMDYN  from NULL        # .asm
+    mod DLM0      from NULL        # .c
+    mod DLM1      from NULL        # .c
+    mod FGET      from NULL        # .c    
+    mod GETS0     from NULL        # .c
+    mod GETS1     from NULL        # .c
+    mod GETS2     from NULL        # .c
+    mod JOINLIST  from NULL        # .c
+    mod LUPDATE   from NULL        # .c
+    mod MAXROW    from NULL        # .c
+    mod MRELEASE  from NULL        # .c
+    mod MSAVE     from NULL        # .c
+    mod NET       from NULL        # .c
+    mod OLDBOX    from NULL        # .c
+    mod OLDCLEAR  from NULL        # .c
+    mod RDDORD    from NULL        # .c
+    mod RDDSVR    from NULL        # .c
+    mod RUN       from NULL        # .c
+    mod SAVEREST  from NULL        # .c
+    mod SDF0      from NULL        # .c
+    mod SDF1      from NULL        # .c
+    mod SDFDYN    from NULL        # .asm
+    mod SETCURS   from NULL        # .c
+    mod SORTOF    from NULL        # .c    
+
+    mod tbrowse0  from NULL        #  Uncomment these three lines
+    mod tbrowse1  from NULL        #  to speed up TBROWSE by forcing
+    mod linelen   from NULL        #  it into the root.    
+    mod TSUPPORT  from NULL        # .c    
+    mod VERSION   from NULL        # .c
+    mod WORKAREA  from NULL        # .c
+    mod _AFIELDS  from NULL        # Clipper    
+    mod _ATPROMP  from NULL        # Clipper
+    mod _CENTURY  from NULL        # Clipper
+    mod _DBCOPY   from NULL        # Clipper
+    mod _DBDELIM  from NULL        # Clipper
+    mod _DBF      from NULL        # Clipper
+    mod _DBGBROW  from NULL        # Clipper
+    mod _DBGINSP  from NULL        # Clipper
+    mod _DBJOIN   from NULL        # Clipper
+    mod _DBLIST   from NULL        # Clipper
+    mod _DBLOCAT  from NULL        # Clipper
+    mod _DBSDF    from NULL        # Clipper
+    mod _DBSORT   from NULL        # Clipper
+    mod _DBSTRUX  from NULL        # Clipper
+    mod _DBTOTAL  from NULL        # Clipper
+    mod _DBUPDAT  from NULL        # Clipper
+    mod _DELIM    from NULL        # Clipper
+
+    mod _ERRSYS   from NULL        # Clipper
+    mod _FLEDIT   from NULL        # Clipper
+    mod _GETMSG   from NULL        # Clipper
+    mod _GETSYS   from NULL        # Clipper
+    mod _INPUT    from NULL        # Clipper
+    mod _RDDORD   from NULL        # Clipper
+    mod _READVAR  from NULL        # Clipper
+    mod _SAVESCR  from NULL        # Clipper
+    mod _SETFUNC  from NULL        # Clipper
+    mod _SETTA    from NULL        # Clipper
+    mod _TEXT     from NULL        # Clipper
+    mod _WAIT     from NULL        # Clipper
+endarea
+
+
+beginarea
+    lib extend
+    mod examplea   
+    mod stuff
+    mod is
+    mod right
+    mod _array
+    mod strtran
+    mod ascan
+    mod dispspac
+    mod copyfile   
+endarea
+mod padl
+mod padr
+mod padc
+mod alltrim
+mod _DBGMENU from NULL
+mod _DBGINSP from NULL
+#mod _DBGLIST from NULL
+mod _DBGBROW from NULL
+mod RDDSYS   from NULL
+
+lib novterm
+#lib dbfntx

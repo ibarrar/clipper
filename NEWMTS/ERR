@@ -1,0 +1,106 @@
+clipper SECURITY.PRG /W /N /M /A /B /IC:\PCPOSMTS\HEADER
+300K available
+Compiling SECURITY.PRG
+Code size 7250, Symbols 2288, Constants 3006
+clipper UNIT.PRG /W /N /M /A /B /IC:\PCPOSMTS\HEADER
+300K available
+Compiling UNIT.PRG
+Code size 5242, Symbols 1584, Constants 1830
+clipper VENDOR.PRG /W /N /M /A /B /IC:\PCPOSMTS\HEADER
+300K available
+Compiling VENDOR.PRG
+Code size 5501, Symbols 1392, Constants 2115
+clipper WINDOW.PRG /W /N /M /A /B /IC:\PCPOSMTS\HEADER
+300K available
+Compiling WINDOW.PRG
+Code size 1837, Symbols 816, Constants 211
+clipper FMFILE.PRG /W /N /M /A /B /IC:\PCPOSMTS\HEADER
+300K available
+Compiling FMFILE.PRG
+Code size 7752, Symbols 1680, Constants 2584
+BLINKER3 @pcposmts
+
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CREATEDBF' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CREATENTX' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_DEPART' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_CARD' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'MONITOR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_ITEMS' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_CASHIER' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_FOREIGN' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_BRAND' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_PCOUNT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_PO' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_STKRECE' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_STKRETU' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_STKADJU' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_STKTRAN' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'GETDATA' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'PLU_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'TERM_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CASH_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DEPT_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'HOUR_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RET_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CCD_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'ITEM_IMP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'REINDEX' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RCTERM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RITERM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RCCASHIER' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RICASHIER' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RCHOUR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RIHOUR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RDEPT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'VOIDPREV' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'BR_MOVEN' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'BR_MOVEI' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CHANGEPR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'ITLSTDP' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'ITLSTBR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DLYSLSRPT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'R_SLSRPT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RSUPPLIER' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RITEM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RPITEM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RFITEM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RFAMT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RSITEM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RSAMT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'NFITEM' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'R_CONCESS' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'P_CONCESS' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'R_CONSIGN' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'P_CONSIGN' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_R_CREDI' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_I_CREDI' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_A_CREDI' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CASH_ACCT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CASH_IACCT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'CASH_ALL' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'OUT_SALES' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'STORE_ACCT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'TERM_ACCT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'IT3100' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_PR_STKT' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_R_STKTR' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'IT3200' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'IDAILYPOST' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'SDAILYPOST' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'MCLOSING' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'ACLOSING' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'REPOST' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RETRV' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'ALIS' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'RESET' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DOWNLOAD' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'UPLOAD' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'DO_NPLU' : unresolved external
+BLINKER : 1115 : PCPOSMTS.OBJ(PCPOSMTS) : 'REDOWNLOAD' : unresolved external
+BLINKER : 1115 : UNIT.OBJ(UNIT) : 'ABROWSE6' : unresolved external
+BLINKER : 1115 : UNIT.OBJ(UNIT) : 'LOOKUP' : unresolved external
+BLINKER : 1115 : USERLIB.LIB(GETDIR) : '_GETDISK' : unresolved external
+
+BLINKER : 0 Warning error(s), 80 Fatal error(s)
+
+PCPOSMTS.EXE (not created) (1.6 seconds)

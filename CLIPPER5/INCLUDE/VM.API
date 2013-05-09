@@ -1,0 +1,73 @@
+/***
+*
+*   Vm.api
+*
+*   C language definitions for the Clipper VM API
+*
+*   Copyright (c) 1992-1993, Computer Associates International, Inc.
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _VM_API
+
+
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+
+/*
+*
+* Standard
+*
+*/
+HANDLE _xvalloc(USHORT size, USHORT flags);
+void   _xvfree (HANDLE h);
+
+HANDLE _xvrealloc(HANDLE h, USHORT size, USHORT flags);
+
+FARP   _xvlock  (HANDLE h);
+void   _xvunlock(HANDLE h);
+
+
+/*
+*
+* Wire
+*
+*/
+FARP _xvwire  (HANDLE h);
+void _xvunwire(HANDLE h);
+
+
+/*
+*
+* State
+*
+*/
+USHORT _xvlockcount(HANDLE h);
+USHORT _xvsize     (HANDLE h);
+
+
+/*
+*
+* API VM Heap 
+*
+*/
+HANDLE _xvheapnew    (USHORT size);
+void   _xvheapdestroy(HANDLE h);
+
+HANDLE _xvheapresize(HANDLE h, USHORT size);
+
+USHORT _xvheapalloc(HANDLE h, USHORT size);
+void   _xvheapfree (HANDLE h, USHORT offset);
+
+FARP   _xvheaplock  (HANDLE h, USHORT offset);
+void   _xvheapunlock(HANDLE h, USHORT offset);
+
+
+#define _VM_API
+#endif

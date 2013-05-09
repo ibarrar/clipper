@@ -1,0 +1,23 @@
+///////
+//
+// TBR31.RMK
+//
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W /B
+   Clipper $<
+
+TBR31.OBJ  : tbr31.prg tbr31.ch
+TBR.OBJ    : tbr.prg
+NET.OBJ    : net.prg net.ch
+SCRUTI.OBJ : scruti.prg
+
+.obj.exe:
+   SET RTLINKCMD=/posi
+   RTLINK $**;
+
+TBR31.EXE: tbr31.obj tbr.obj net.obj scruti.obj
+
+// EOF - TBR31.RMK //
+

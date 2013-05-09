@@ -1,0 +1,48 @@
+/***
+*
+*   Fm.api
+*
+*   Fixed memory allocation functions
+*
+*   Copyright (c) 1987-1993, Computer Associates International, Inc.
+*   All rights reserved.
+*
+*   CA-Clipper uses Microsoft C large model calling conventions
+*
+*/
+
+
+#ifndef _FM_API
+
+
+#ifndef _CLIPDEFS_H
+#include "clipdefs.h"
+#endif
+
+
+/***
+*   Note:
+*   _xalloc() returns NULL if the request cannot be satisfied
+*   _xgrab() generates a runtime error if the request cannot be satisfied
+*/
+
+/*   allocate memory */
+extern void far * _xalloc(unsigned int numberOfBytes);
+extern void far * _xgrab(unsigned int numberOfBytes);
+extern void       _xfree(void far *allocatedBlock);
+
+
+/* S87 compat. */
+#define _exmgrab(size)         _xgrab(size)
+#define _exmback(ptr, size)    _xfree(ptr)
+
+
+/*   Buffer maintenance routines */
+extern PVOID _bset (void far *, unsigned char, unsigned int );
+extern PVOID _bcopy(void far *, const void far *,unsigned int );
+extern PVOID _bmove(void far *, void far *,   unsigned int );
+
+
+#define _FM_API
+
+#endif

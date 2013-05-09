@@ -1,0 +1,66 @@
+VFDDR.DOC           Device driver for VFD Display
+---------
+
+Device name : VFDDR.SYS v1.0
+
+INTRODUCTION
+                         VFD Display
+
+         ษออออัออออัออออัออออัออออัออออัออออัออออัออออป
+         บ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  บ
+         บ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | บ
+         บ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  ณ -  บ
+         บ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | ณ| | บ
+         บ - .ณ - .ณ - .ณ - .ณ - .ณ - .ณ - .ณ - .ณ - .บ
+         บ   ,ณ   ,ณ   ,ณ   ,ณ   ,ณ   ,ณ   ,ณ   ,ณ   ,บ
+         ศออออฯออออฯออออฯออออฯออออฯออออฯออออฯออออฯออออผ
+           0    1    2    3    4    5    6    7    8
+
+
+HOW TO USE
+
+   The device can be opened as a file handle in any program languages that
+   support this feature. Following is a sample C progam:
+
+
+     FILE *fp;
+
+       fp = fopen("VFD$$", "wb");             /* Open VFD       */
+       fprintf(fp, "%c", 0);                /* init the VFD   */
+       fflush(fp);
+       fclose(fp);
+
+   For simple usage, declare a 1x9 matrix that contain the characters to
+   be displayed, and write to VFD. Hence, scrolling, and some other effects.
+   can be achieved by manipulating the matrix.
+
+
+COMMAND
+
+    00h - To reset the VFD
+    01h - To clear screen
+    1xh - Set cursor to position x, where x is in the range 0 to 8.
+
+    \r  - Carriage Return, set cursor =0
+    \n  - Line feed, set cursor =0, clear screen
+    \f  - Form feed, cursor postion unchanged, clear screen
+    \b  - Backspace
+
+    '.' - Display dot
+    ',' - Display comma
+    ';' - Display semi-colan
+    'ซ' - Display 1/2 sign
+
+    '!' - Toggle LED 1 on/off
+    '@' - Toggle LED 2 on/off
+    '#' - Toggle LED 3 on/off
+
+    The rest are will be treated as characters to be displayed on the VFD.
+    Note that the character to be displayed will be equal to its ASCII code
+    value. For example to display 'A', just send 65 to VFD, which is the ASCII
+    value of 'A'.
+
+                                                       Cheng Hwa
+                                                       Asst. Software Engr
+                                                       27 Dec 94
+

@@ -1,0 +1,24 @@
+// Make file for all skipper samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+TBR19.OBJ : tbr19.prg
+TBR20.OBJ : tbr20.prg
+TBR21.OBJ : tbr21.prg
+TBR22.OBJ : tbr22.prg
+TBR23a.OBJ : TBR23a.prg
+
+.obj.exe:
+   SET RTLINKCMD=/free
+   RTLINK FILE $<
+
+TBR19.EXE : tbr19.obj
+TBR20.EXE : tbr20.obj
+TBR21.EXE : tbr21.obj
+TBR22.EXE : tbr22.obj
+TBR23a.EXE : TBR23a.obj
+
+// eof //

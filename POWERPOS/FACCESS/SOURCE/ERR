@@ -1,0 +1,9 @@
+251K available
+Compiling BUILD_DP.PRG
+Code size 662, Symbols 160, Constants 570
+
+BLINKER : overlay opsize set to 40Kb - minimum size is 17Kb
+
+BLINKER : link was successful
+
+BUILD_DP.EXE (161 Kb) (0.5 seconds)

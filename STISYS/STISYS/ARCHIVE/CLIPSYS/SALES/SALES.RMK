@@ -1,0 +1,17 @@
+.prg.obj:
+  CLIPPER $* /N /A /M /B /O$@
+
+SALES.OBJ:    Sales.prg
+PO.OBJ:       Po.prg
+REPORT.OBJ:   Report.prg
+MAINT.OBJ:    Maint.prg
+ABROWSE.OBJ:  ABrowse.prg
+
+SALES.EXE : SALES.OBJ PO.OBJ MAINT.OBJ REPORT.OBJ ABROWSE.OBJ
+  RTLINK FI SALES,PO,REPORT,MAINT,ABROWSE PLL BASE50
+
+
+
+
+
+

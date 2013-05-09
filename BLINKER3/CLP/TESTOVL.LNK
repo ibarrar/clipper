@@ -1,0 +1,11 @@
+# TESTOVL.LNK:
+# Comments start with a pound sign
+# Start of overlay area
+BEGINAREA
+    FILE test
+    FILE limerick
+    # Overlay the EXTEND library
+    LIB extend
+# End of overlay area
+ENDAREA
+LIB clipper

@@ -1,0 +1,655 @@
+READ.ME                 BLINKER 2.1 Release notes               93/06/02
+-------                 -------------------------               --------
+
+  This READ.ME contains IMPORTANT INFORMATION which is not available in
+  the manual. Please read this document before calling for technical
+  support. It describes last minute changes and additions to the BLINKER
+  manual and product made since the manual was printed. Where
+  differences occur, the information contained herein supersedes the
+  Norton Guide, which in turn supersedes the printed manual.
+
+  You may find it worthwhile to print and study this file before using
+  the product. There is a completely updated Norton Guide file which
+  contains the new commands and functions, but we have repeated them
+  below for the benefit of those people who do not have a Norton Guide
+  Reader.
+
+  If the installation program was unable to update to Blinker 2.1
+  automatically then the update program BLIUPD.EXE should be copied to
+  the Blinker 2.0x directory and run from the DOS prompt.
+  
+Contents
+--------
+  1. General Notes
+  2. Additional compiler information
+    2.1. Microsoft C/C++ / Visual C++
+    2.2. Visual BASIC for DOS
+    2.3. WATCOM C
+    2.4. Stony Brook Compilers
+    2.5. RM FORTRAN
+  3. Swap system
+    3.1. Keyboard stuffing
+    3.2. BLINKER environment settings
+    3.3. Other additions
+  4. New / changed link script commands
+  5. New link time error messages
+  6. Turbo Debugger support
+  7. Functions for other swappers
+
+
+1. General Notes
+----------------
+
+  Subdirectories within the Blinker 2.1 installation directory contain
+  header files defining all the available Blinker run time functions for
+  each major language. Those functions defined as having optional
+  parameters should pass the value -1 as a dummy for those languages
+  which do not support optional function parameters.
+
+  CodeView is only supported with external overlay files (created using
+  the SECTION INTO command). Error message 1117 is displayed if CodeView
+  is specified with internal overlays. Microsoft C/C++ 7.0, Visual C++
+  and Visual BASIC for DOS require version 5 of CodeView information, so
+  use the CVVERSION 5 command to specify this in the link script file.
+
+  Japanese users should note that Blinker 2.1 will run on all machines
+  provided that the blinking eyes are disabled with the BLINKER MESSAGE
+  NOBLINK command. This may appear on the command line or anywhere in
+  the link script file.
+
+  When linked with Blinker, Clipper's default STACK is increased to
+  5235, equivalent to a BLINKER PROCEDURE DEPTH OF 50.
+
+  In many cases it should be possible to use incremental linking with
+  Clipper applications which previously required too much additional
+  memory, by linking with the CLS87MAX or CL501MAX script files to
+  overlay as much as possible, and then enabling the overlay caching.
+
+  It should be noted that to use BASIC with Blinker the final program
+  must run as a separate EXE file, i.e. all modules must be compiled
+  with the /O option. When linking BASIC please compile the BASIC error
+  handler BAS\BLERRPRG.BAS for the appropriate string model (Near or
+  Far) and link it into the ROOT of the program.
+
+  Three new functions BLIDEMDTEFOR (), BLIERRPRMFOR (), BLISERNUMFOR ()
+  have been added to support the Blinker functions which return strings
+  to FORCE.
+
+  The startup module for Assembler programs must reside in the root of
+  the program.
+
+
+2. Additional compiler information
+----------------------------------
+
+2.1. Microsoft C/C++ / Visual C++
+---------------------------------
+  These compilers are fully supported. When using CodeView with these
+  compilers please specify version 5 of CodeView information in the link
+  script file using the CVVERSION 5 command (in addition to the CODEVIEW
+  command).
+
+  CodeView 4.1 seems to leave the EXE file open the first time it loads
+  it, so either link it READONLY, or just restart the program if you get
+  the open error.
+
+
+2.2. Visual BASIC for DOS
+-------------------------
+  This compiler is fully supported. When using CodeView with this
+  compiler please specify version 5 of CodeView information in the link
+  script file using the CVVERSION 5 command (in addition to the CODEVIEW
+  command).
+
+
+2.3. WATCOM C
+-------------
+  WatCom C requires an explicit DOSSEG command. It can appear anywhere
+  on the command line or in the link script file.
+
+
+2.4. Stony Brook Compilers
+--------------------------
+  The compiler run time libraries, and any libraries produced by the
+  Stony Brook librarian must be SEARCHed. Use of the LIB command on
+  these libraries will result in an internal Blinker error 1191: invalid
+  library number. Alternatively, the libraries may be rebuilt using the
+  Microsoft librarian (LIB.EXE).
+
+  When using overlays, the startup module must be in the root.
+
+  2.4.1. Modula 2
+  ---------------
+  When using overlays, compile using the LARGE model:
+
+  m2 myprog.mod /CODE:L
+
+  2.4.2. Pascal+
+  --------------
+  When using overlays, compile using the LARGE model, and place
+  constants in a separate segment:
+
+  ppc myprog.pas //CODE:L //CONSTANT:L
+
+
+2.5. RM FORTRAN
+---------------
+  RM FORTRAN is fully supported with Blinker 2.1.
+
+
+3. Swap system
+--------------
+3.1 Keyboard stuffing
+---------------------
+
+SWPKEYBRD() - Stuff keystrokes into the child program
+SWPKEYCLR() - Alter the number of 'key not ready' signals sent
+
+SWPKEYBRD()
+-----------
+
+Function:   SWPKEYBRD/SWPKEYBRDBAS (Basic)
+Syntax  :   nivalue = SWPKEYBRD(cString)
+Purpose :   Stuff keystrokes into the child application
+Return  :   An integer value:
+
+            0 -> OK
+
+           -1 -> open quote in string
+           -2 -> open { (extended key definition)
+
+           +N -> parsing error at location N in input string.
+
+The SWPKEYBRD function allows the parent program to stuff the keyboard
+with a series of keystrokes prior to executing the child program. Use of
+this function will allow you complete control over the execution of the
+child program.
+
+SWPKEYBRD() should work with most programs that use the BIOS keyboard
+functions 0,1,10H and 11H to read keyboard input. Programs that access
+the keyboard hardware directly (such as MS Word) will not see stuffed
+keystrokes, and so cannot be controlled by this function.
+
+The maximum number of keystrokes that can be stuffed is 250.
+
+SWPKEYBRD Parameters
+--------------------
+
+SWPKEYBRD takes a single string parameter made up of the following
+components:
+
+a) embedded sub-strings within quotes
+b) shift/ctrl/alt key combinations and keys that cannot be
+   specified in ascii form, such as {pgup} and {enter}
+
+You may separate strings and shifted key combinations with spaces.
+
+eg:
+
+x = SWPKEYBRD(" {tab} 'Testing...' {enter} {alt-f} 's' {alt-x} " )
+
+Clearing the keyboard buffer
+----------------------------
+
+By default, SWPKEYBRD() fools the child program into thinking that the
+keyboard buffer has been cleared between each keystroke. This will make key
+stuffing operate more reliably with programs that clear the keyboard buffer on
+a regular basis. This behaviour can be changed using the function SWPKEYCLR()
+to disable this feature.
+
+Embedded substrings
+-------------------
+
+Embedded sub-strings will usually contain ASCII characters found on the
+keyboard, such as A-Z, a-z, 0-9, !@#$%^&*() and so on. These characters are
+translated by SWPKEYBRD() into the keycodes associated with the keys that bear
+the character legend on a _US_ keyboard.
+
+It is possible for an embedded sub-string to contain characters that are not
+present on the keyboard, such as international characters, box and line
+characters. When SWPKEYBRD() encounters such a character, it generates a
+keystroke that is the equivalent {alt-nnn} keycode, where nnn is the ascii
+value of the character in question.
+
+Quotes
+------
+
+Embedded substrings may start and end with either a single (') or a double (") 
+quote. This allows you to use either within the quoted text:
+
+swpkeybrd("{enter}'Then he said "hello" and left'{enter}")
+swpkeybrd('{enter}"Please press 'X' now!"{enter}')
+
+Note that most languages will use the first and last quote within the string 
+as delimiters. The string you pass to SWPKEYBRD() must be within _another_ set 
+of quotes.
+
+Some languages may not allow the use of two different quotes (eg BASIC)
+- in this case the quotes may be passed using the CHR$(n) function or
+equivalent:
+
+swpkeybrd("{enter}'Then he said "+CHR$(34)+"hello"+CHR$(34)+" and left'{enter}")
+
+
+Extended Key combinations
+-------------------------
+
+In addition to quoted text, SWPKEYBRD() can also pass other keystrokes that 
+cannot be represented properly by normal ASCII characters. Many of these 
+keystrokes may be used in conjunction with a shift state. The three available 
+shift states are:
+
+shift
+ctrl
+alt
+
+When a shift state key is specified, it should be precede the actual key 
+definition, and be separated from it by a '-' character - eg:
+
+{shift-f7}{ctrl-a}{alt-esc}
+
+You cannot use more than one shift state at a time - the BIOS does not support 
+this. If the child program uses multiple shift states simultaneously, such as 
+{ctrl}+{alt}, {ctrl}+{shift}, you will not be able to control it using 
+SWPKEYBRD(), as it either directly accesses the keyboard hardware, or it uses 
+shift state information in the BIOS data area, which SWPKEYBRD() does not 
+attempt to emulate.
+
+The following keys are available:
+
+{f1}-{f12}
+{shift-f1} - {shift-f12}
+{ctrl-f1} - {ctrl-f12}
+{alt-f1} - {alt-f12}
+
+{ctrl-a} - {ctrl-z}
+{alt-a} - {alt-z}
+{ctrl-0} - {ctrl-9}
+
+{esc} {tab} {bksp} {enter}
+{space} {ins} {del}
+
+{ctrl-esc} {ctrl-tab} {ctrl-bksp} {ctrl-enter}
+{ctrl-space} {ctrl-ins} {ctrl-del}
+
+{ctrl-prtscr}
+
+note that {ctrl-prtscr} is the only flavor of print screen that the bios 
+passes through, and so is the only one that can be stuffed.
+
+{alt-esc} {alt-tab} {alt-bksp} {alt-enter}
+{alt-space} {alt-ins} {alt-del}
+
+
+Numeric Keypad Cursor Control Keys
+----------------------------------
+
+Please note these keys are found on the numeric keypad.
+
+{up} {down} {left} {right}
+{home} {end} {pgup} {pgdn}
+
+{ctrl-up} {ctrl-down} {ctrl-left} {ctrl-right}
+{ctrl-home} {ctrl-end} {ctrl-pgup} {ctrl-pgdn}
+
+{alt-up} {alt-down} {alt-left} {alt-right}
+{alt-home} {alt-end} {alt-pgup} {alt-pgdn}
+
+Extended Cursor Control Keys
+----------------------------
+
+These keys correspond to the separate gray keys found on 101/102 key extended 
+keyboards. The * character indicates these gray keys:
+
+{*ins} {*del} {*end} {*pgup} {*pgdn} {*home}
+{*up} {*down} {*right} {*left}
+
+{ctrl-*ins} {ctrl-*del} {ctrl-*end} {ctrl-*pgup} {ctrl-*pgdn}
+{ctrl-*home} {ctrl-*up} {ctrl-*down} {ctrl-*right} {ctrl-*left}
+
+{alt-*ins} {alt-*del} {alt-*end} {alt-*pgup} {alt-*pgdn}
+{alt-*home} {alt-*up} {alt-*down} {alt-*right} {alt-*left}
+
+Numeric Keypad Keys
+-------------------
+
+Normally, when you specify a number (0-9) as part of an embedded string, the 
+keystroke generated will be from the numeric keys along the top of the 
+keyboard. If you require to stuff keystrokes from the numeric pad, use the 
+following (the # indicates the keystroke is from the numeric pad):
+
+{#0} {#1} {#2} {#3} {#4} {#5}
+{#6} {#7} {#8} {#9} {#.}
+{#/} {#*} {#-} {#+} {#enter}
+
+{ctrl-#0} {ctrl-#1} {ctrl-#2} {ctrl-#3} {ctrl-#4} {ctrl-#5}
+{ctrl-#6} {ctrl-#7} {ctrl-#8} {ctrl-#9} {ctrl-#.}
+{ctrl-#/} {ctrl-#*} {ctrl-#-} {ctrl-#+} {ctrl-#enter}
+
+{alt-#0} {alt-#1} {alt-#2} {alt-#3} {alt-#4} {alt-#5}
+{alt-#6} {alt-#7} {alt-#8} {alt-#9} {alt-#.}
+{alt-#/} {alt-#*} {alt-#-} {alt-#+} {alt-#enter}
+
+International Keyboard Drivers
+------------------------------
+
+Keystrokes supplied to the child process are passed directly from the swap 
+kernel, by-passing any international keyboard driver that may be loaded. This 
+has the effect of making the keys appear to have come from a US keyboard. The 
+international keyboard handler will regain control, as normal, as soon as 
+SWPKEYBRD() has stuffed all its keystrokes.
+
+SWPKEYCLR
+---------
+
+  Function : Alter frequency of keyboard buffer clearing
+
+  Syntax   : niValue = SWPKEYCLR(niValue)
+
+  Return   : The previous setting
+
+  Default  : 3
+
+  This function can be used to alter the number of times the swap
+  function indicates to the child process that the keyboard buffer is
+  empty between keystrokes. Increasing the number of clear signals sent
+  to the child may help in situations where the child loses keystrokes.
+  Normally this function will not be required, as the default will work
+  with most programs.
+
+  Example:
+
+  SWPKEYCLR(5)               // five clears between each stuffed key
+
+3.2. BLINKER environment settings
+---------------------------------
+  The swap system now examines the BLINKER (or whatever it is renamed
+  to) environment variable for the following settings. These settings
+  OVERRIDE the SWPxxxxxx() functions which are set during program
+  execution.
+
+        /S3n (n=0 or 1) Enable / disable use of EMS 3.2 only
+        /SEn (n=0 or 1) Enable / disable use of EMS
+        /SPn (n=0 or 1) Enable / disable save of EMS Pframe
+        /SUn (n=0 or 1) Enable / disable use of UMBs
+        /SXn (n=0 or 1) Enable / disable use of XMS
+        /SDxxxx         Directory path for temporary files
+
+  Note: If the directory path is also set with the SWAP environment
+  variable then it will override the BLINKER /SD setting.
+
+
+3.3. Other additions
+--------------------
+
+There are a few additional swap system functions which are not mentioned
+in the manual. For further examples of these functions see the SWAPDEMO
+program in the appropriate language subdirectory of the Blinker
+directory.
+
+SWPADDSTR() - Add to the string set in the parent program
+SWPEMS320() - Limit the swapper to using EMS 3.2 calls
+SWPGETSTR() - Return the string stuffed by the child program
+SWPSETSTR() - Return a string to the parent program
+
+
+SWPADDSTR()
+-----------
+
+Function:   SWPADDSTR/SWPADDSTRBAS (Basic)
+Syntax  :   nivalue = SWPADDSTR(cPID, cString)
+Purpose :   Add to a string returned to a previous parent program
+Return  :   A logical value
+See Also:   SWPSETSTR(), SWPGETSTR(), SWPSETPID(), SWPGETPID()
+
+SWPADDSTR() is very similar to SWPSETSTR(), except that instead of returning a
+string to the named parent program, it appends to the string already set in
+the parent. In the case that no string has been returned to the parent,
+SWPADDSTR() operates identically to SWPSETSTR().
+
+example:
+
+success := SWPSETSTR("TEST","ONE")
+success := SWPADDSTR("TEST","TWO")
+
+returns the string "ONETWO" to the program that has set a program ID of
+"TEST"
+
+The return value is a logical indicating success or failure. There are three
+possible reasons for failure:
+
+1 - the named parent program is not currently in memory
+2 - appending to the existing string would cause the total length to exceed
+    127 bytes.
+3 - the parent was linked with a version of Blinker prior to 2.10
+
+
+SWPEMS320()
+-----------
+
+  Function:     Limit the swapper to using EMS 3.2 calls
+
+  Syntax :      lValue = SWPEMS320(lvalue)
+
+  Return:       The previous setting
+
+  Some offbeat/OEM EMS emulators have been giving some problems with the
+  swapper's use of EMS 4.0 level functions that appear to be improperly
+  implemented in the affected drivers. This function can be used to
+  force the swapper to only use EMS 3.2 functions.
+
+  example:
+
+  SWPEMS320(.T.)    // use only EMS 3.2 calls.
+
+  This function will not be needed in most cases.
+
+
+SWPGETSTR()
+-----------
+
+Function:   SWPGETSTR/SWPGETSTRBAS (Basic)
+Syntax  :   cstring = SWPGETSTR()
+Purpose :   Retrieve a string returned by a child program
+Return  :   A string
+See Also:   SWPSETSTR(), SWPADDSTR(), SWPSETPID()
+
+SWPGETSTR() is used within the parent program to retrieve the string set by a
+child program.
+
+* Parent program
+SWPSETPID("PARENT")
+SWPRUNCMD("child",0,"","")
+string = SWPGETSTR()
+? "The string returned is : ",string // 'Hello'
+* eof parent
+
+* Child program
+if SWPGETPID("PARENT")
+   SWPSETSTR("PARENT","Hello")
+endif
+quit
+* eof child
+
+
+SWPSETSTR()
+-----------
+
+Function:   SWPSETSTR/SWPSETSTRBAS (Basic)
+Syntax  :   nivalue = SWPSETSTR(cPID, cString)
+Purpose :   Return a string to a previous parent program
+Return  :   An logical value
+See Also:   SWPADDSTR(), SWPGETSTR(), SWPSETPID(), SWPGETPID()
+
+SWPSETSTR() can be used to return a string of up to 127 bytes from the child
+program to a parent. The string to be returned may not contain any NULLs,
+- the first NULL will be interpreted as a string terminator.
+
+The parent to receive the string is identified using the program ID of the
+parent program (set in the parent using SWPSETPID()). The string may be
+retrieved by the parent program using SWPGETSTR().
+
+example:
+
+success := SWPSETSTR("TEST","OK")
+
+returns the string "OK" to the program that has set a program ID of "TEST".
+
+The return value is a logical indicating success or failure. There are three
+possible reasons for failure:
+
+1 - the named parent program kernel is not currently in memory
+2 - the string to be returned is longer than 127 bytes
+3 - the parent was linked with a version of Blinker prior to 2.10
+
+
+4. New / changed link script commands
+-------------------------------------
+
+// is now treated as a comment inside a link script file, so anything
+  following these characters is ignored. E.g.
+
+  //      This is a link file
+  fi test        // first OBJ
+
+
+BLINKER EXECUTABLE NOBLINK
+
+  Purpose : Causes NO Blinker code whatsoever to be linked in
+
+  Syntax  : BLINKER EXECUTABLE NOBLINK
+
+  Default : Disabled
+
+  This command causes Blinker to ignore all overlays, demo restrictions,
+  and the Clipper 5.x paging system, and will give unresolved externals
+  for all Blinker functions. This is mainly used in order to create
+  small C / ASM programs with no overhead. DON'T USE FOR CLIPPER EXCEPT
+  FOR SMALL PROGRAMS WITHOUT OVERLAYS !!
+
+
+BLINKER MEMORY CLEAR
+
+  Purpose : Clears all memory beyond the EXE file to a specified value
+
+  Syntax  : BLINKER MEMORY CLEAR nnn
+
+  Default : Disabled
+
+  This command causes Blinker to clear all of memory above the
+  stack through to the top of memory with the decimal value specified (0
+  - 255). This can be used to help identify problems with uninitialised
+  memory etc., and programs should not normally be shipped with this
+  option enabled.
+
+
+DOSSEG
+
+  Purpose : Use Microsoft DOS segment ordering
+  
+  Syntax  : DOSSEG
+
+  Default : Disabled
+
+  This command is used to specify that Blinker should arrange the
+  segments making up the program in conformance with the segment
+  ordering scheme used by the Microsoft high level language compilers.
+  Most compilers which require this segment ordering include a DOSSEG
+  request in each .OBJ created or in the language library, so this
+  command is not needed under normal circumstances.
+
+  WatCom C requires an explicit DOSSEG command.
+
+
+EXTRAMEM
+
+  Purpose : Limit the amount of extra memory allocated to a program by DOS
+
+  Syntax  : EXTRAMEM nnnn
+
+  Default : 1 MB
+
+  This command is used to limit the amount of extra memory DOS will
+  allocate to a program. The parameter is the size, as a decimal number
+  of paragraphs BEYOND THE INITIALISED EXE SIZE, of the largest memory
+  block into which DOS will load the program. This is equivalent to the
+  /CPARM option of MSLink.
+  This command is used, amongst other things, to reduce the size of the
+  near heap in Medium and Large model programs.
+
+
+MEMORY
+
+  Purpose : Set the size of the largest memory block allocated to a
+            program by DOS
+
+  Syntax  : MEMORY nnnn
+
+  Default : 1 MB
+
+  This command is used to set the size, as a decimal number of
+  paragraphs, of the largest memory block into which DOS will load
+  the program.
+
+
+MURPHY
+
+  The MURPHY command causes all overlays to be run at the same address
+  in memory, but does NOT yet fill the rest of the overlay area with INT
+  3 instructions.
+
+
+5. New Link Time Error Messages
+-------------------------------
+
+1117: use of debugging information requires external overlays
+
+  This release of Blinker supports the use of CodeView debugging
+  information in overlaid programs which use EXTERNAL OVERLAYS only.
+  Please refer to the manual on how to use the SECTION INTO command to
+  specify external overlay file(s). This is only necessary whilst
+  debugging with CodeView information.
+
+
+6. Turbo Debugger support
+-------------------------
+
+  Limited support consists of module source code with line
+     numbers, public data symbols and non-overlaid public code
+     symbols. We do not currently support overlaid code under
+     the Turbo Debugger, but plan to in a subsequent release.
+  TDCONVRT handles non-overlaid programs fine.
+  If a program contains C or ASM overlays then the -c option
+     must be used to create an external .TDS file, otherwise a
+     Blinker 1203 error will occur at run time. This is
+     because TDCONVRT places the debugging information
+     directly after the root of the .EXE file. It also creates
+     unusually large .TDS files with overlaid programs due to
+     some internal confusion, but they appear to function
+     correctly for the root part of the program.
+  Overlaid programs will otherwise run correctly, but
+     breakpoints on overlaid code will be ignored and display
+     meaningless code at the symbol addresses.
+  Turbo Debugger does not currently recognise the _main symbol
+     as output from Blinker and TDCONVRT, so when running a
+     program under the debugger select GOTO (Ctl G) and enter
+     "main" to locate the start of the program.
+
+7. Functions for other swappers
+-------------------------------
+
+  Overlay () and Dr Switch work fine, but with other swappers it is
+  necessary to unhook the overlay manager before the swap and to rehook
+  it afterwards. 2.1 now has 2 functions BLIUNHOOK and BLIREINIT (with
+  preceding underscores for ASM etc.) which perform this function
+  (no parameters).
+
+      e.g.                          or
+          BLIUNHOOK ();                    BLIUNHOOK ()
+          SWAP (....);                     HOLDEVCL (....)
+          BLIREINIT ();                    BLIREINIT ()
+
+  Please note that these calls are *NOT* required when using the built
+  in swap function, SWPRUNCMD().
+
+<eof>

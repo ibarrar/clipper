@@ -1,0 +1,52 @@
+// Make file for all error system samples
+//
+
+.prg.obj:
+   SET CLIPPERCMD=/N /W
+   Clipper $<
+
+ERR01.OBJ : err01.prg
+ERR02.OBJ : err02.prg
+ERR03.OBJ : err03.prg
+ERR04.OBJ : err04.prg
+ERR05.OBJ : err05.prg
+ERR06.OBJ : err06.prg
+ERR07.OBJ : err07.prg
+ERR07.OBJ : err07.prg
+ERR08.OBJ : err08.prg
+ERR09.OBJ : err09.prg
+ERR10.OBJ : err10.prg
+ERR11.OBJ : err11.prg
+ERR12.OBJ : err12.prg
+ERR13.OBJ : err13.prg
+ERR14.OBJ : err14.prg
+ERR15.OBJ : err15.prg
+ERR16.OBJ : err16.prg
+ERR17.OBJ : err17.prg
+ERR18.OBJ : err18.prg
+
+.obj.exe:
+   SET RTLINKCMD=/free
+   RTLINK FILE $<
+
+ERR01.EXE : err01.obj
+ERR02.EXE : err02.obj
+ERR03.EXE : err03.obj
+ERR04.EXE : err04.obj
+ERR05.EXE : err05.obj
+ERR06.EXE : err06.obj
+ERR07.EXE : err07.obj
+ERR07.EXE : err07.obj
+ERR08.EXE : err08.obj
+ERR09.EXE : err09.obj
+ERR10.EXE : err10.obj
+ERR11.EXE : err11.obj
+ERR12.EXE : err12.obj
+ERR13.EXE : err13.obj
+ERR14.EXE : err14.obj
+ERR15.EXE : err15.obj
+ERR16.EXE : err16.obj
+ERR17.EXE : err17.obj
+ERR18.EXE : err18.obj
+
+// eof //
